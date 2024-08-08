@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SCRIPTS=( 01-fish 02-portainer 03-cockpit 04-home )
+SCRIPTS=( 01-fish 02-portainer 03-cockpit 04-home 05-samba )
 SCRIPTS_BASE=./scripts
 
 . $SCRIPTS_BASE/00-init.sh
