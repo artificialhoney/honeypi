@@ -1,3 +1,5 @@
-hosts
-.vscode
 .DS_Store
+tmp
+dist
+
+.env
