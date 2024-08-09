@@ -2,7 +2,7 @@
 
 POSITIONAL_ARGS=()
 
-STACKS_SCOPE=stacks
+HONEYPI_SCOPE=stacks
 HOST_MODULES=$(ls host | xargs -n 1 basename -s .sh)
 APP_MODULES=$(ls apps | xargs -n 1 basename)
 STACK_MODULES=$(ls stacks | xargs -n 1 basename)
@@ -10,12 +10,12 @@ STACK_MODULES=$(ls stacks | xargs -n 1 basename)
 while [[ $# -gt 0 ]]; do
   case $1 in
     -e|--environment)
-      STACKS_ENVIRONMENT="$2"
+      HONEYPI_ENVIRONMENT="$2"
       shift # past argument
       shift # past value
       ;;
     -s|--scope)
-      STACKS_SCOPE="$2"
+      HONEYPI_SCOPE="$2"
       shift # past argument
       shift # past value
       ;;
@@ -32,12 +32,15 @@ done
 
 set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
 
-if [[ -n $1 ]]; then
-    export STACKS_ENVIRONMENT=${STACKS_ENVIRONMENT:-"local"}
-    echo "Loading environment from '${STACKS_ENVIRONMENT}.env'"
-    [ -f $STACKS_ENVIRONMENT.env ] && eval export $(cat $STACKS_ENVIRONMENT.env)
-    echo "Creating home in '${STACKS_HOME}'"
-    echo "Running in '${STACKS_SCOPE}' with '${@}'"
+export HONEYPI_ENVIRONMENT=${HONEYPI_ENVIRONMENT:-"local"}
+echo "Loading environment from '${HONEYPI_ENVIRONMENT}.env'"
+[ -f $HONEYPI_ENVIRONMENT.env ] && eval export $(cat $HONEYPI_ENVIRONMENT.env)
+
+if [[ $1 -eq "sync" ]]; then
+  rsync . -chavzP --stats pi@$HONEYPI_HOST:/home/pi/honeypi
+elif [[ -n $1 ]]; then
+    echo "Creating home in '${HONEYPI_HOME}'"
+    echo "Running in '${HONEYPI_SCOPE}' with '${@}'"
     if [[ $1 -eq 'host' ]]; then
       for arg in "${@:-$HOST_MODULES}"
       do
@@ -46,12 +49,12 @@ if [[ -n $1 ]]; then
     elif [[ $1 -eq 'apps' ]]; then
       for arg in "${@:-$APP_MODULES}"
       do
-        docker-compose --env-file "${STACKS_ENVIRONMENT}.env" -f "./apps/$arg/docker-compose.yml" up -d
+        docker-compose --env-file "${HONEYPI_ENVIRONMENT}.env" -f "./apps/$arg/docker-compose.yml" up -d
       done
     elif [[ $1 -eq 'stacks' ]]; then
       for arg in "${@:-$STACK_MODULES}"
       do
-        docker-compose --env-file "${STACKS_ENVIRONMENT}.env" -f "./stacks/$arg/docker-compose.yml" up -d
+        docker-compose --env-file "${HONEYPI_ENVIRONMENT}.env" -f "./stacks/$arg/docker-compose.yml" up -d
       done
     fi
     exit 0
