@@ -2,23 +2,20 @@
 
 POSITIONAL_ARGS=()
 
-HONEYPI_HOME=${HONEYPI_HOME:-"$HOME/.honeypi"}
-HONEYPI_MODULES_GIT=${HONEYPI_MODULES_GIT:-'https://github.com/artificialhoney/stacks'}
-HONEYPI_SUITE=${HONEYPI_SUITE:-"./suite"}
+STACKS_SCOPE=stacks
+HOST_MODULES=$(ls host | xargs -n 1 basename -s .sh)
+APP_MODULES=$(ls apps | xargs -n 1 basename)
+STACK_MODULES=$(ls stacks | xargs -n 1 basename)
 
 while [[ $# -gt 0 ]]; do
   case $1 in
-    -h|--help)
-      echo "honeypi.sh (-e <ENVIRONMENT>) (-s <SSH_URL>) (init|install|run) (<ARGUMENTS>)"
-      exit 0
-      ;;
     -e|--environment)
-      HONEYPI_ENVIRONMENT="$2"
+      STACKS_ENVIRONMENT="$2"
       shift # past argument
       shift # past value
       ;;
-    -s|--ssh)
-      HONEYPI_SSH_URL="$2"
+    -s|--scope)
+      STACKS_SCOPE="$2"
       shift # past argument
       shift # past value
       ;;
@@ -35,37 +32,30 @@ done
 
 set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
 
-. dotenv.sh
-
-if [[ $1 -eq 'init' ]]; then
-    echo "Creating suite in '$HONEYPI_HOME'"
-    if [[ -n $HONEYPI_SSH_URL ]]; then
-      ssh $HONEYPI_SSH_URL "./init.sh"
-    else
-      ./init.sh
+if [[ -n $1 ]]; then
+    export STACKS_ENVIRONMENT=${STACKS_ENVIRONMENT:-"local"}
+    echo "Loading environment from '${STACKS_ENVIRONMENT}.env'"
+    [ -f $STACKS_ENVIRONMENT.env ] && eval export $(cat $STACKS_ENVIRONMENT.env)
+    echo "Creating home in '${STACKS_HOME}'"
+    echo "Running in '${STACKS_SCOPE}' with '${@}'"
+    if [[ $1 -eq 'host' ]]; then
+      for arg in "${@:-$HOST_MODULES}"
+      do
+        . "./host/$arg.sh"
+      done
+    elif [[ $1 -eq 'apps' ]]; then
+      for arg in "${@:-$APP_MODULES}"
+      do
+        docker-compose --env-file "${STACKS_ENVIRONMENT}.env" -f "./apps/$arg/docker-compose.yml" up -d
+      done
+    elif [[ $1 -eq 'stacks' ]]; then
+      for arg in "${@:-$STACK_MODULES}"
+      do
+        docker-compose --env-file "${STACKS_ENVIRONMENT}.env" -f "./stacks/$arg/docker-compose.yml" up -d
+      done
     fi
     exit 0
 fi
 
-if [[ $1 -eq 'install' ]]; then
-    ./install.sh
-    exit 0
-fi
-
-if [[ $1 -eq 'run' ]]; then
-    shift
-    echo "Running suite in '${HONEYPI_SUITE}' with '${@}'"
-    for arg in "${@}"
-    do
-      if [[ -n $HONEYPI_SSH_URL ]]; then
-        ssh $HONEYPI_SSH_URL "./install.sh -e ${HONEYPI_ENVIRONMENT} ${@}"
-      else
-        . "${HONEYPI_SUITE}/*-${arg}.sh"
-      fi
-    done
-    exit 0
-fi
-
-echo "No task provided! Aborting"
+echo "No scope provided"
 exit 0
-

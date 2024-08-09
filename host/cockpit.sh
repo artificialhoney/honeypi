@@ -1,7 +1,7 @@
 
 
 . /etc/os-release
-echo "deb http://deb.debian.org/debian ${VERSION_CODENAME}-backports main" > \
+sudo echo "deb http://deb.debian.org/debian ${VERSION_CODENAME}-backports main" > \
     /etc/apt/sources.list.d/backports.list
 sudo apt update
 

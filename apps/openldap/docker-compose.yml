@@ -1,0 +1,29 @@
+services:
+  openldap:
+    image: osixia/openldap:latest
+    container_name: openldap
+    tty: true
+    stdin_open: true
+    volumes:
+      - ${STACKS_HOME}/openldap/ldap:/data/var/lib/ldap
+      - ${STACKS_HOME}/openldap/slapd.d:/etc/ldap/slapd.d
+      - ${STACKS_HOME}/openldap/certs:/container/service/slapd/assets/certs
+    ports:
+      - 389:389
+      - 636:636
+    extends:
+      file: ../../commons/compose.yml
+      service: base
+  phpldapadmin:
+    image: osixia/phpldapadmin:latest
+    container_name: phpldapadmin
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: openldap
+      PHPLDAPADMIN_HTTPS: false
+    ports:
+      - 8085:80
+    depends_on:
+      - openldap
+    extends:
+      file: ../../commons/compose.yml
+      service: base

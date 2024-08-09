@@ -1,0 +1,20 @@
+services:
+  homeassistant:
+    extends:
+      file: ../../apps/homeassistant/docker-compose.yml
+      service: homeassistant
+  mosquitto:
+    extends:
+      file: ../../apps/mosquitto/docker-compose.yml
+      service: mosquitto
+  nodered:
+    extends:
+      file: ../../apps/nodered/docker-compose.yml
+      service: nodered
+    depends_on:
+      - homeassistant
+      - mosquitto
+  mediamtx:
+    extends:
+      file: ../../apps/mediamtx/docker-compose.yml
+      service: mediamtx

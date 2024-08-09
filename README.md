@@ -1,14 +1,14 @@
-# Honeypi
+# stacks
 
 My Raspberry Pi Server.
 
-## Prerequisites
-
-Create `.env` file from `example.env`.
-
-## Deploy
+## Usage
 
 ```bash
-./deploy.sh
+git clone https://github.com/artificialhoney/honeypi honeypi
+cd honeypi
+cp local.env hive.env # make your changes
+
+./honeypi.sh -e hive smarthome
 ```
 

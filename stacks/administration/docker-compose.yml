@@ -1,0 +1,9 @@
+services:
+  nextcloud:
+    extends:
+      file: ../../apps/nextcloud/docker-compose.yml
+      service: nextcloud
+  rocketchat:
+    extends:
+      file: ../../apps/rocketchat/docker-compose.yml
+      service: rocketchat

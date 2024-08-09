@@ -1,3 +1,8 @@
 .DS_Store
 tmp
 dist
+
+.local/
+
+*.env
+!local.env
