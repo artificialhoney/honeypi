@@ -1,4 +1,4 @@
-# stacks
+# honeypi
 
 My Raspberry Pi Server.
 
