@@ -50,31 +50,34 @@ export HONEYPI_ENVIRONMENT=${HONEYPI_ENVIRONMENT:-"local"}
 echo "Loading environment from '${HONEYPI_ENVIRONMENT}.env'"
 [ -f $HONEYPI_ENVIRONMENT.env ] && eval export $(cat $HONEYPI_ENVIRONMENT.env)
 
-if [[ $1 -eq "sync" ]]; then
+if [ "$1" = "sync" ]; then
   echo "Syncing with 'pi@${HONEYPI_HOST}'"
   rsync . -chavzP --stats pi@$HONEYPI_HOST:/home/pi/honeypi
-elif [[ $1 -eq "run" ]]; then
+  exit 0
+elif [ "$1" = "run" ]; then
   shift
-  echo "Creating home in '${HONEYPI_HOME}'"
   echo "Running in '${HONEYPI_SCOPE}' with '${@}'"
-  if [[ $1 -eq 'host' ]]; then
+  if [ "$HONEYPI_SCOPE" = "host" ]; then
     for arg in "${@:-$HOST_MODULES}"
     do
       . "./host/$arg.sh"
     done
-  elif [[ $1 -eq 'apps' ]]; then
+  elif [ "$HONEYPI_SCOPE" = "apps" ]; then
     for arg in "${@:-$APP_MODULES}"
     do
       docker-compose -f "./apps/$arg/docker-compose.yml" up -d
     done
-  elif [[ $1 -eq 'stacks' ]]; then
+  elif [ "$HONEYPI_SCOPE" = "stacks" ]; then
     for arg in "${@:-$STACK_MODULES}"
     do
       docker-compose -f "./stacks/$arg/docker-compose.yml" up -d
     done
+  else
+    echo "Unknown scope '$1'."
   fi
+  exit 0
+else
+  echo "No argument(s) provided. Run -h for help."
   exit 0
 fi
 
-echo "No argument(s) provided. Run -h for help."
-exit 0

@@ -6,3 +6,4 @@ sudo sh get-Docker.sh
 sudo usermod -aG docker $USER
 newgrp docker
 docker run hello-world
+sudo apt-get install docker-compose -y
