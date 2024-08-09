@@ -14,6 +14,7 @@ while [[ $# -gt 0 ]]; do
       echo
       echo 'Usage:'
       echo '  honeypi run -e <env> -s <apps|host|stacks> <name>'
+      echo '  honeypi remove <name>'
       echo '  honeypi sync -e <env>'
       echo '  honeypi -h | --help'
       echo 'Options:'
@@ -46,9 +47,9 @@ done
 
 set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
 
-export HONEYPI_ENVIRONMENT=${HONEYPI_ENVIRONMENT:-"local"}
+HONEYPI_ENVIRONMENT=${HONEYPI_ENVIRONMENT:-local}
 echo "Loading environment from '${HONEYPI_ENVIRONMENT}.env'"
-[ -f $HONEYPI_ENVIRONMENT.env ] && eval export $(cat $HONEYPI_ENVIRONMENT.env)
+[ -f ${HONEYPI_ENVIRONMENT}.env ] && eval export $(cat ${HONEYPI_ENVIRONMENT}.env)
 
 if [ "$1" = "sync" ]; then
   echo "Syncing with 'pi@${HONEYPI_HOST}'"
@@ -76,6 +77,10 @@ elif [ "$1" = "run" ]; then
     echo "Unknown scope '$1'."
   fi
   exit 0
+elif [ "$1" = "remove" ]; then
+  shift
+  docker stop "${@}"
+  docker rm -v "${@}"
 else
   echo "No argument(s) provided. Run -h for help."
   exit 0
