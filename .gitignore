@@ -7,3 +7,5 @@ dist
 *.env
 !local.env
 !commons/commons.env
+
+assets/
