@@ -57,6 +57,7 @@ if [ "$1" = "sync" ]; then
   exit 0
 elif [ "$1" = "run" ]; then
   shift
+  sudo find ./apps -maxdepth 1 -execdir sh -c 'mkdir -p "${HONEYPI_HOME}/${0%}"' {} \;
   echo "Running in '${HONEYPI_SCOPE}' with '${@}'"
   if [ "$HONEYPI_SCOPE" = "host" ]; then
     for arg in "${@:-$HOST_MODULES}"
