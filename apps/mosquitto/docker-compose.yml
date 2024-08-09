@@ -14,4 +14,4 @@ services:
     extends:
       file: ../../commons/compose.yml
       service: base
-    user: ${PUID:-1000}:${PGID:-1000}
+    user: ${HONEYPI_PUID:-1000}:${HONEYPI_PGID:-1000}

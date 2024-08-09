@@ -1,4 +1,4 @@
 services:
   base:
     env_file:
-      - ../envs/${HONEYPI_ENVIRONMENT}.env
+      - ${HONEYPI_COMMONS_ENV}
