@@ -14,6 +14,3 @@ services:
     extends:
       file: ../../commons/compose.yml
       service: base
-volumes:
-  nextcloud:
-    name: nextcloud_aio_mastercontainer

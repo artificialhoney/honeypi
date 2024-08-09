@@ -7,3 +7,5 @@ services:
     extends:
       file: ../../apps/rocketchat/docker-compose.yml
       service: rocketchat
+volumes:
+  nextcloud_aio_mastercontainer:

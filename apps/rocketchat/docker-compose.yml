@@ -18,10 +18,10 @@ services:
       file: ../../commons/compose.yml
       service: base
   rocketchat:
-    image: rocketchat:arm64-6.10.2
     container_name: rocketchat
     build:
-      dockerfile: ./Dockerfile
+      context: .
+      dockerfile: Dockerfile
     environment:
       - ROOT_URL=${HONEYPI_ROCKETCHAT_ROOT_URL}
       - MONGO_URL=mongodb://rocketchatmongo:27017/rocketchat
