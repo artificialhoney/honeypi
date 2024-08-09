@@ -1,4 +1,5 @@
 services:
   base:
     env_file:
-      - ${HONEYPI_COMMONS_ENV}
+      - ../${STACKS_ENVIRONMENT}.env
+      - ${HONEYPI_COMMONS_ENV:-"./commons.env"}
