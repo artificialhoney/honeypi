@@ -7,9 +7,9 @@ services:
       - 1883:1883
       - 9001:9001
     volumes:
-      - ${STACKS_HOME}/mosquitto/config:/mosquitto/config
-      - ${STACKS_HOME}/mosquitto/data:/mosquitto/data
-      - ${STACKS_HOME}/mosquitto/log:/mosquitto/log
+      - ${HONEYPI_HOME}/mosquitto/config:/mosquitto/config
+      - ${HONEYPI_HOME}/mosquitto/data:/mosquitto/data
+      - ${HONEYPI_HOME}/mosquitto/log:/mosquitto/log
       - ./config/mosquitto.conf:/mosquitto/config/mosquitto.conf
     extends:
       file: ../../commons/compose.yml

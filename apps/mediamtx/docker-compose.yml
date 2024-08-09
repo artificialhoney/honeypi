@@ -5,7 +5,7 @@ services:
     network_mode: host
     restart: always
     volumes:
-      - ${STACKS_MEDIAMTX_CONFIG:-./config/mediamtx.yml}:/mediamtx.yml
+      - ${HONEYPI_MEDIAMTX_CONFIG:-./config/mediamtx.yml}:/mediamtx.yml
     extends:
       file: ../../commons/compose.yml
       service: base

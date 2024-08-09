@@ -8,8 +8,8 @@ services:
       - 81:81
       - 443:443
     volumes:
-      - ${STACKS_HOME}/nginxproxymanager/data:/data
-      - ${STACKS_HOME}/nginxproxymanager/letsencrypt:/etc/letsencrypt
+      - ${HONEYPI_HOME}/nginxproxymanager/data:/data
+      - ${HONEYPI_HOME}/nginxproxymanager/letsencrypt:/etc/letsencrypt
     extends:
       file: ../../commons/compose.yml
       service: base

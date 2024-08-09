@@ -5,9 +5,9 @@ services:
     command: --max-allowed-packet=64MB
     restart: always
     volumes:
-      - ${STACKS_HOME}/matomo/mysql:/var/lib/mysql:Z
+      - ${HONEYPI_HOME}/matomo/mysql:/var/lib/mysql:Z
     environment:
-      - MYSQL_ROOT_PASSWORD=${STACKS_MATOMO_DB_ROOT_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${HONEYPI_MATOMO_DB_ROOT_PASSWORD}
       - MARIADB_AUTO_UPGRADE=1
       - MARIADB_DISABLE_UPGRADE_BACKUP=1
     extends:
@@ -18,10 +18,10 @@ services:
     container_name: matomo
     restart: always
     volumes:
-      - ${STACKS_HOME}/matomo/html:/var/www/html:z
+      - ${HONEYPI_HOME}/matomo/html:/var/www/html:z
     environment:
       - MATOMO_DATABASE_HOST=matomodb
-      - MYSQL_PASSWORD=${STACKS_MATOMO_DB_ROOT_PASSWORD}
+      - MYSQL_PASSWORD=${HONEYPI_MATOMO_DB_ROOT_PASSWORD}
     extends:
       file: ../../commons/compose.yml
       service: base

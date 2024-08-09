@@ -10,7 +10,7 @@ services:
     ports:
       - 8080:8080
     environment:
-      - NEXTCLOUD_DATADIR=${STACKS_HOME}/nextcloud/data
+      - NEXTCLOUD_DATADIR=${HONEYPI_HOME}/nextcloud/data
     extends:
       file: ../../commons/compose.yml
       service: base

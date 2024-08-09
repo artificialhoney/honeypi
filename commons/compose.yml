@@ -1,4 +1,4 @@
 services:
   base:
     env_file:
-      - ../envs/${STACKS_ENVIRONMENT}.env
+      - ../envs/${HONEYPI_ENVIRONMENT}.env

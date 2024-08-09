@@ -3,10 +3,10 @@ services:
     image: bellingcat/auto-archiver:latest
     container_name: autoarchiver
     volumes:
-      - ${STACKS_HOME}/autoarchiver/secrets:/app/secrets
-      - ${STACKS_HOME}/autoarchiver/local_archive:/app/local_archive
+      - ${HONEYPI_HOME}/autoarchiver/secrets:/app/secrets
+      - ${HONEYPI_HOME}/autoarchiver/local_archive:/app/local_archive
     configs:
-      - ${STACKS_AUTOARCHIVER_CONFIG:-./config/orchestration.yml}
+      - ${HONEYPI_AUTOARCHIVER_CONFIG:-./config/orchestration.yml}
     extends:
       file: ../../commons/compose.yaml
       service: base

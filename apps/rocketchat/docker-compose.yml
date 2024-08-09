@@ -3,7 +3,7 @@ services:
     image: arm64v8/mongo:4.4.18
     container_name: rocketchatmongo
     volumes:
-      - ${STACKS_HOME}/rocketchat/data:/data
+      - ${HONEYPI_HOME}/rocketchat/data:/data
     entrypoint: mongod --bind_ip_all --wiredTigerCacheSizeGB 0.25  --oplogSize 128 --replSet rs0
     extends:
       file: ../../commons/compose.yml
@@ -23,7 +23,7 @@ services:
     build:
       dockerfile: ./Dockerfile
     environment:
-      - ROOT_URL=${STACKS_ROCKETCHAT_ROOT_URL}
+      - ROOT_URL=${HONEYPI_ROCKETCHAT_ROOT_URL}
       - MONGO_URL=mongodb://rocketchatmongo:27017/rocketchat
       - MONGO_OPLOG_URL=mongodb://rocketchatmongo:27017/local
     ports:

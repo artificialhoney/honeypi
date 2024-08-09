@@ -5,7 +5,7 @@ services:
     restart: always
     network_mode: host
     volumes:
-      - ${STACKS_HOME}/homebridge:/homebridge
+      - ${HONEYPI_HOME}/homebridge:/homebridge
       - /run/dbus:/run/dbus:ro
     logging:
       driver: json-file
