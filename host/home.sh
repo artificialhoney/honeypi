@@ -3,5 +3,6 @@
 cd $HOME
 git init .
 git remote add origin $HONEYPI_HOME_GIT_URL
-git pull origin master
+git fetch --all
+git reset --hard origin/main
 cd - 
