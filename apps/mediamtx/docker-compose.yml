@@ -3,9 +3,9 @@ services:
     image: bluenviron/mediamtx:latest-ffmpeg
     container_name: mediamtx
     network_mode: host
-    restart: always
-    devices:
-      - /dev/video0:/dev/video0
+    restart: unless-stopped
+    # devices:
+      # - /dev/video0:/dev/video0
     volumes:
       - ${HONEYPI_MEDIAMTX_CONFIG:-./config}/mediamtx.yml:/mediamtx.yml
       - ${HONEYPI_MEDIAMTX_CONFIG}/server.crt:/server.crt
@@ -13,8 +13,8 @@ services:
     extends:
       file: ../../commons/compose.yml
       service: base
-    environment:
-      - PUID=${HONEYPI_PUID:-1000}
-      - PGID=${HONEYPI_PGID:-1000}
-    user: "1000:44"
+    # environment:
+    #   - PUID=${HONEYPI_PUID:-1000}
+    #   - PGID=${HONEYPI_PGID:-1000}
+    # user: "1000:44"
 
