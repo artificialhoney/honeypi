@@ -21,13 +21,11 @@ RestartSec=12
 
 [Install]
 WantedBy=default.target
-" > /etc/systemd/user/spotifyd.service'
+" > /etc/systemd/system/spotifyd.service'
 
 # mkdir -p ~/.config/systemd/user/
 # nano ~/.config/systemd/user/spotifyd.service
 # sudo systemctl --user daemon-reload
 
-sudo systemctl --user start spotifyd.service
-
-sudo loginctl enable-linger pi
-sudo systemctl --user enable spotifyd.service
+sudo systemctl start spotifyd.service
+sudo systemctl enable spotifyd.service
