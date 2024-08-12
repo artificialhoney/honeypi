@@ -27,5 +27,6 @@ WantedBy=default.target
 # nano ~/.config/systemd/user/spotifyd.service
 # sudo systemctl --user daemon-reload
 
+sudo systemctl daemon-reload
 sudo systemctl start spotifyd.service
 sudo systemctl enable spotifyd.service
