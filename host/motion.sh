@@ -3,10 +3,10 @@
 sudo apt-get install libcamera-tools libcamera-v4l2 motion -y
 sudo libcamerify motion
 
-sudo sed -i 's/webcontrol_localhost on/webcontrol_localhost off/g'
-sudo sed -i 's/stream_localhost on/webcontrol_localhost off/g'
+sudo sed -i 's/webcontrol_localhost on/webcontrol_localhost off/g' /etc/motion/motion.conf
+sudo sed -i 's/stream_localhost on/webcontrol_localhost off/g' /etc/motion/motion.conf
 
-sudo sed -i 's/ExecStart=\/usr\/bin\/motion/ExecStart=\/usr\/bin\/libcamerify \/usr\/bin\/motion/g'
+sudo sed -i 's/ExecStart=\/usr\/bin\/motion/ExecStart=\/usr\/bin\/libcamerify \/usr\/bin\/motion/g' /lib/systemd/system/motion.service
 
 sudo find /var/log/motion -delete
 sudo mkdir /var/log/motion
