@@ -7,8 +7,8 @@ sudo apt install libfreetype6 libcamera0
 wget -q -O ./tmp/mediamtx.tar.gz - https://github.com/bluenviron/mediamtx/releases/download/v1.8.5/mediamtx_v1.8.5_linux_armv6.tar.gz
 tar xzf ./tmp/mediamtx.tar.gz -C ./tmp
 
-mkdir -p /opt/mediamtx
-sudo cp ./tmp/mediamtx /opt/mediamtx
+sudo mkdir -p /opt/mediamtx
+sudo cp ./tmp/mediamtx /opt/mediamtx/
 
 sudo ln -s $HONEYPI_MEDIAMTX_CONFIG/mediamtx.yml /opt/mediamtx/mediamtx.yml
 
