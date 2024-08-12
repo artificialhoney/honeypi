@@ -1,6 +1,10 @@
 #!/bin/bash
 
-wget https://github.com/Spotifyd/spotifyd/releases/latest/spotifyd-linux-armhf-full.tar.gz
+wget -q -O ./tmp/spotifyd.tar.gz - https://github.com/Spotifyd/spotifyd/releases/download/v0.3.5/spotifyd-linux-armhf-default.tar.gz
+tar xzf ./tmp/spotifyd.tar.gz -C ./tmp
+
+sudo mkdir -p /opt/spotifyd
+sudo cp ./tmp/spotifyd /opt/spotifyd/
 
 sudo sh -c 'echo "[Unit]
 Description=A spotify playing daemon
@@ -11,7 +15,7 @@ Wants=network-online.target
 After=network-online.target
 
 [Service]
-ExecStart=/usr/bin/spotifyd --no-daemon
+ExecStart=/opt/spotifyd/spotifyd --no-daemon
 Restart=always
 RestartSec=12
 
