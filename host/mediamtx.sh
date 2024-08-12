@@ -2,7 +2,7 @@
 
 mkdir -p ./tmp
 
-sudo apt install libfreetype6 libcamera0
+sudo apt install libfreetype6 libcamera0 ffmpeg
 
 wget -q -O ./tmp/mediamtx.tar.gz - https://github.com/bluenviron/mediamtx/releases/download/v1.8.5/mediamtx_v1.8.5_linux_armv6.tar.gz
 tar xzf ./tmp/mediamtx.tar.gz -C ./tmp
@@ -20,7 +20,6 @@ ExecStart=/opt/mediamtx/mediamtx /opt/mediamtx/mediamtx.yml
 
 [Install]
 WantedBy=multi-user.target
-EOT
 " > /etc/systemd/system/mediamtx.service'
 
 sudo systemctl daemon-reload
