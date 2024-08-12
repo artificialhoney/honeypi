@@ -1,6 +1,6 @@
 #!/bin/bash
 
-wget -q -O ./tmp/spotifyd.tar.gz - https://github.com/Spotifyd/spotifyd/releases/download/v0.3.5/spotifyd-linux-armhf-default.tar.gz
+wget -q -O ./tmp/spotifyd.tar.gz - https://github.com/Spotifyd/spotifyd/releases/download/v0.3.5/spotifyd-linux-armv6-slim.tar.gz
 tar xzf ./tmp/spotifyd.tar.gz -C ./tmp
 
 sudo mkdir -p /opt/spotifyd
