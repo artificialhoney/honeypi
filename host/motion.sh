@@ -1,7 +1,6 @@
 #!/bin/bash
 
 sudo apt-get install libcamera-tools libcamera-v4l2 motion -y
-sudo libcamerify motion
 
 sudo sed -i 's/webcontrol_localhost on/webcontrol_localhost off/g' /etc/motion/motion.conf
 sudo sed -i 's/stream_localhost on/webcontrol_localhost off/g' /etc/motion/motion.conf
