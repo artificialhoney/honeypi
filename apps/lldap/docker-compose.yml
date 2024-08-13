@@ -1,0 +1,17 @@
+services:
+  lldap:
+    image: lldap/lldap:latest
+    ports:
+      - "17170:17170"
+    volumes:
+      - ${HONEYPI_HOME}/lldap/data:/data
+    environment:
+      - UID=${HONEYPI_PUID}
+      - GID=${HONEYPI_PGID}
+      - TZ=${HONEYPI_TZ}
+      - LLDAP_JWT_SECRET=MJv2wWQFYS
+      - LLDAP_KEY_SEED=9DCxizgFz6
+      - LLDAP_LDAP_BASE_DN=dc=honeymachine,dc=io
+    extends:
+      file: ../../commons/compose.yml
+      service: base
