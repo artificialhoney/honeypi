@@ -1,6 +1,6 @@
 services:
   gitlab:
-    image: zengxs/gitlab:latest
+    image: yrzr/gitlab-ce-arm64v8:latest
     container_name: gitlab
     restart: always
     hostname: 'hive.honeymachine.io'
