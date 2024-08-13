@@ -1,0 +1,27 @@
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    container_name: gitlab
+    restart: always
+    hostname: 'hive.honeymachine.io'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        # Add any other gitlab.rb configuration here, each on its own line
+        external_url 'https://hive.honeymachine.io'
+    ports:
+      - '8080:80'
+      - '8443:443'
+      - '8822:22'
+    shm_size: '256m'
+    volumes:
+      - ${HONEYPI_HOME}/gitlab/config:/etc/gitlab'
+      - ${HONEYPI_HOME}/gitlab/logs:/var/log/gitlab'
+      - ${HONEYPI_HOME}/gitlab/data:/var/opt/gitlab'
+    logging:
+      driver: json-file
+      options:
+        max-size: 10mb
+        max-file: 1
+    extends:
+      file: ../../commons/compose.yml
+      service: base
