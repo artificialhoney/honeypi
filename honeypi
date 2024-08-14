@@ -2,10 +2,13 @@
 
 POSITIONAL_ARGS=()
 
-HONEYPI_ENVIRONMENT=$HONEYPI_ENVIRONMENT
 HONEYPI_SCOPE=apps
 HOST_MODULES=$(ls host | xargs -n 1 basename -s .sh)
 APP_MODULES=$(ls apps | xargs -n 1 basename)
+
+loadEnv() {
+  source $1
+}
 
 while [[ $# -gt 0 ]]; do
   case $1 in
@@ -50,35 +53,34 @@ set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
 
 if [ "$1" = "env" ]; then
   shift
-  [[ "$1" = "" ]] && HONEYPI_ENVIRONMENT=${HONEYPI_ENVIRONMENT:-local} || HONEYPI_ENVIRONMENT="$1"
   echo "Loading environment from '${HONEYPI_ENVIRONMENT}'.env"
-  [[ -f $HONEYPI_ENVIRONMENT.env ]] && set -a && source $HONEYPI_ENVIRONMENT.env && set +a
+  [ -f "$HONEYPI_ENVIRONMENT.env" ] && loadEnv "$HONEYPI_ENVIRONMENT.env"
   set | grep HONEYPI_
   exit 0
 elif [ "$1" = "sync" ]; then
   shift
-  [[ -f $HONEYPI_ENVIRONMENT.env ]] && set -a && source $HONEYPI_ENVIRONMENT.env && set +a
+  [ -f "$HONEYPI_ENVIRONMENT.env" ] && loadEnv "$HONEYPI_ENVIRONMENT.env"
   [[ ! "$1" = "" ]] && URL=$1 || URL=${HONEYPI_HOST_URL:-local}
   DIR="$(dirname "$(readlink -f "$0")")"
   DIR=${2:-"$DIR"}
   echo "Syncing to '${URL}' from '${DIR}'"
-  rsync -chavzP --stats $DIR/* "$URL"
+  rsync -chavzP --stats -e "ssh -A" $DIR/* $URL/
   exit 0
 elif [ "$1" = "connect" ]; then
   shift
-  [[ -f $HONEYPI_ENVIRONMENT.env ]] && set -a && source $HONEYPI_ENVIRONMENT.env && set +a
+  [ -f $HONEYPI_ENVIRONMENT.env ] && loadEnv $HONEYPI_ENVIRONMENT.env
   echo "Connecting to '$1'"
   docker exec -it $1 /bin/bash
   exit 0
 elif [ "$1" = "run" ]; then
   shift
-  [[ -f $HONEYPI_ENVIRONMENT.env ]] && set -a && source $HONEYPI_ENVIRONMENT.env && set +a
+  [ -f $HONEYPI_ENVIRONMENT.env ] && loadEnv $HONEYPI_ENVIRONMENT.env
   sudo find ./apps -maxdepth 1 -execdir sh -c 'mkdir -p "${HONEYPI_HOME}/${0%}"' {} \;
   echo "Running in '${HONEYPI_SCOPE}' with '${@}'"
   if [ "$HONEYPI_SCOPE" = "host" ]; then
     for arg in "${@:-$HOST_MODULES}"
     do
-      . "./host/$arg.sh"
+      . ./host/$arg.sh
     done
   elif [ "$HONEYPI_SCOPE" = "apps" ]; then
     for arg in "${@:-$APP_MODULES}"
@@ -91,9 +93,10 @@ elif [ "$1" = "run" ]; then
   exit 0
 elif [ "$1" = "remove" ]; then
   shift
-  [[ -f $HONEYPI_ENVIRONMENT.env ]] && set -a && source $HONEYPI_ENVIRONMENT.env && set +a
+  [ -f $HONEYPI_ENVIRONMENT.env ] && loadEnv $HONEYPI_ENVIRONMENT.env
   docker stop "${@}"
-  docker rm -v "${@}"
+  docker rm -fv "${@}"
+  exit 0
 else
   echo "No argument(s) provided. Run -h for help."
   exit 0
