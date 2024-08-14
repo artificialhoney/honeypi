@@ -2,10 +2,10 @@
 
 POSITIONAL_ARGS=()
 
+HONEYPI_ENVIRONMENT=$HONEYPI_ENVIRONMENT
 HONEYPI_SCOPE=apps
 HOST_MODULES=$(ls host | xargs -n 1 basename -s .sh)
 APP_MODULES=$(ls apps | xargs -n 1 basename)
-STACK_MODULES=$(ls stacks | xargs -n 1 basename)
 
 while [[ $# -gt 0 ]]; do
   case $1 in
@@ -13,14 +13,16 @@ while [[ $# -gt 0 ]]; do
       echo 'honeypi'
       echo
       echo 'Usage:'
-      echo '  honeypi run -e <env> -s <apps|host|stacks> <name>'
+      echo '  honeypi run <name>'
       echo '  honeypi remove <name>'
-      echo '  honeypi sync -e <env>'
+      echo '  honeypi sync <from> <to>'
+      echo '  honeypi env <env>'
+      echo '  honeypi connect <name>'
       echo '  honeypi -h | --help'
       echo 'Options:'
       echo '  -h --help                  Show this screen.'
       echo '  -e --environment=<env>     Environment [default: local].'
-      echo '  -s --scope=<scope>         Scope [default: apps].'
+      echo '  -n --native                Scope native [default: apps].'
       shift # past argument
       exit 0
       ;;
@@ -29,10 +31,9 @@ while [[ $# -gt 0 ]]; do
       shift # past argument
       shift # past value
       ;;
-    -s|--scope)
-      HONEYPI_SCOPE="$2"
+    -n|--native)
+      HONEYPI_SCOPE="host"
       shift # past argument
-      shift # past value
       ;;
     -*|--*)
       echo "Unknown option $1"
@@ -51,21 +52,27 @@ if [ "$1" = "env" ]; then
   shift
   [[ "$1" = "" ]] && HONEYPI_ENVIRONMENT=${HONEYPI_ENVIRONMENT:-local} || HONEYPI_ENVIRONMENT="$1"
   echo "Loading environment from '${HONEYPI_ENVIRONMENT}'.env"
-  [ -f ${HONEYPI_ENVIRONMENT}.env ] && eval export $(cat ${HONEYPI_ENVIRONMENT}.env)
-  cat ${HONEYPI_ENVIRONMENT}.env
+  [[ -f $HONEYPI_ENVIRONMENT.env ]] && set -a && source $HONEYPI_ENVIRONMENT.env && set +a
+  set | grep HONEYPI_
   exit 0
 elif [ "$1" = "sync" ]; then
-  # TODO Make more dynamic with ARGV
-  echo "Syncing with 'pi@${HONEYPI_HOST}'"
-  rsync . -chavzP --stats pi@$HONEYPI_HOST:/home/pi/honeypi
+  shift
+  [[ -f $HONEYPI_ENVIRONMENT.env ]] && set -a && source $HONEYPI_ENVIRONMENT.env && set +a
+  [[ ! "$1" = "" ]] && URL=$1 || URL=${HONEYPI_HOST_URL:-local}
+  DIR="$(dirname "$(readlink -f "$0")")"
+  DIR=${2:-"$DIR"}
+  echo "Syncing to '${URL}' from '${DIR}'"
+  rsync "$DIR" -chavzP --stats "$URL"
   exit 0
 elif [ "$1" = "connect" ]; then
   shift
+  [[ -f $HONEYPI_ENVIRONMENT.env ]] && set -a && source $HONEYPI_ENVIRONMENT.env && set +a
   echo "Connecting to '$1'"
   docker exec -it $1 /bin/bash
   exit 0
 elif [ "$1" = "run" ]; then
   shift
+  [[ -f $HONEYPI_ENVIRONMENT.env ]] && set -a && source $HONEYPI_ENVIRONMENT.env && set +a
   sudo find ./apps -maxdepth 1 -execdir sh -c 'mkdir -p "${HONEYPI_HOME}/${0%}"' {} \;
   echo "Running in '${HONEYPI_SCOPE}' with '${@}'"
   if [ "$HONEYPI_SCOPE" = "host" ]; then
@@ -78,17 +85,13 @@ elif [ "$1" = "run" ]; then
     do
       docker-compose -f "./apps/$arg/docker-compose.yml" up -d
     done
-  elif [ "$HONEYPI_SCOPE" = "stacks" ]; then
-    for arg in "${@:-$STACK_MODULES}"
-    do
-      docker-compose -f "./stacks/$arg/docker-compose.yml" up -d
-    done
   else
     echo "Unknown scope '$1'."
   fi
   exit 0
 elif [ "$1" = "remove" ]; then
   shift
+  [[ -f $HONEYPI_ENVIRONMENT.env ]] && set -a && source $HONEYPI_ENVIRONMENT.env && set +a
   docker stop "${@}"
   docker rm -v "${@}"
 else
