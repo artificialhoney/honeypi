@@ -1,7 +1,7 @@
 services:
   gitlab-ce-arm64v8:
     restart: unless-stopped
-    container_name: gitlab-ce
+    container_name: gitlab
     privileged: true
     deploy:
       resources:
