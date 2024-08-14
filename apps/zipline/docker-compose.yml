@@ -29,10 +29,8 @@ services:
     volumes:
       - ${HONEYPI_HOME}/zipline/uploads:/zipline/uploads'
       - ${HONEYPI_HOME}/zipline/public:/zipline/public'
-      - './uploads:/zipline/uploads'
-      - './public:/zipline/public'
     depends_on:
-      - 'postgres'
+      - postgres
 
 volumes:
   pg_data:

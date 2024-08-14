@@ -47,11 +47,15 @@ done
 
 set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
 
-HONEYPI_ENVIRONMENT=${HONEYPI_ENVIRONMENT:-local}
-echo "Loading environment from '${HONEYPI_ENVIRONMENT}.env'"
-[ -f ${HONEYPI_ENVIRONMENT}.env ] && eval export $(cat ${HONEYPI_ENVIRONMENT}.env)
-
-if [ "$1" = "sync" ]; then
+if [ "$1" = "env" ]; then
+  shift
+  [[ "$1" = "" ]] && HONEYPI_ENVIRONMENT=${HONEYPI_ENVIRONMENT:-local} || HONEYPI_ENVIRONMENT="$1"
+  echo "Loading environment from '${HONEYPI_ENVIRONMENT}'.env"
+  [ -f ${HONEYPI_ENVIRONMENT}.env ] && eval export $(cat ${HONEYPI_ENVIRONMENT}.env)
+  cat ${HONEYPI_ENVIRONMENT}.env
+  exit 0
+elif [ "$1" = "sync" ]; then
+  # TODO Make more dynamic with ARGV
   echo "Syncing with 'pi@${HONEYPI_HOST}'"
   rsync . -chavzP --stats pi@$HONEYPI_HOST:/home/pi/honeypi
   exit 0
