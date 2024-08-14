@@ -55,6 +55,11 @@ if [ "$1" = "sync" ]; then
   echo "Syncing with 'pi@${HONEYPI_HOST}'"
   rsync . -chavzP --stats pi@$HONEYPI_HOST:/home/pi/honeypi
   exit 0
+elif [ "$1" = "connect" ]; then
+  shift
+  echo "Connecting to '$1'"
+  docker exec -it $1 /bin/bash
+  exit 0
 elif [ "$1" = "run" ]; then
   shift
   sudo find ./apps -maxdepth 1 -execdir sh -c 'mkdir -p "${HONEYPI_HOME}/${0%}"' {} \;
