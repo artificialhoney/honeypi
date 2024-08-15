@@ -13,7 +13,6 @@ services:
     volumes:
       - ${HONEYPI_HOME}/authelia/config:/config
       - ${HONEYPI_HOME}/authelia/secrets:/secrets
-    network_mode: host
     extends:
       file: ../../commons/compose.yml
       service: base

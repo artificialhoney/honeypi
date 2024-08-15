@@ -19,6 +19,8 @@ services:
     extends:
       file: ../../rocketchat/docker-compose.yml
       service: rocketchat
+    depends_on:
+      - mongo
   homeassistant:
     extends:
       file: ../../homeassistant/docker-compose.yml
@@ -27,10 +29,18 @@ services:
     extends:
       file: ../../zipline/docker-compose.yml
       service: zipline
+    depends_on:
+      - postgres
   mediamtx:
     extends:
       file: ../../mediamtx/docker-compose.yml
       service: mediamtx
+  kratos:
+    extends:
+      file: ../../kratos/docker-compose.yml
+      service: kratos
+    depends_on:
+      - postgres
   nginxproxymanager:
     extends:
       file: ../../nginxproxymanager/docker-compose.yml
