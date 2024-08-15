@@ -3,7 +3,7 @@ services:
     image: mariadb:latest
     container_name: matomodb
     command: --max-allowed-packet=64MB
-    restart: always
+    restart: unless-stopped
     volumes:
       - ${HONEYPI_HOME}/matomo/mysql:/var/lib/mysql:Z
     environment:

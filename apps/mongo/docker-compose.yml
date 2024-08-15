@@ -1,0 +1,11 @@
+services:
+  mongo:
+    image: arm64v8/mongo:4.4.18
+    container_name: mongo
+    restart: unless-stopped
+    volumes:
+      - ${HONEYPI_HOME}/mongo/data:/data
+    entrypoint: mongod --bind_ip_all --wiredTigerCacheSizeGB 0.25  --oplogSize 128 --replSet rs0
+    extends:
+      file: ../../commons/compose.yml
+      service: base

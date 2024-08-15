@@ -7,3 +7,6 @@ sudo usermod -aG docker $USER
 newgrp docker
 docker run hello-world
 sudo apt-get install docker-compose -y
+
+docker swarm init --advertise-addr eth0
+docker service create --name registry --publish published=5000,target=5000 registry:2

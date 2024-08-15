@@ -2,11 +2,11 @@ services:
   nodered:
     image: nodered/node-red
     container_name: nodered
+    restart: unless-stopped
     ports:
       - 1880:1880
     volumes:
       - ${HONEYPI_HOME}/nodered/data:/data
-    restart: unless-stopped
     extends:
       file: ../../commons/compose.yml
       service: base

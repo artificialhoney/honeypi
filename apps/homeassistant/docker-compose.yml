@@ -3,25 +3,10 @@ services:
     container_name: homeassistant
     image: homeassistant/home-assistant:latest
     volumes:
-      - ${HONEYPI_HOME}/homeassistant/hass-config:/config
+      - ${HONEYPI_HOME}/homeassistant/config:/config
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
     restart: unless-stopped
-    privileged: true
-    network_mode: host
-    extends:
-      file: ../../commons/compose.yml
-      service: base
-  hassconfigurator:
-    image: causticlab/hass-configurator-docker:latest
-    restart: always
-    ports:
-      - 3218:3218/tcp
-    volumes:
-      - ${HONEYPI_HOME}/homeassistant/configurator-config:/config
-      - ${HONEYPI_HOME}/homeassistant/hass-config:/hass-config
-      - ./configurator-config/settings.conf:/config/settings.conf
-      - ./hass-config/settings.conf:/hass-config/configuration.yml
     extends:
       file: ../../commons/compose.yml
       service: base

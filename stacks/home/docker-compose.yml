@@ -1,0 +1,37 @@
+services:
+  mongo:
+    extends:
+      file: ../../mongo/docker-compose.yml
+      service: mongo
+  postgres:
+    extends:
+      file: ../../postgres/docker-compose.yml
+      service: postgres
+  redis:
+    extends:
+      file: ../../redis/docker-compose.yml
+      service: redis
+  gitlab:
+    extends:
+      file: ../../gitlab/docker-compose.yml
+      service: gitlab
+  rocketchat:
+    extends:
+      file: ../../rocketchat/docker-compose.yml
+      service: rocketchat
+  homeassistant:
+    extends:
+      file: ../../homeassistant/docker-compose.yml
+      service: homeassistant
+  zipline:
+    extends:
+      file: ../../zipline/docker-compose.yml
+      service: zipline
+  mediamtx:
+    extends:
+      file: ../../mediamtx/docker-compose.yml
+      service: mediamtx
+  nginxproxymanager:
+    extends:
+      file: ../../nginxproxymanager/docker-compose.yml
+      service: nginxproxymanager

@@ -2,8 +2,7 @@ services:
   homebridge:
     image: homebridge/homebridge:latest
     container_name: homebridge
-    restart: always
-    network_mode: host
+    restart: unless-stopped
     volumes:
       - ${HONEYPI_HOME}/homebridge:/homebridge
       - /run/dbus:/run/dbus:ro

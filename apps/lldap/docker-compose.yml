@@ -2,6 +2,7 @@ services:
   lldap:
     image: lldap/lldap:latest
     container_name: lldap
+    restart: unless-stopped
     ports:
       - "17170:17170"
     volumes:

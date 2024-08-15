@@ -2,6 +2,7 @@ services:
   autoarchiver:
     image: bellingcat/auto-archiver:latest
     container_name: autoarchiver
+    restart: unless-stopped
     volumes:
       - ${HONEYPI_HOME}/autoarchiver/secrets:/app/secrets
       - ${HONEYPI_HOME}/autoarchiver/local_archive:/app/local_archive

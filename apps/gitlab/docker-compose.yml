@@ -3,16 +3,15 @@ services:
     image: yrzr/gitlab-ce-arm64v8:latest
     restart: unless-stopped
     container_name: gitlab
-    privileged: true
     deploy:
       resources:
         limits:
           memory: 8G
     ports:
-      - "8080:80"
-      - "8443:443"
-      - "8822:22"
-    shm_size: "256m"
+      - 8080:80
+      - 8443:443
+      - 8822:22"
+    shm_size: 256m
     volumes:
       - ${HONEYPI_HOME}/gitlab/config:/etc/gitlab'
       - ${HONEYPI_HOME}/gitlab/logs:/var/log/gitlab'
@@ -21,28 +20,6 @@ services:
     environment:
       - GITLAB_HOME=${HONEYPI_HOME}/gitlab
       - GITLAB_ROOT_PASSWORD=${HONEYPI_GITLAB_ROOT_PASSWORD}
-      - GITLAB_OMNIBUS_CONFIG=" registry['enable'] = false;
-          gitlab_rails['ldap_enabled'] = true
-          gitlab_rails['ldap_servers'] = {
-            'main' => {
-              'label' => 'LDAP',
-              'host' =>  'lldap',
-              'port' => 636,
-              'uid' => 'sAMAccountName',
-              'bind_dn' => 'CN=Gitlab,OU=Users,DC=honeymachine,DC=io',
-              'password' => '<bind_user_password>',
-              'encryption' => 'simple_tls',
-              'verify_certificates' => true,
-              'timeout' => 10,
-              'active_directory' => false,
-              'user_filter' => '(employeeType=developer)',
-              'base' => '${HONEYPI_LLDAP_LDAP_BASE_DN}',
-              'lowercase_usernames' => 'true',
-              'retry_empty_result_with_codes' => [80],
-              'allow_username_or_email_login' => false,
-              'block_auto_created_users' => false
-            }
-          }
     extends:
       file: ../../commons/compose.yml
       service: base
