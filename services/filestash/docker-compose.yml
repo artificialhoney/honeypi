@@ -1,0 +1,10 @@
+services:
+  filestash:
+    container_name: filestash
+    image: machines/filestash:latest
+    restart: unless-stopped
+    volumes:
+      - ${HONEYPI_HOME}/filestash/state:/app/data/state/
+    extends:
+      file: ../../commons/compose.yaml
+      service: base

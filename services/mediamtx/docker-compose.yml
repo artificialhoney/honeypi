@@ -4,7 +4,7 @@ services:
     container_name: mediamtx
     restart: unless-stopped
     # devices:
-      # - /dev/video0:/dev/video0
+    # - /dev/video0:/dev/video0
     volumes:
       - ${HONEYPI_MEDIAMTX_CONFIG:-./config}/mediamtx.yml:/mediamtx.yml
       - ${HONEYPI_MEDIAMTX_CONFIG}/server.crt:/server.crt
@@ -12,4 +12,3 @@ services:
     extends:
       file: ../../commons/compose.yml
       service: base
-

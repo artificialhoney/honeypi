@@ -1,36 +1,19 @@
----
-
 services:
-  server:
+  authentik:
     image: ghcr.io/goauthentik/server:latest
     restart: unless-stopped
     command: server
-    environment:
-      AUTHENTIK_REDIS__HOST: redis
-      AUTHENTIK_POSTGRESQL__HOST: postgres
-      AUTHENTIK_POSTGRESQL__USER: ${HONEYPI_POSTGRES_USER}
-      AUTHENTIK_POSTGRESQL__NAME: authentik
-      AUTHENTIK_POSTGRESQL__PASSWORD: ${HONEYPI_POSTGRES_PASSWORD}
     volumes:
       - ${HONEYPI_HOME}/authentik/media:/media
       - ${HONEYPI_HOME}/authentik/templates:/templates
-    ports:
-      - 9000:9000
-      - 9443:9443
     extends:
       file: ../../commons/compose.yml
       service: base
-  worker:
+  authentik-worker:
     image: ghcr.io/goauthentik/server:latest
-    container_name: postgres_worker
+    container_name: authentik-worker
     restart: unless-stopped
     command: worker
-    environment:
-      AUTHENTIK_REDIS__HOST: redis
-      AUTHENTIK_POSTGRESQL__HOST: postgresql
-      AUTHENTIK_POSTGRESQL__USER: ${HONEYPI_POSTGRES_USER}
-      AUTHENTIK_POSTGRESQL__NAME: authentik
-      AUTHENTIK_POSTGRESQL__PASSWORD: ${HONEYPI_POSTGRES_PASSWORD}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${HONEYPI_HOME}/authentik/media:/media

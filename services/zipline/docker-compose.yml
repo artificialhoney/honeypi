@@ -1,17 +1,8 @@
 services:
   zipline:
-    image: diced/zipline:latest
+    image: ghcr.io/diced/zipline:latest
     container_name: zipline
-    ports:
-      - 4000:3000
     restart: unless-stopped
-    environment:
-      - CORE_RETURN_HTTPS=false
-      - CORE_SECRET=I love it
-      - CORE_HOST=0.0.0.0
-      - CORE_PORT=3000
-      - CORE_DATABASE_URL=postgres://${HONEYPI_POSTGRES_USER}:${HONEYPI_POSTGRES_PASSWORD}@postgres/zipline
-      - CORE_LOGGER=true
     volumes:
       - ${HONEYPI_HOME}/zipline/uploads:/zipline/uploads'
       - ${HONEYPI_HOME}/zipline/public:/zipline/public'

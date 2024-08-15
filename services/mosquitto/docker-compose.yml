@@ -3,9 +3,6 @@ services:
     image: eclipse-mosquitto:latest
     container_name: mosquitto
     restart: unless-stopped
-    ports:
-      - 1883:1883
-      - 9001:9001
     volumes:
       - ${HONEYPI_HOME}/mosquitto/config:/mosquitto/config
       - ${HONEYPI_HOME}/mosquitto/data:/mosquitto/data

@@ -1,25 +1,23 @@
 services:
-  kratos-migrate:
-    image: oryd/kratos:latest
-    container_name: kratos-migrate
-    environment:
-      - DSN=postgres://${HONEYPI_POSTGRES_USER}:${HONEYPI_POSTGRES_PASSWORD}@postgres/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
-    volumes:
-      - ${HONEYPI_HOME}/kratos/config:/etc/config/kratos
-      - ${HONEYPI_KRATOS_CONFIG}:/etc/config/kratos
-    command: -c /etc/config/kratos/kratos.yml migrate sql -e --yes
-    restart: unless-stopped
   kratos:
-    image: oryd/kratos:v1.2.0
+    image: oryd/kratos:latest
     container_name: kratos
-    ports:
-      - 4433:4433 # public
-      - 4434:4434 # admin
     restart: unless-stopped
-    environment:
-      - DSN=postgres://${HONEYPI_POSTGRES_USER}:${HONEYPI_POSTGRES_PASSWORD}@postgres/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
-      - LOG_LEVEL=trace
     command: serve -c /etc/config/kratos/kratos.yml --dev --watch-courier
     volumes:
       - ${HONEYPI_HOME}/kratos/config:/etc/config/kratos
       - ${HONEYPI_KRATOS_CONFIG}:/etc/config/kratos
+    extends:
+      file: ../../commons/compose.yml
+      service: base
+  kratos-migrate:
+    image: oryd/kratos:latest
+    container_name: kratos-migrate
+    restart: unless-stopped
+    command: -c /etc/config/kratos/kratos.yml migrate sql -e --yes
+    volumes:
+      - ${HONEYPI_HOME}/kratos/config:/etc/config/kratos
+      - ${HONEYPI_KRATOS_CONFIG}:/etc/config/kratos
+    extends:
+      file: ../../commons/compose.yml
+      service: base

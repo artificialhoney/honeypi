@@ -1,29 +1,10 @@
 services:
-  matomodb:
-    image: mariadb:latest
-    container_name: matomodb
-    command: --max-allowed-packet=64MB
-    restart: unless-stopped
-    volumes:
-      - ${HONEYPI_HOME}/matomo/mysql:/var/lib/mysql:Z
-    environment:
-      - MYSQL_ROOT_PASSWORD=${HONEYPI_MATOMO_DB_ROOT_PASSWORD}
-      - MARIADB_AUTO_UPGRADE=1
-      - MARIADB_DISABLE_UPGRADE_BACKUP=1
-    extends:
-      file: ../../commons/compose.yml
-      service: base
   matomo:
     image: matomo:latest
     container_name: matomo
-    restart: always
+    restart: unless-stopped
     volumes:
       - ${HONEYPI_HOME}/matomo/html:/var/www/html:z
-    environment:
-      - MATOMO_DATABASE_HOST=matomodb
-      - MYSQL_PASSWORD=${HONEYPI_MATOMO_DB_ROOT_PASSWORD}
     extends:
       file: ../../commons/compose.yml
       service: base
-    ports:
-      - 8086:80

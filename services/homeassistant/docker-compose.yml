@@ -2,11 +2,11 @@ services:
   homeassistant:
     container_name: homeassistant
     image: homeassistant/home-assistant:latest
+    restart: unless-stopped
     volumes:
       - ${HONEYPI_HOME}/homeassistant/config:/config
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
-    restart: unless-stopped
     extends:
       file: ../../commons/compose.yml
       service: base

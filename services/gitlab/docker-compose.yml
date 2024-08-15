@@ -7,19 +7,11 @@ services:
       resources:
         limits:
           memory: 8G
-    ports:
-      - 8080:80
-      - 8443:443
-      - 8822:22
     shm_size: 256m
     volumes:
       - ${HONEYPI_HOME}/gitlab/config:/etc/gitlab'
       - ${HONEYPI_HOME}/gitlab/logs:/var/log/gitlab'
       - ${HONEYPI_HOME}/gitlab/data:/var/opt/gitlab'
-    hostname: hive.honeymachine.io
-    environment:
-      - GITLAB_HOME=${HONEYPI_HOME}/gitlab
-      - GITLAB_ROOT_PASSWORD=${HONEYPI_GITLAB_ROOT_PASSWORD}
     extends:
       file: ../../commons/compose.yml
       service: base

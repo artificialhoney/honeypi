@@ -7,11 +7,6 @@ services:
     volumes:
       - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    ports:
-      - 8080:8080
-    environment:
-      - APACHE_PORT=11000
-      - NEXTCLOUD_DATADIR=${HONEYPI_HOME}/nextcloud/data
     extends:
       file: ../../commons/compose.yml
       service: base

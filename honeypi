@@ -75,7 +75,7 @@ elif [ "$1" = "service" ]; then
   echo "Deploying services: '${@}'"
   for arg in "${@}"
   do
-    docker-compose -f "./apps/$arg/docker-compose.yml" --env-file $HONEYPI_ENVIRONMENT.env up -d
+    docker compose -f "./apps/$arg/docker-compose.yml" --env-file $HONEYPI_ENVIRONMENT.env up -d
   done
   exit 0
 elif [ "$1" = "module" ]; then
@@ -94,10 +94,10 @@ elif [ "$1" = "stack" ]; then
   for arg in "${@}"
   do
     COMPOSE_FILE="./stacks/$arg/docker-compose.yml"
-    docker-compose -f $COMPOSE_FILE --env-file $HONEYPI_ENVIRONMENT.env up -d
-    docker-compose -f $COMPOSE_FILE down --volumes
-    docker-compose -f $COMPOSE_FILE push
-    docker stack deploy --compose-file $COMPOSE_FILE $arg
+    docker compose -f $COMPOSE_FILE --env-file $HONEYPI_ENVIRONMENT.env up -d
+    # docker-compose -f $COMPOSE_FILE down --volumes
+    # docker-compose -f $COMPOSE_FILE push
+    # docker stack deploy --compose-file $COMPOSE_FILE $arg
   done
 else
   echo "No argument(s) provided. Run -h for help."

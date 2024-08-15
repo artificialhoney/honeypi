@@ -37,7 +37,6 @@ steps:
     # - csv_db
     # - gsheet_db
     # - mongo_db
-
 configurations:
   gsheet_feeder:
     sheet: "your sheet name"
@@ -75,7 +74,6 @@ configurations:
         id: 0000000001
       - invite: https://t.me/+123456788
         id: 0000000002
-
   twitter_api_archiver:
     # either bearer_token only
     bearer_token: "TWITTER_BEARER_TOKEN"
@@ -88,12 +86,10 @@ configurations:
     username: "INSTAGRAM_USERNAME"
     password: "INSTAGRAM_PASSWORD"
     # session_file: "secrets/instaloader.session"
-
   vk_archiver:
     username: "or phone number"
     password: "vk pass"
     session_file: "secrets/vk_config.v2.json"
-
   screenshot_enricher:
     width: 1280
     height: 2300

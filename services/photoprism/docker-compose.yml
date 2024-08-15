@@ -1,0 +1,11 @@
+services:
+  photoprism:
+    image: photoprism/photoprism:latest
+    stop_grace_period: 10s
+    security_opt:
+      - seccomp:unconfined
+      - apparmor:unconfined
+    working_dir: /photoprism
+    volumes:
+      - ${HONEYPI_HOME}/photoprism/originals:/photoprism/originals
+      - ${HONEYPI_HOME}/photoprism/storage:/photoprism/storage

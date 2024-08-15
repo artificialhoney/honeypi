@@ -1,11 +1,8 @@
 services:
   portainer:
     image: portainer/portainer-ce:latest
-    ports:
-      - 9443:9443
-    volumes:
-      - data:/data
-      - /var/run/docker.sock:/var/run/docker.sock
+    container_name: portainer
     restart: unless-stopped
-volumes:
-  data:
+    volumes:
+      - ${HOMEPI_HOME}/portainer/data:/data
+      - /var/run/docker.sock:/var/run/docker.sock

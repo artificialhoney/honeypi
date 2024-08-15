@@ -1,17 +1,9 @@
 services:
   rocketchat:
-    image: 127.0.0.1:5000/rocketchat:arm64-6.10.2
+    image: ${HONEYPI_DOCKER_REGISTRY}/rocketchat
     container_name: rocketchat
     restart: unless-stopped
-    build:
-      context: .
-      dockerfile: Dockerfile
-    environment:
-      - ROOT_URL=${HONEYPI_ROCKETCHAT_ROOT_URL}
-      - MONGO_URL=mongodb://mongo:27017/rocketchat
-      - MONGO_OPLOG_URL=mongodb://mongo:27017/local
-    ports:
-      - 3000:3000
+    build: .
     extends:
       file: ../../commons/compose.yml
       service: base

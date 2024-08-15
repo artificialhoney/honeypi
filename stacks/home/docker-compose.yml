@@ -25,12 +25,10 @@ services:
     extends:
       file: ../../services/homeassistant/docker-compose.yml
       service: homeassistant
-  zipline:
+  filestash:
     extends:
-      file: ../../services/zipline/docker-compose.yml
-      service: zipline
-    depends_on:
-      - postgres
+      file: ../../services/filestash/docker-compose.yml
+      service: filestash
   mediamtx:
     extends:
       file: ../../services/mediamtx/docker-compose.yml

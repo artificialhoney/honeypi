@@ -6,10 +6,6 @@ services:
     shm_size: 128mb
     volumes:
       - ${HONEYPI_HOME}/postgres/data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_USER=${HONEYPI_POSTGRES_USER}
-      - POSTGRES_PASSWORD=${HONEYPI_POSTGRES_PASSWORD}
-      - PGDATA=/var/lib/postgresql/data/pgdata
     extends:
       file: ../../commons/compose.yml
       service: base

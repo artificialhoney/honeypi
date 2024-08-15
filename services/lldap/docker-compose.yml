@@ -3,14 +3,8 @@ services:
     image: lldap/lldap:latest
     container_name: lldap
     restart: unless-stopped
-    ports:
-      - "17170:17170"
     volumes:
       - ${HONEYPI_HOME}/lldap/data:/data
     extends:
       file: ../../commons/compose.yml
       service: base
-    environment:
-      - LLDAP_JWT_SECRET=$[HONEYPI_LLDAP_JWT_SECRET]
-      - LLDAP_KEY_SEED=${HONEYPI_LLDAP_KEY_SEED}
-      - LLDAP_LDAP_BASE_DN=${HONEYPI_LLDAP_LDAP_BASE_DN}
