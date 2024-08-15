@@ -10,7 +10,7 @@ services:
     ports:
       - 8080:80
       - 8443:443
-      - 8822:22"
+      - 8822:22
     shm_size: 256m
     volumes:
       - ${HONEYPI_HOME}/gitlab/config:/etc/gitlab'

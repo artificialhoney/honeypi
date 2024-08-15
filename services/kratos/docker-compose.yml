@@ -10,8 +10,6 @@ services:
     command: -c /etc/config/kratos/kratos.yml migrate sql -e --yes
     restart: unless-stopped
   kratos:
-    depends_on:
-      - kratos-migrate
     image: oryd/kratos:v1.2.0
     container_name: kratos
     ports:

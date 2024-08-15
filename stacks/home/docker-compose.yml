@@ -1,47 +1,54 @@
 services:
   mongo:
     extends:
-      file: ../../mongo/docker-compose.yml
+      file: ../../services/mongo/docker-compose.yml
       service: mongo
   postgres:
     extends:
-      file: ../../postgres/docker-compose.yml
+      file: ../../services/postgres/docker-compose.yml
       service: postgres
   redis:
     extends:
-      file: ../../redis/docker-compose.yml
+      file: ../../services/redis/docker-compose.yml
       service: redis
   gitlab:
     extends:
-      file: ../../gitlab/docker-compose.yml
+      file: ../../services/gitlab/docker-compose.yml
       service: gitlab
   rocketchat:
     extends:
-      file: ../../rocketchat/docker-compose.yml
+      file: ../../services/rocketchat/docker-compose.yml
       service: rocketchat
     depends_on:
       - mongo
   homeassistant:
     extends:
-      file: ../../homeassistant/docker-compose.yml
+      file: ../../services/homeassistant/docker-compose.yml
       service: homeassistant
   zipline:
     extends:
-      file: ../../zipline/docker-compose.yml
+      file: ../../services/zipline/docker-compose.yml
       service: zipline
     depends_on:
       - postgres
   mediamtx:
     extends:
-      file: ../../mediamtx/docker-compose.yml
+      file: ../../services/mediamtx/docker-compose.yml
       service: mediamtx
+  kratos-migrate:
+    extends:
+      file: ../../services/kratos/docker-compose.yml
+      service: kratos-migrate
+    depends_on:
+      - postgres
   kratos:
     extends:
-      file: ../../kratos/docker-compose.yml
+      file: ../../services/kratos/docker-compose.yml
       service: kratos
     depends_on:
       - postgres
+      - kratos-migrate
   nginxproxymanager:
     extends:
-      file: ../../nginxproxymanager/docker-compose.yml
+      file: ../../services/nginxproxymanager/docker-compose.yml
       service: nginxproxymanager

@@ -3,8 +3,9 @@
 POSITIONAL_ARGS=()
 
 HONEYPI_SCOPE=apps
-HOST_MODULES=$(ls host | xargs -n 1 basename -s .sh)
-APP_MODULES=$(ls apps | xargs -n 1 basename)
+MODULES=$(ls modules | xargs -n 1 basename -s .sh)
+SERVICE_MODULES=$(ls services | xargs -n 1 basename)
+STACK_MODULES=$(ls stacks | xargs -n 1 basename)
 
 loadEnv() {
   source $1
@@ -16,8 +17,9 @@ while [[ $# -gt 0 ]]; do
       echo 'honeypi'
       echo
       echo 'Usage:'
-      echo '  honeypi run <name>'
-      echo '  honeypi remove <name>'
+      echo '  honeypi stack <name>'
+      echo '  honeypi service <name>'
+      echo '  honeypi module <name>'
       echo '  honeypi sync <from> <to>'
       echo '  honeypi env <env>'
       echo '  honeypi connect <name>'
@@ -25,7 +27,6 @@ while [[ $# -gt 0 ]]; do
       echo 'Options:'
       echo '  -h --help                  Show this screen.'
       echo '  -e --environment=<env>     Environment [default: local].'
-      echo '  -n --native                Scope native [default: apps].'
       shift # past argument
       exit 0
       ;;
@@ -33,10 +34,6 @@ while [[ $# -gt 0 ]]; do
       HONEYPI_ENVIRONMENT="$2"
       shift # past argument
       shift # past value
-      ;;
-    -n|--native)
-      HONEYPI_SCOPE="host"
-      shift # past argument
       ;;
     -*|--*)
       echo "Unknown option $1"
@@ -72,31 +69,36 @@ elif [ "$1" = "connect" ]; then
   echo "Connecting to '$1'"
   docker exec -it $1 /bin/bash
   exit 0
-elif [ "$1" = "run" ]; then
+elif [ "$1" = "service" ]; then
   shift
   [ -f $HONEYPI_ENVIRONMENT.env ] && loadEnv $HONEYPI_ENVIRONMENT.env
-  sudo find ./apps -maxdepth 1 -execdir sh -c 'mkdir -p "${HONEYPI_HOME}/${0%}"' {} \;
-  echo "Running in '${HONEYPI_SCOPE}' with '${@}'"
-  if [ "$HONEYPI_SCOPE" = "host" ]; then
-    for arg in "${@:-$HOST_MODULES}"
-    do
-      . ./host/$arg.sh
-    done
-  elif [ "$HONEYPI_SCOPE" = "apps" ]; then
-    for arg in "${@:-$APP_MODULES}"
-    do
-      docker-compose -f "./apps/$arg/docker-compose.yml" --env-file $HONEYPI_ENVIRONMENT.env up -d
-    done
-  else
-    echo "Unknown scope '$1'."
-  fi
+  echo "Deploying services: '${@}'"
+  for arg in "${@}"
+  do
+    docker-compose -f "./apps/$arg/docker-compose.yml" --env-file $HONEYPI_ENVIRONMENT.env up -d
+  done
   exit 0
-elif [ "$1" = "remove" ]; then
+elif [ "$1" = "module" ]; then
   shift
   [ -f $HONEYPI_ENVIRONMENT.env ] && loadEnv $HONEYPI_ENVIRONMENT.env
-  docker stop "${@}"
-  docker rm -fv "${@}"
+  echo "Deploying modules: '${@}'"
+  for arg in "${@}"
+  do
+    . ./host/$arg.sh
+  done
   exit 0
+elif [ "$1" = "stack" ]; then
+  shift
+  [ -f $HONEYPI_ENVIRONMENT.env ] && loadEnv $HONEYPI_ENVIRONMENT.env
+  echo "Deploying stacks: '${@}'"
+  for arg in "${@}"
+  do
+    COMPOSE_FILE="./stacks/$arg/docker-compose.yml"
+    docker-compose -f $COMPOSE_FILE --env-file $HONEYPI_ENVIRONMENT.env up -d
+    docker-compose -f $COMPOSE_FILE down --volumes
+    docker-compose -f $COMPOSE_FILE push
+    docker stack deploy --compose-file $COMPOSE_FILE $arg
+  done
 else
   echo "No argument(s) provided. Run -h for help."
   exit 0

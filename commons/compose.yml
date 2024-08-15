@@ -2,3 +2,5 @@ services:
   base:
     environment:
       - TZ=${HONEYPI_TZ:-'Europe/Amsterdam'}
+    env_file:
+      - ./../${HONEYPI_ENVIRONMENT}.env

@@ -1,6 +1,6 @@
 services:
   rocketchat:
-    image: rocketchat:arm64-6.10.2
+    image: 127.0.0.1:5000/rocketchat:arm64-6.10.2
     container_name: rocketchat
     restart: unless-stopped
     build:
