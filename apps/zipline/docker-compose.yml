@@ -13,6 +13,9 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    extends:
+      file: ../../commons/compose.yml
+      service: base
 
   zipline:
     image: diced/zipline:latest
@@ -31,6 +34,8 @@ services:
       - ${HONEYPI_HOME}/zipline/public:/zipline/public'
     depends_on:
       - postgres
-
+    extends:
+      file: ../../commons/compose.yml
+      service: base
 volumes:
   pg_data:

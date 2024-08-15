@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo $HONEYPI_GIT_HOME_URL
-
 cd $HOME
 git init .
 git remote add origin "$HONEYPI_GIT_HOME_URL"

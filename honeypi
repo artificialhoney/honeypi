@@ -85,7 +85,7 @@ elif [ "$1" = "run" ]; then
   elif [ "$HONEYPI_SCOPE" = "apps" ]; then
     for arg in "${@:-$APP_MODULES}"
     do
-      docker-compose -f "./apps/$arg/docker-compose.yml" up -d
+      docker-compose -f "./apps/$arg/docker-compose.yml" --env-file $HONEYPI_ENVIRONMENT.env up -d
     done
   else
     echo "Unknown scope '$1'."

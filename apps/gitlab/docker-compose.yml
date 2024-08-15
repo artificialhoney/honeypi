@@ -1,5 +1,6 @@
 services:
-  gitlab-ce-arm64v8:
+  gitlab:
+    image: yrzr/gitlab-ce-arm64v8:latest
     restart: unless-stopped
     container_name: gitlab
     privileged: true
@@ -42,4 +43,6 @@ services:
               'block_auto_created_users' => false
             }
           }
-    image: yrzr/gitlab-ce-arm64v8:latest
+    extends:
+      file: ../../commons/compose.yml
+      service: base
