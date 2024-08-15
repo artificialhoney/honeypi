@@ -2,7 +2,6 @@
 
 POSITIONAL_ARGS=()
 
-HONEYPI_SCOPE=apps
 MODULES=$(ls modules | xargs -n 1 basename -s .sh)
 SERVICE_MODULES=$(ls services | xargs -n 1 basename)
 STACK_MODULES=$(ls stacks | xargs -n 1 basename)

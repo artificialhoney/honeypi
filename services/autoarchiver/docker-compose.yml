@@ -9,5 +9,5 @@ services:
     configs:
       - ${HONEYPI_AUTOARCHIVER_CONFIG:-./config/orchestration.yml}
     extends:
-      file: ../../commons/compose.yaml
+      file: ../../commons/compose.yml
       service: base

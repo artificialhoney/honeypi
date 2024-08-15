@@ -3,10 +3,6 @@ services:
     image: yrzr/gitlab-ce-arm64v8:latest
     restart: unless-stopped
     container_name: gitlab
-    deploy:
-      resources:
-        limits:
-          memory: 8G
     shm_size: 256m
     volumes:
       - ${HONEYPI_HOME}/gitlab/config:/etc/gitlab'

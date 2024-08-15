@@ -1,6 +1,8 @@
 services:
   photoprism:
     image: photoprism/photoprism:latest
+    container_name: photoprism
+    restart: unless-stopped
     stop_grace_period: 10s
     security_opt:
       - seccomp:unconfined
@@ -9,3 +11,6 @@ services:
     volumes:
       - ${HONEYPI_HOME}/photoprism/originals:/photoprism/originals
       - ${HONEYPI_HOME}/photoprism/storage:/photoprism/storage
+    extends:
+      file: ../../commons/compose.yml
+      service: base

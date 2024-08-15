@@ -1,4 +1,8 @@
 services:
+  mariadb:
+    extends:
+      file: ../../services/mariadb/docker-compose.yml
+      service: mariadb
   mongo:
     extends:
       file: ../../services/mongo/docker-compose.yml
@@ -15,24 +19,56 @@ services:
     extends:
       file: ../../services/gitlab/docker-compose.yml
       service: gitlab
+    ports:
+      - 10080:80
+      - 10022:22
   rocketchat:
     extends:
       file: ../../services/rocketchat/docker-compose.yml
       service: rocketchat
+    expose:
+      - 3000
+    ports:
+      - 3000:3000
+    depends_on:
+      - rocketchat-mongo-init
+  rocketchat-mongo-init:
+    extends:
+      file: ../../services/rocketchat/docker-compose.yml
+      service: rocketchat-mongo-init
     depends_on:
       - mongo
   homeassistant:
     extends:
       file: ../../services/homeassistant/docker-compose.yml
       service: homeassistant
+    ports:
+      - 8123:8123
   filestash:
     extends:
       file: ../../services/filestash/docker-compose.yml
       service: filestash
+    ports:
+      - 8334:8334
+  photoprism:
+    extends:
+      file: ../../services/photoprism/docker-compose.yml
+      service: photoprism
+    ports:
+      - 2342:2342
+    depends_on:
+      - mariadb
   mediamtx:
     extends:
       file: ../../services/mediamtx/docker-compose.yml
       service: mediamtx
+    ports:
+      - 8554:8554
+      - 1935:1935
+      - 8888:8888
+      - 8889:8889
+      - 8890:8890/udp
+      - 8189:8189/udp
   kratos-migrate:
     extends:
       file: ../../services/kratos/docker-compose.yml
@@ -43,10 +79,16 @@ services:
     extends:
       file: ../../services/kratos/docker-compose.yml
       service: kratos
+    ports:
+      - 4433:4433
+      - 4434:4434
     depends_on:
-      - postgres
       - kratos-migrate
   nginxproxymanager:
     extends:
       file: ../../services/nginxproxymanager/docker-compose.yml
       service: nginxproxymanager
+    ports:
+      - 80:80
+      - 81:81
+      - 443:443

@@ -6,5 +6,5 @@ services:
     volumes:
       - ${HONEYPI_HOME}/filestash/state:/app/data/state/
     extends:
-      file: ../../commons/compose.yaml
+      file: ../../commons/compose.yml
       service: base

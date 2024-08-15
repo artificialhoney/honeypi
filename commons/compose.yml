@@ -2,7 +2,7 @@ services:
   base:
     environment:
       - TZ=${HONEYPI_TZ:-'Europe/Amsterdam'}
-      - DSN=postgres://${HONEYPI_POSTGRES_USER}:${HONEYPI_POSTGRES_PASSWORD}@postgres/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
+      - DSN=postgres://root:${HONEYPI_POSTGRES_PASSWORD}@postgres:5432/kratos
       - LOG_LEVEL=${HONEYPI_LOG_LEVEL:-info}
       - HONEYPI_DOCKER_REGISTRY=${HONEYPI_DOCKER_REGISTRY:-'127.0.0.1:5000'}
       - ALLOW_EMPTY_PASSWORD=yes
@@ -12,12 +12,9 @@ services:
       - AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE=${HONEYPI_AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE:-'/secrets/STORAGE_ENCRYPTION_KEY'}
       - AUTHENTIK_REDIS__HOST=redis
       - AUTHENTIK_POSTGRESQL__HOST=postgres
-      - AUTHENTIK_POSTGRESQL__USER=${HONEYPI_POSTGRES_USER}
+      - AUTHENTIK_POSTGRESQL__USER=root
       - AUTHENTIK_POSTGRESQL__NAME=authentik
       - AUTHENTIK_POSTGRESQL__PASSWORD=${HONEYPI_POSTGRES_PASSWORD}
-      - GITLAB_OMNIBUS_CONFIG= |
-          external_url 'http://gitlab.example.com:8929' gitlab_rails['gitlab_shell_ssh_port'] = 2424
-      - GITLAB_ROOT_PASSWORD=${HONEYPI_GITLAB_PASSWORD}
       - LLDAP_JWT_SECRET=${HONEYPI_LLDAP_JWT_SECRET}
       - LLDAP_KEY_SEED=${HONEYPI_LLDAP_KEY_SEED}
       - LLDAP_LDAP_BASE_DN=${HONEYPI_LLDAP_LDAP_BASE_DN}
@@ -41,10 +38,22 @@ services:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=${HONEYPI_POSTGRES_PASSWORD}
       - PGDATA=/var/lib/postgresql/data/pgdata
-      - ROOT_URL=${HONEYPI_ROCKETCHAT_URL}
+      # - ROOT_URL=${HONEYPI_ROCKETCHAT_URL}
       - MONGO_URL=mongodb://mongo:27017/rocketchat
       - MONGO_OPLOG_URL=mongodb://mongo:27017/local
       - CORE_SECRET=${HONEYPI_CORE_SECRET}
       - CORE_DATABASE_URL=postgres://root:${HONEYPI_POSTGRES_PASSWORD}@postgres/zipline
+      - DB_ADAPTER=postgresql
+      - DB_HOST=postgres
+      - DB_USER=root
+      - DB_PASS=password
+      - DB_NAME=gitlabhq_production
+      - REDIS_HOST=redis
+      - GITLAB_HTTPS=false
+      - SSL_SELF_SIGNED=false
+      - GITLAB_HOST=localhost
+      - GITLAB_PORT=10080
+      - GITLAB_SSH_PORT=10022
+      - GITLAB_ROOT_PASSWORD=${HONEYPI_GITLAB_PASSWORD}
     env_file:
       - ./../${HONEYPI_ENVIRONMENT}.env
