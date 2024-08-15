@@ -1,0 +1,10 @@
+services:
+  redis:
+    image: 'redis/redis:latest'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    volumes: 
+      - ${HONEYPI_HOME}/redis/data:/data
+    extends:
+      file: ../../commons/compose.yml
+      service: base
