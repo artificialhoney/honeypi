@@ -6,9 +6,9 @@ services:
     # devices:
     # - /dev/video0:/dev/video0
     volumes:
-      - ${HONEYPI_MEDIAMTX_CONFIG:-./config}/mediamtx.yml:/mediamtx.yml
-      - ${HONEYPI_MEDIAMTX_CONFIG}/server.crt:/server.crt
-      - ${HONEYPI_MEDIAMTX_CONFIG}/server.key:/server.key
+      - ${HONEYPI_HOME}/mediamtx/config/mediamtx.yml:/mediamtx.yml
+      - ${HONEYPI_HOME}/mediamtx/config/server.crt:/server.crt
+      - ${HONEYPI_HOME}/mediamtx/config/server.key:/server.key
     extends:
       file: ../../commons/compose.yml
       service: base

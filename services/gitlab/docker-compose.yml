@@ -5,9 +5,9 @@ services:
     container_name: gitlab
     shm_size: 256m
     volumes:
-      - ${HONEYPI_HOME}/gitlab/config:/etc/gitlab'
-      - ${HONEYPI_HOME}/gitlab/logs:/var/log/gitlab'
-      - ${HONEYPI_HOME}/gitlab/data:/var/opt/gitlab'
+      - ${HONEYPI_HOME}/gitlab/config:/etc/gitlab
+      - ${HONEYPI_HOME}/gitlab/logs:/var/log/gitlab
+      - ${HONEYPI_HOME}/gitlab/data:/var/opt/gitlab
     extends:
       file: ../../commons/compose.yml
       service: base

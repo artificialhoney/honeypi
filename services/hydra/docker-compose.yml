@@ -15,14 +15,15 @@ services:
     restart: on-failure
     command: migrate -c /etc/config/hydra/hydra.yml sql -e --yes
     volumes:
-      - ${HONEYPI_HYDRA_CONFIG}:/etc/config/hydra
+      - ${HONEYPI_HOME}/hydra/config:/etc/config/hydra
     extends:
       file: ../../commons/compose.yml
       service: base
   hydra-consent:
-    image: oryd/hydra-login-consent-node:latest
+    image: ${HONEYPI_DOCKER_REGISTRY}/hydra-login-consent-node
     container_name: hydra-consent
     restart: unless-stopped
+    build: .
     extends:
       file: ../../commons/compose.yml
       service: base
