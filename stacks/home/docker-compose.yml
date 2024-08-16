@@ -69,21 +69,31 @@ services:
       - 8889:8889
       - 8890:8890/udp
       - 8189:8189/udp
-  kratos-migrate:
+  hydra-migrate:
     extends:
-      file: ../../services/kratos/docker-compose.yml
-      service: kratos-migrate
+      file: ../../services/hydra/docker-compose.yml
+      service: hydra-migrate
     depends_on:
       - postgres
-  kratos:
+  hydra:
     extends:
-      file: ../../services/kratos/docker-compose.yml
-      service: kratos
+      file: ../../services/hydra/docker-compose.yml
+      service: hydra
     ports:
-      - 4433:4433
-      - 4434:4434
+      - 4444:4444
+      - 4445:4445
+      - 5555:5555
     depends_on:
-      - kratos-migrate
+      - hydra-migrate
+      - postgres
+  hydra-consent:
+    extends:
+      file: ../../services/hydra/docker-compose.yml
+      service: hydra-consent
+    ports:
+      - 4000:3000
+    depends_on:
+      - hydra
   nginxproxymanager:
     extends:
       file: ../../services/nginxproxymanager/docker-compose.yml

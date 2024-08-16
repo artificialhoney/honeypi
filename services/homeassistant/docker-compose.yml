@@ -4,7 +4,7 @@ services:
     image: homeassistant/home-assistant:latest
     restart: unless-stopped
     volumes:
-      - ${HONEYPI_HOME}/homeassistant/config:/config
+      - ${HONEYPI_HOMEASSISTANT_CONFIG}:/config
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
     extends:

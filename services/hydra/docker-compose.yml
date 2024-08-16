@@ -1,0 +1,28 @@
+services:
+  hydra:
+    image: oryd/hydra:latest
+    restart: unless-stopped
+    container_name: hydra
+    command: serve -c /etc/config/hydra/hydra.yml all --dev
+    volumes:
+      - ${HONEYPI_HYDRA_CONFIG}:/etc/config/hydra
+    extends:
+      file: ../../commons/compose.yml
+      service: base
+  hydra-migrate:
+    image: oryd/hydra:latest
+    container_name: hydra-migrate
+    restart: on-failure
+    command: migrate -c /etc/config/hydra/hydra.yml sql -e --yes
+    volumes:
+      - ${HONEYPI_HYDRA_CONFIG}:/etc/config/hydra
+    extends:
+      file: ../../commons/compose.yml
+      service: base
+  hydra-consent:
+    image: oryd/hydra-login-consent-node:latest
+    container_name: hydra-consent
+    restart: unless-stopped
+    extends:
+      file: ../../commons/compose.yml
+      service: base
