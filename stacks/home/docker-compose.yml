@@ -22,6 +22,8 @@ services:
     ports:
       - 10080:80
       - 10022:22
+    depends_on:
+      - postgres
   rocketchat:
     extends:
       file: ../../services/rocketchat/docker-compose.yml
@@ -69,31 +71,22 @@ services:
       - 8889:8889
       - 8890:8890/udp
       - 8189:8189/udp
-  hydra-migrate:
+  authentik-worker:
     extends:
-      file: ../../services/hydra/docker-compose.yml
-      service: hydra-migrate
+      file: ../../services/authentik/docker-compose.yml
+      service: authentik-worker
     depends_on:
-      - postgres
-  hydra:
+      - authentik
+  authentik:
     extends:
-      file: ../../services/hydra/docker-compose.yml
-      service: hydra
+      file: ../../services/authentik/docker-compose.yml
+      service: authentik
     ports:
-      - 4444:4444
-      - 4445:4445
-      - 5555:5555
+      - 9000:9000
+      - 9443:9443
     depends_on:
-      - hydra-migrate
+      - redis
       - postgres
-  hydra-consent:
-    extends:
-      file: ../../services/hydra/docker-compose.yml
-      service: hydra-consent
-    ports:
-      - 4000:3000
-    depends_on:
-      - hydra
   nginxproxymanager:
     extends:
       file: ../../services/nginxproxymanager/docker-compose.yml
@@ -102,3 +95,5 @@ services:
       - 80:80
       - 81:81
       - 443:443
+    depends_on:
+      - mariadb

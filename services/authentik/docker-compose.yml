@@ -2,6 +2,7 @@ services:
   authentik:
     image: ghcr.io/goauthentik/server:latest
     restart: unless-stopped
+    container_name: authentik
     command: server
     volumes:
       - ${HONEYPI_HOME}/authentik/media:/media
@@ -11,14 +12,14 @@ services:
       service: base
   authentik-worker:
     image: ghcr.io/goauthentik/server:latest
-    container_name: authentik-worker
     restart: unless-stopped
+    container_name: authentik-worker
     command: worker
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
       - ${HONEYPI_HOME}/authentik/media:/media
       - ${HONEYPI_HOME}/authentik/certs:/certs
       - ${HONEYPI_HOME}/authentik/templates:/templates
     extends:
       file: ../../commons/compose.yml
       service: base
+    

@@ -92,11 +92,9 @@ elif [ "$1" = "stack" ]; then
   echo "Deploying stacks: '${@}'"
   for arg in "${@}"
   do
+    export UID
     COMPOSE_FILE="./stacks/$arg/docker-compose.yml"
     docker compose -f $COMPOSE_FILE --env-file $HONEYPI_ENVIRONMENT.env up -d
-    # docker-compose -f $COMPOSE_FILE down --volumes
-    # docker-compose -f $COMPOSE_FILE push
-    # docker stack deploy --compose-file $COMPOSE_FILE $arg
   done
 else
   echo "No argument(s) provided. Run -h for help."

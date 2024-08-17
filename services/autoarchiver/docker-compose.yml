@@ -7,7 +7,8 @@ services:
       - ${HONEYPI_HOME}/autoarchiver/secrets:/app/secrets
       - ${HONEYPI_HOME}/autoarchiver/local_archive:/app/local_archive
     configs:
-      - ${HONEYPI_AUTOARCHIVER_CONFIG:-./config/orchestration.yml}
+      - ${HONEYPI_CONFIG}/autoarchiver/config/orchestration.yml
     extends:
       file: ../../commons/compose.yml
       service: base
+    

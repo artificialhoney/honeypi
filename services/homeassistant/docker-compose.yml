@@ -4,9 +4,10 @@ services:
     image: homeassistant/home-assistant:latest
     restart: unless-stopped
     volumes:
-      - ${HONEYPI_HOME}/config:/config
+      - ${HONEYPI_CONFIG}/homeassistant/config/configuration.yaml:/config/configuration.yaml
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
     extends:
       file: ../../commons/compose.yml
       service: base
+    

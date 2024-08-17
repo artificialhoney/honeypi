@@ -1,6 +1,6 @@
 services:
   rocketchat:
-    image: ${HONEYPI_DOCKER_REGISTRY}/rocketchat
+    image: rocketchat:latest
     container_name: rocketchat
     restart: unless-stopped
     build: .
