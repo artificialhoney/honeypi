@@ -68,7 +68,7 @@ services:
       - SERVER_con1=mariadb
       - USER_con1=honeypi
       - PASSWORD_con1=${HONEYPI_MARIADB_PASSWORD}
-      - ENGINE_con1=mariadb@dbgate-plugin-mariadb
+      - ENGINE_con1=mysql@dbgate-plugin-mysql
       - LABEL_con2=Postgres
       - SERVER_con2=postgres
       - USER_con2=honeypi
