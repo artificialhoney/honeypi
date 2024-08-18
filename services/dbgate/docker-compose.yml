@@ -1,0 +1,10 @@
+services:
+  dbgate:
+    image: dbgate/dbgate
+    restart: always
+    container_name: dbgate
+    volumes:
+      - ${HONEYPI_HOME}/dbgate/data:/root/.dbgate
+    extends:
+      file: ../../commons/compose.yml
+      service: base

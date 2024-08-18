@@ -97,3 +97,13 @@ services:
       - 443:443
     depends_on:
       - mariadb
+  dbgate:
+    extends:
+      file: ../../services/dbgate/docker-compose.yml
+      service: dbgate
+    ports:
+      - 4000:3000
+    depends_on:
+      - mariadb
+      - mongo
+      - postgres
