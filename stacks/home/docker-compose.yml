@@ -44,6 +44,8 @@ services:
     extends:
       file: ../../services/homeassistant/docker-compose.yml
       service: homeassistant
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
     ports:
       - 8123:8123
   filestash:

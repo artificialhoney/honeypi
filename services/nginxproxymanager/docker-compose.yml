@@ -6,6 +6,7 @@ services:
     volumes:
       - ${HONEYPI_HOME}/nginxproxymanager/data:/data
       - ${HONEYPI_HOME}/nginxproxymanager/letsencrypt:/etc/letsencrypt
+      - ./_hsts_map.conf:/app/templates/_hsts_map.conf
     extends:
       file: ../../commons/compose.yml
       service: base
