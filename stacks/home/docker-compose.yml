@@ -101,3 +101,11 @@ services:
       - mariadb
       - mongo
       - postgres
+  webdav:
+    extends:
+      file: ../../services/webdav/docker-compose.yml
+      service: webdav
+    volumes:
+      - /media/hive/home/sk:/media
+    ports:
+      - 8080:80

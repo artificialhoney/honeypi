@@ -3,8 +3,6 @@ services:
     image: bluenviron/mediamtx:latest-ffmpeg
     container_name: mediamtx
     restart: unless-stopped
-    # devices:
-    # - /dev/video0:/dev/video0
     volumes:
       - ${HONEYPI_CONFIG}/mediamtx/config/mediamtx.yml:/mediamtx.yml
       - ${HONEYPI_CONFIG}/mediamtx/config/server.crt:/server.crt

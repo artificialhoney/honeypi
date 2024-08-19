@@ -83,7 +83,7 @@ elif [ "$1" = "module" ]; then
   echo "Deploying modules: '${@}'"
   for arg in "${@}"
   do
-    . ./host/$arg.sh
+    . ./modules/$arg.sh
   done
   exit 0
 elif [ "$1" = "stack" ]; then
