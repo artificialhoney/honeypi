@@ -1,0 +1,7 @@
+services:
+  pm2:
+    extends:
+      file: ../../services/pm2/docker-compose.yml
+      service: pm2
+    ports:
+      - 7000:7000

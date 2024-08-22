@@ -96,5 +96,8 @@ services:
       - LABEL_con3=MongoDB
       - URL_con3=mongodb://mongo:27017
       - ENGINE_con3=mongo@dbgate-plugin-mongo
+      # node
+      - NODE_ENV=production
+      - PORT=7000
     env_file:
       - ./../${HONEYPI_ENVIRONMENT}.env
