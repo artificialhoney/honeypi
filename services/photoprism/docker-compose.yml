@@ -1,6 +1,6 @@
 services:
   photoprism:
-    image: photoprism/photoprism:latest
+    image: photoprism/photoprism:${HONEYPI_APP_VERSION:-latest}
     container_name: photoprism
     restart: unless-stopped
     stop_grace_period: 10s

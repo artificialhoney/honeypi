@@ -1,7 +1,7 @@
 services:
   homeassistant:
     container_name: homeassistant
-    image: homeassistant/home-assistant:latest
+    image: homeassistant/home-assistant:${HONEYPI_APP_VERSION:-latest}
     restart: unless-stopped
     volumes:
       - ${HONEYPI_HOME}/homeassistant/config:/config

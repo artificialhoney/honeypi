@@ -1,6 +1,6 @@
 services:
   gitlab:
-    image: yrzr/gitlab-ce-arm64v8:latest
+    image: yrzr/gitlab-ce-arm64v8:${HONEYPI_APP_VERSION:-latest}
     restart: unless-stopped
     container_name: gitlab
     shm_size: 256m

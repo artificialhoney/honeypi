@@ -1,7 +1,7 @@
 services:
   filestash:
     container_name: filestash
-    image: machines/filestash:latest
+    image: machines/filestash:${HONEYPI_APP_VERSION:-latest}
     restart: unless-stopped
     volumes:
       - ${HONEYPI_HOME}/filestash/state:/app/data/state/

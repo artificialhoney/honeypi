@@ -1,6 +1,6 @@
 services:
   homebridge:
-    image: homebridge/homebridge:latest
+    image: homebridge/homebridge:${HONEYPI_APP_VERSION:-latest}
     container_name: homebridge
     restart: unless-stopped
     volumes:

@@ -1,6 +1,6 @@
 services:
   rocketchat:
-    image: rocketchat:latest
+    image: rocketchat:${HONEYPI_APP_VERSION:-latest}
     container_name: rocketchat
     restart: unless-stopped
     build: .

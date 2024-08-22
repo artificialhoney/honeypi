@@ -1,6 +1,6 @@
 services:
   autoarchiver:
-    image: bellingcat/auto-archiver:latest
+    image: bellingcat/auto-archiver:${HONEYPI_APP_VERSION:-latest}
     container_name: autoarchiver
     restart: unless-stopped
     volumes:

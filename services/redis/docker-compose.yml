@@ -1,6 +1,6 @@
 services:
   redis:
-    image: 'redis:latest'
+    image: 'redis:${HONEYPI_APP_VERSION:-latest}'
     container_name: redis
     restart: unless-stopped
     volumes:

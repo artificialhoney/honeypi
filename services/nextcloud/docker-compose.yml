@@ -1,6 +1,6 @@
 services:
   nextcloud-aio-mastercontainer:
-    image: nextcloud/all-in-one:latest
+    image: nextcloud/all-in-one:${HONEYPI_APP_VERSION:-latest}
     init: true
     restart: unless-stopped
     container_name: nextcloud-aio-mastercontainer

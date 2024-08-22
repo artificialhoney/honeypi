@@ -1,6 +1,6 @@
 services:
   authentik:
-    image: ghcr.io/goauthentik/server:latest
+    image: ghcr.io/goauthentik/server:${HONEYPI_APP_VERSION:-latest}
     restart: unless-stopped
     container_name: authentik
     command: server
@@ -11,7 +11,7 @@ services:
       file: ../../commons/compose.yml
       service: base
   authentik-worker:
-    image: ghcr.io/goauthentik/server:latest
+    image: ghcr.io/goauthentik/server:${HONEYPI_APP_VERSION:-latest}
     restart: unless-stopped
     container_name: authentik-worker
     command: worker
