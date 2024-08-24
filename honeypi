@@ -1,10 +1,12 @@
 #!/bin/bash
 
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
 POSITIONAL_ARGS=()
 
-MODULES=$(ls modules | xargs -n 1 basename -s .sh)
-SERVICE_MODULES=$(ls services | xargs -n 1 basename)
-STACK_MODULES=$(ls stacks | xargs -n 1 basename)
+MODULES=$(ls $SCRIPT_DIR/modules | xargs -n 1 basename -s .sh)
+SERVICE_MODULES=$(ls $SCRIPT_DIR/services | xargs -n 1 basename)
+STACK_MODULES=$(ls $SCRIPT_DIR/stacks | xargs -n 1 basename)
 
 loadEnv() {
   source $1
@@ -19,9 +21,7 @@ while [[ $# -gt 0 ]]; do
       echo '  honeypi stack <name>'
       echo '  honeypi service <name>'
       echo '  honeypi module <name>'
-      echo '  honeypi sync <from> <to>'
       echo '  honeypi env <env>'
-      echo '  honeypi connect <name>'
       echo '  honeypi -h | --help'
       echo 'Options:'
       echo '  -h --help                  Show this screen.'
@@ -53,28 +53,13 @@ if [ "$1" = "env" ]; then
   [ -f "$HONEYPI_ENVIRONMENT.env" ] && loadEnv "$HONEYPI_ENVIRONMENT.env"
   set | grep HONEYPI_
   exit 0
-elif [ "$1" = "sync" ]; then
-  shift
-  [ -f "$HONEYPI_ENVIRONMENT.env" ] && loadEnv "$HONEYPI_ENVIRONMENT.env"
-  [[ ! "$1" = "" ]] && URL=$1 || URL=${HONEYPI_HOST_URL:-local}
-  DIR="$(dirname "$(readlink -f "$0")")"
-  DIR=${2:-"$DIR"}
-  echo "Syncing to '${URL}' from '${DIR}'"
-  rsync -chavzP --stats -e "ssh -A" $DIR/* $URL/
-  exit 0
-elif [ "$1" = "connect" ]; then
-  shift
-  [ -f $HONEYPI_ENVIRONMENT.env ] && loadEnv $HONEYPI_ENVIRONMENT.env
-  echo "Connecting to '$1'"
-  docker exec -it $1 /bin/bash
-  exit 0
 elif [ "$1" = "service" ]; then
   shift
   [ -f $HONEYPI_ENVIRONMENT.env ] && loadEnv $HONEYPI_ENVIRONMENT.env
   echo "Deploying services: '${@}'"
   for arg in "${@}"
   do
-    docker compose -f "./services/$arg/docker-compose.yml" --env-file $HONEYPI_ENVIRONMENT.env up -d
+    docker compose -f "$SCRIPT_DIR/services/$arg/docker-compose.yml" --env-file $HONEYPI_ENVIRONMENT.env up -d
   done
   exit 0
 elif [ "$1" = "module" ]; then
@@ -83,7 +68,7 @@ elif [ "$1" = "module" ]; then
   echo "Deploying modules: '${@}'"
   for arg in "${@}"
   do
-    . ./modules/$arg.sh
+    . $SCRIPT_DIR/modules/$arg.sh
   done
   exit 0
 elif [ "$1" = "stack" ]; then
@@ -93,7 +78,7 @@ elif [ "$1" = "stack" ]; then
   for arg in "${@}"
   do
     export UID
-    COMPOSE_FILE="./stacks/$arg/docker-compose.yml"
+    COMPOSE_FILE="$SCRIPT_DIR/stacks/$arg/docker-compose.yml"
     docker compose -f $COMPOSE_FILE --env-file $HONEYPI_ENVIRONMENT.env up -d
   done
 else
