@@ -103,20 +103,12 @@ services:
       - mariadb
       - mongo
       - postgres
-  webdav:
-    extends:
-      file: ../../services/webdav/docker-compose.yml
-      service: webdav
-    volumes:
-      - /media/hive/home/sk:/media
-    ports:
-      - 8080:80
   syncthing:
     extends:
       file: ../../services/syncthing/docker-compose.yml
       service: syncthing
     ports:
-      - 8384:8384 # Web UI
-      - 22000:22000/tcp # TCP file transfers
-      - 22000:22000/udp # QUIC file transfers
-      - 21027:21027/udp # Receive local discovery broadcasts
+        - 8384:8384 # Web UI
+        - 22001:22000/tcp # TCP file transfers
+        - 22001:22000/udp # QUIC file transfers
+        - 21027:21027/udp # Receive local discovery broadcasts
