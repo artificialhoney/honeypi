@@ -1,8 +1,18 @@
 #!/bin/bash
 
-sudo -s, apt install samba -y
-mv /etc/samba/smb.conf /etc/samba/smb.conf.org
-grep -Ev '^#|^;|^$' /etc/samba/smb.conf.org > /etc/samba/smb.conf
-exit
+HONEYPI_SMB_USERNAME=pi
 
-sudo smbpasswd -a pi
+sudo apt install samba samba-common-bin -y
+
+sudo sh -c 'echo "
+[stuff]
+path = /media/hive/home/'$HONEYPI_SMB_USERNAME'
+writeable = yes
+browseable = yes
+public=no
+" > /etc/samba/smb.conf'
+
+
+sudo smbpasswd -a $HONEYPI_SMB_USERNAME
+
+sudo systemctl restart smbd

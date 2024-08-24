@@ -74,7 +74,7 @@ elif [ "$1" = "service" ]; then
   echo "Deploying services: '${@}'"
   for arg in "${@}"
   do
-    docker compose -f "./apps/$arg/docker-compose.yml" --env-file $HONEYPI_ENVIRONMENT.env up -d
+    docker compose -f "./services/$arg/docker-compose.yml" --env-file $HONEYPI_ENVIRONMENT.env up -d
   done
   exit 0
 elif [ "$1" = "module" ]; then

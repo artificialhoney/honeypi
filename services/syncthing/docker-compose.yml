@@ -1,0 +1,10 @@
+services:
+  syncthing:
+    image: syncthing/syncthing:${HONEYPI_APP_VERSION:-latest}
+    container_name: syncthing
+    restart: unless-stopped
+    volumes:
+      - ${HONEYPI_HOME}/syncthing:/var/syncthing
+    extends:
+      file: ../../commons/compose.yml
+      service: base
