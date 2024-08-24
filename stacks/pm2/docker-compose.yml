@@ -3,5 +3,8 @@ services:
     extends:
       file: ../../services/pm2/docker-compose.yml
       service: pm2
+    environment:
+      - NODE_ENV=production
+      - PORT=7000
     ports:
       - 7000:7000
