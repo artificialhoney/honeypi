@@ -100,4 +100,4 @@ services:
       - URL_con3=mongodb://mongo:27017
       - ENGINE_con3=mongo@dbgate-plugin-mongo
     env_file:
-      - ./../${HONEYPI_ENVIRONMENT}.env
+      - $PWD/${HONEYPI_ENVIRONMENT}.env
