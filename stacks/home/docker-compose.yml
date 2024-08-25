@@ -62,10 +62,6 @@ services:
     extends:
       file: ../../services/photoprism/docker-compose.yml
       service: photoprism
-    volumes:
-      - ${HONEYPI_HOME}/photoprism/originals:/photoprism/originals
-      - ${HONEYPI_HOME}/syncthing/SD:/photoprism/originals/SD
-      - ${HONEYPI_HOME}/photoprism/storage:/photoprism/storage
     ports:
       - 2342:2342
     depends_on:
