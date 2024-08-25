@@ -52,12 +52,6 @@ services:
       - /dev/ttyUSB0:/dev/ttyUSB0
     ports:
       - 8123:8123
-  filestash:
-    extends:
-      file: ../../services/filestash/docker-compose.yml
-      service: filestash
-    ports:
-      - 8334:8334
   photoprism:
     extends:
       file: ../../services/photoprism/docker-compose.yml
