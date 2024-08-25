@@ -60,6 +60,12 @@ services:
       - 2342:2342
     depends_on:
       - mariadb
+  jellyfin:
+    extends:
+      file: ../../services/jellyfin/docker-compose.yml
+      service: jellyfin
+    ports:
+      - 8096:8096
   authentik-worker:
     extends:
       file: ../../services/authentik/docker-compose.yml
@@ -96,12 +102,3 @@ services:
       - mariadb
       - mongo
       - postgres
-  syncthing:
-    extends:
-      file: ../../services/syncthing/docker-compose.yml
-      service: syncthing
-    ports:
-        - 8384:8384 # Web UI
-        - 22001:22000/tcp # TCP file transfers
-        - 22001:22000/udp # QUIC file transfers
-        - 21027:21027/udp # Receive local discovery broadcasts
