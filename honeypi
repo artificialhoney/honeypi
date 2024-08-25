@@ -7,7 +7,7 @@ POSITIONAL_ARGS=()
 MODULES=$(ls $SCRIPT_DIR/modules | xargs -n 1 basename -s .sh)
 SERVICE_MODULES=$(ls $SCRIPT_DIR/services | xargs -n 1 basename)
 STACK_MODULES=$(ls $SCRIPT_DIR/stacks | xargs -n 1 basename)
-HONEYPI_COMPOSE_FILE=./docker-compose.yml
+HONEYPI_COMPOSE_FILE=$PWD/docker-compose.yml
 
 loadEnv() {
   source $1
@@ -57,12 +57,12 @@ set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
 if [ "$1" = "env" ]; then
   shift
   echo "Loading environment from '${HONEYPI_ENVIRONMENT}'.env"
-  [ -f "$HONEYPI_ENVIRONMENT.env" ] && loadEnv "$HONEYPI_ENVIRONMENT.env"
+  [ -f "$PWD/$HONEYPI_ENVIRONMENT.env" ] && loadEnv "$PWD/$HONEYPI_ENVIRONMENT.env"
   set | grep HONEYPI_
   exit 0
 elif [ "$1" = "service" ]; then
   shift
-  [ -f $HONEYPI_ENVIRONMENT.env ] && loadEnv $HONEYPI_ENVIRONMENT.env
+  [ -f "$PWD/$HONEYPI_ENVIRONMENT.env" ] && loadEnv "$PWD/$HONEYPI_ENVIRONMENT.env"
   echo "Deploying services: '${@}'"
   for arg in "${@}"
   do
@@ -71,7 +71,7 @@ elif [ "$1" = "service" ]; then
   exit 0
 elif [ "$1" = "module" ]; then
   shift
-  [ -f $HONEYPI_ENVIRONMENT.env ] && loadEnv $HONEYPI_ENVIRONMENT.env
+  [ -f "$PWD/$HONEYPI_ENVIRONMENT.env" ] && loadEnv "$PWD/$HONEYPI_ENVIRONMENT.env"
   echo "Deploying modules: '${@}'"
   for arg in "${@}"
   do
@@ -80,7 +80,7 @@ elif [ "$1" = "module" ]; then
   exit 0
 elif [ "$1" = "stack" ]; then
   shift
-  [ -f $HONEYPI_ENVIRONMENT.env ] && loadEnv $HONEYPI_ENVIRONMENT.env
+  [ -f "$PWD/$HONEYPI_ENVIRONMENT.env" ] && loadEnv "$PWD/$HONEYPI_ENVIRONMENT.env"
   echo "Deploying stacks: '${@}'"
   for arg in "${@}"
   do
