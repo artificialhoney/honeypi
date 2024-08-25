@@ -66,11 +66,6 @@ services:
       - 2342:2342
     depends_on:
       - mariadb
-  mediamtx:
-    extends:
-      file: ../../services/mediamtx/docker-compose.yml
-      service: mediamtx
-    network_mode: host
   authentik-worker:
     extends:
       file: ../../services/authentik/docker-compose.yml
