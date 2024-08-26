@@ -1,6 +1,6 @@
 FROM dtcooper/raspberrypi-os:bookworm AS builder
 
-RUN apt-get install -y cmake \
+RUN apt-get update && apt-get install -y cmake \
                      libavahi-compat-libdnssd-dev libplist-dev libssl-dev \
                      build-essential\
                      git
