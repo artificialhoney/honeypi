@@ -14,7 +14,7 @@ FROM dtcooper/raspberrypi-os:bookworm
 
 COPY --from=builder /app /app
 
-WORKDIR /app/rpiplay
+WORKDIR /app/rpiplay/build
 
 COPY start.sh ./
 
