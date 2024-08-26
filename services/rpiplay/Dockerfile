@@ -1,38 +1,22 @@
 FROM dtcooper/raspberrypi-os:bookworm AS builder
 
-RUN apt-get update && apt-get install -y cmake \
-                     libavahi-compat-libdnssd-dev libplist-dev libssl-dev \
-                     build-essential\
-                     git
+RUN apt-get update && sudo apt-get install cmake libavahi-compat-libdnssd-dev libplist-dev libssl-dev \
+libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstreamer1.0-libav \
+gstreamer1.0-vaapi gstreamer1.0-plugins-bad git
 
-RUN apt-get install -y libraspberrypi-dev libraspberrypi-doc
+WORKDIR /app
 
-WORKDIR /usr/src/app/
+RUN git clone https://github.com/FD-/RPiPlay.git rpiplay
 
-RUN git clone https://github.com/FD-/RPiPlay.git
+WORKDIR /app/rpiplay
 
-WORKDIR /usr/src/app/RPiPlay/build
+RUN mkdir build && cd build && cmake .. && make -j
 
-RUN cmake -D CMAKE_CXX_FLAGS="-O3" -D CMAKE_C_FLAGS="-O3" .. &&\
-    make -j &&\
-    make install
+FROM dtcooper/raspberrypi-os:bookworm
 
-RUN apt-get install -y python3-pip python3-setuptools rsync
+COPY --from=builder /app /app
 
-WORKDIR /rootfs
-
-WORKDIR /usr/src/app
-
-RUN pip3 install git+https://github.com/larsks/dockerize --break-system-packages
-
-RUN dockerize -n --verbose -g video -g audio -o /rootfs/ /usr/local/bin/rpiplay &&\
-    rm /rootfs/Dockerfile
-
-FROM --platform=linux/arm/v8 busybox:stable
-
-COPY --from=builder /rootfs/ ./
-
-WORKDIR /usr/src/app/
+WORKDIR /app/rpiplay
 
 COPY start.sh ./
 

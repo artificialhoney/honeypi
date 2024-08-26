@@ -7,9 +7,3 @@ services:
     extends:
       file: ../../commons/compose.yml
       service: base
-    devices:
-      - /dev/dri
-      - /dev/vchiq
-    group_add:
-      - video
-      - audio
