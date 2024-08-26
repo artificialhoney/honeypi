@@ -1,6 +1,6 @@
 FROM dtcooper/raspberrypi-os:bookworm AS builder
 
-RUN apt-get update && apt-get install cmake libavahi-compat-libdnssd-dev libplist-dev libssl-dev \
+RUN apt-get update && apt-get install -y cmake libavahi-compat-libdnssd-dev libplist-dev libssl-dev \
 libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstreamer1.0-libav \
 gstreamer1.0-vaapi gstreamer1.0-plugins-bad git
 
