@@ -1,0 +1,43 @@
+FROM dtcooper/raspberrypi-os:bookworm AS builder
+
+RUN install_packages cmake \
+                     libavahi-compat-libdnssd-dev libplist-dev libssl-dev \
+                     build-essential\
+                     git
+
+RUN install_packages libraspberrypi-dev libraspberrypi-doc
+
+WORKDIR /usr/src/app/
+
+RUN git clone https://github.com/FD-/RPiPlay.git
+
+WORKDIR /usr/src/app/RPiPlay/build
+
+RUN cmake --DCMAKE_CXX_FLAGS="-O3" --DCMAKE_C_FLAGS="-O3" .. &&\
+    make -j &&\
+    make install
+
+RUN install_packages python3-pip python3-setuptools rsync
+
+WORKDIR /rootfs
+
+WORKDIR /usr/src/app
+
+RUN pip3 install git+https://github.com/larsks/dockerize
+
+RUN dockerize -n --verbose -g video -g audio -o /rootfs/ /usr/local/bin/rpiplay &&\
+    rm /rootfs/Dockerfile
+
+FROM --platform=linux/arm64/v8 busybox:stable
+
+COPY --from=builder /rootfs/ ./
+
+WORKDIR /usr/src/app/
+
+COPY start.sh ./
+
+COPY VERSION ./
+
+RUN chmod +x ./start.sh
+
+CMD ["sh", "./start.sh"]
