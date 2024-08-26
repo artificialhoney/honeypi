@@ -1,4 +1,4 @@
-FROM dtcooper/raspberrypi-os:bookworm AS builder
+FROM dtcooper/raspberrypi-os:bookworm
 
 RUN apt-get update && apt-get install -y cmake libavahi-compat-libdnssd-dev libplist-dev libssl-dev git build-essential
 
@@ -8,13 +8,7 @@ RUN git clone https://github.com/FD-/RPiPlay.git rpiplay
 
 WORKDIR /app/rpiplay
 
-RUN mkdir build && cd build && cmake .. && make -j
-
-FROM dtcooper/raspberrypi-os:bookworm
-
-COPY --from=builder /app /app
-
-WORKDIR /app/rpiplay/build
+RUN mkdir build && cd build && cmake .. && make -j && make install
 
 COPY start.sh ./
 
