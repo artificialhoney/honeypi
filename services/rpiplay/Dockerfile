@@ -10,7 +10,7 @@ RUN git clone https://github.com/FD-/RPiPlay.git rpiplay
 
 WORKDIR /app/rpiplay
 
-RUN mkdir build && cd build && cmake .. && make -j
+RUN mkdir build && cd build && cmake -D CMAKE_CXX_FLAGS="-O3" -D CMAKE_C_FLAGS="-O3" .. && make -j
 
 FROM dtcooper/raspberrypi-os:bookworm
 
