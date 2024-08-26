@@ -23,7 +23,7 @@ WORKDIR /rootfs
 
 WORKDIR /usr/src/app
 
-RUN pip3 install git+https://github.com/larsks/dockerize
+RUN pip3 install git+https://github.com/larsks/dockerize --break-system-packages
 
 RUN dockerize -n --verbose -g video -g audio -o /rootfs/ /usr/local/bin/rpiplay &&\
     rm /rootfs/Dockerfile
