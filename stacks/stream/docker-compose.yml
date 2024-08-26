@@ -9,3 +9,11 @@ services:
     volumes:
       - ${HONEYPI_CONFIG}/mediamtx/config/mediamtx.yml:/mediamtx.yml
     network_mode: host
+  rpiplay:
+    privileged: true
+    extends:
+      file: ../../services/rpiplay/docker-compose.yml
+      service: rpiplay
+    network_mode: host
+    environment:
+      - DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
