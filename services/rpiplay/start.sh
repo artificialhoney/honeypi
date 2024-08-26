@@ -12,8 +12,6 @@ esac
 ROTATION="-r ${AIRPIPLAY_ROTATION:=""}"
 FLIP="-f ${AIRPIPLAY_FLIP:=""}"
 
-echo "Air-Pi-Play v$(cat VERSION) powered by RpiPlay"
-
 echo "Device is discoverable as ${DEVICE_NAME}"
 
 rpiplay -n $DEVICE_NAME -a $AUDIO_OUT -b $BACKGROUND $LATENCY $ROTATION $FLIP
