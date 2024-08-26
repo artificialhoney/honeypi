@@ -7,8 +7,6 @@ services:
     extends:
       file: ../../commons/compose.yml
       service: base
-    privileged: true
-    network_mode: host
     devices:
       - /dev/dri
       - /dev/vchiq
