@@ -28,15 +28,13 @@ RUN pip3 install git+https://github.com/larsks/dockerize
 RUN dockerize -n --verbose -g video -g audio -o /rootfs/ /usr/local/bin/rpiplay &&\
     rm /rootfs/Dockerfile
 
-FROM --platform=linux/arm64/v8 busybox:stable
+FROM --platform=linux/arm/v8 busybox:stable
 
 COPY --from=builder /rootfs/ ./
 
 WORKDIR /usr/src/app/
 
 COPY start.sh ./
-
-COPY VERSION ./
 
 RUN chmod +x ./start.sh
 
