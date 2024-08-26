@@ -3,7 +3,11 @@ services:
     image: rpiplay:${HONEYPI_APP_VERSION:-latest}
     container_name: rpiplay
     restart: unless-stopped
+    security_opt:
+      - apparmor:unconfined
     build: .
     extends:
       file: ../../commons/compose.yml
       service: base
+    volumes:
+      - /var/run/dbus/:/var/run/dbus/
