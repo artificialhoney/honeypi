@@ -66,6 +66,9 @@ services:
       service: jellyfin
     ports:
       - 8096:8096
+      - 8920:8920
+      - 7359:7359/udp
+      - 1900:1900/udp
   authentik-worker:
     extends:
       file: ../../services/authentik/docker-compose.yml
