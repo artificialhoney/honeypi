@@ -1,11 +1,11 @@
 FROM dtcooper/raspberrypi-os:bookworm AS builder
 
-RUN install_packages cmake \
+RUN apt-get install -y cmake \
                      libavahi-compat-libdnssd-dev libplist-dev libssl-dev \
                      build-essential\
                      git
 
-RUN install_packages libraspberrypi-dev libraspberrypi-doc
+RUN apt-get install -y libraspberrypi-dev libraspberrypi-doc
 
 WORKDIR /usr/src/app/
 
@@ -17,7 +17,7 @@ RUN cmake --DCMAKE_CXX_FLAGS="-O3" --DCMAKE_C_FLAGS="-O3" .. &&\
     make -j &&\
     make install
 
-RUN install_packages python3-pip python3-setuptools rsync
+RUN apt-get install -y python3-pip python3-setuptools rsync
 
 WORKDIR /rootfs
 
