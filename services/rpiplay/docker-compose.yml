@@ -9,6 +9,14 @@ services:
     extends:
       file: ../../commons/compose.yml
       service: base
+    devices:
+      - /dev/dri
+      - /dev/vchiq
+    group_add:
+      - video
+      - audio
+    environment: 
+        - DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
     volumes:
       - /var/run/dbus/:/var/run/dbus/
       - /var/run/avahi-daemon/socket:/var/run/avahi-daemon/socket
