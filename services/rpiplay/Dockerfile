@@ -13,7 +13,7 @@ RUN git clone https://github.com/FD-/RPiPlay.git
 
 WORKDIR /usr/src/app/RPiPlay/build
 
-RUN cmake --DCMAKE_CXX_FLAGS="-O3" --DCMAKE_C_FLAGS="-O3" .. &&\
+RUN cmake -D CMAKE_CXX_FLAGS="-O3" -D CMAKE_C_FLAGS="-O3" .. &&\
     make -j &&\
     make install
 
