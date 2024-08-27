@@ -10,7 +10,6 @@ sudo apt-get install -y \
     fonts-noto-color-emoji \
     feh \
     gjs \
-    gnome-themes-standard \
     gir1.2-webkit2-4.0 \
     cec-utils \
     xdotool \
@@ -26,9 +25,9 @@ sudo chown 1000:1000 /boot/kiosk.url
 echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections
 export DEBIAN_FRONTEND=noninteractive
 
-sudo cp -f $SCRIPT_DIR/files/config.txt /boot
+sudo cp -f $SCRIPT_DIR/files/boot/config.txt /boot
 sudo chmod 644 /boot/config.txt
-sudo cp -f $SCRIPT_DIR/files/cmdline.txt /boot
+sudo cp -f $SCRIPT_DIR/files/boot/cmdline.txt /boot
 sudo chmod 644 /boot/cmdline.txt
 
 USER_HOME="/home/${HONEYPI_KIOSK_USER}"
@@ -51,7 +50,7 @@ sudo sh -c 'echo "
 
 # silent startx on video console
 
-if [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]]; then
+if [[ -z '$DISPLAY' && '$XDG_VTNR' -eq 1 ]]; then
   startx > /dev/null 2>&1
   exit
 fi
