@@ -36,9 +36,9 @@ mkdir -p $USER_HOME/kiosk
 sudo cp -f $SCRIPT_DIR/files/kiosk/kiosk.sh $USER_HOME/kiosk
 sudo chmod 755 $USER_HOME/kiosk/kiosk.sh
 sudo chown 1000:1000 $USER_HOME/kiosk/kiosk.sh
-# sudo cp -f $SCRIPT_DIR/files/firstrun.sh $USER_HOME
-# sudo chmod 755 $USER_HOME/firstrun.sh
-# sudo chown 1000:1000 $USER_HOME/firstrun.sh
+sudo cp -f $SCRIPT_DIR/files/firstrun.sh $USER_HOME
+sudo chmod 755 $USER_HOME/firstrun.sh
+sudo chown 1000:1000 $USER_HOME/firstrun.sh
 
 sudo cp -f $SCRIPT_DIR/files/.xinitrc $USER_HOME
 sudo chmod 644 $USER_HOME/.xinitrc
@@ -46,7 +46,7 @@ sudo chown 1000:1000 $USER_HOME/.xinitrc
 
 sudo sh -c 'echo "
 # first-run script
-# [[ -f ./firstrun.sh ]] && ./firstrun.sh
+[[ -f ./firstrun.sh ]] && ./firstrun.sh
 
 # silent startx on video console
 
