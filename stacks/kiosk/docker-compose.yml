@@ -1,0 +1,29 @@
+services:
+  mariadb:
+    extends:
+      file: ../../services/mariadb/docker-compose.yml
+      service: mariadb
+  xibo-xmr:
+    extends:
+      file: ../../services/xibo/docker-compose.yml
+      service: xibo-xmr
+    ports:
+        - 9505:9505
+  xibo-web:
+    extends:
+      file: ../../services/xibo/docker-compose.yml
+      service: xibo-web
+    environment:
+      - MYSQL_HOST=mariadb
+      - XMR_HOST=xibo-xmr
+      - CMS_USE_MEMCACHED=true
+      - MEMCACHED_HOST=memcached
+    ports:
+      - 80:80
+  memcached:
+    extends:
+      file: ../../services/memcached/docker-compose.yml
+      service: memcached
+  quickchart:
+    image: ianw/quickchart
+    restart: unless-stopped
