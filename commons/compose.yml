@@ -1,5 +1,5 @@
 services:
   base:
     env_file:
-      - ./compose.env
+      - ./commons.env
       - $PWD/${HONEYPI_ENVIRONMENT}.env

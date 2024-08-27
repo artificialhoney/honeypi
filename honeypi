@@ -11,6 +11,7 @@ HONEYPI_COMPOSE_FILE=$PWD/docker-compose.yml
 
 loadEnv() {
   source $1
+  source $SCRIPT_DIR/commons/commons.env
 }
 
 while [[ $# -gt 0 ]]; do
