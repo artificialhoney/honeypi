@@ -4,7 +4,7 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 POSITIONAL_ARGS=()
 
-MODULES=$(ls $SCRIPT_DIR/modules | xargs -n 1 basename -s .sh)
+MODULES=$(ls $SCRIPT_DIR/modules | xargs -n 1 basename)
 SERVICE_MODULES=$(ls $SCRIPT_DIR/services | xargs -n 1 basename)
 STACK_MODULES=$(ls $SCRIPT_DIR/stacks | xargs -n 1 basename)
 HONEYPI_COMPOSE_FILE=$PWD/docker-compose.yml
@@ -75,7 +75,7 @@ elif [ "$1" = "module" ]; then
   echo "Deploying modules: '${@}'"
   for arg in "${@}"
   do
-    . $SCRIPT_DIR/modules/$arg.sh
+    . $SCRIPT_DIR/modules/$arg/install.sh
   done
   exit 0
 elif [ "$1" = "stack" ]; then
