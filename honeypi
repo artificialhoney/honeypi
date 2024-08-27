@@ -82,12 +82,13 @@ elif [ "$1" = "stack" ]; then
   shift
   [ -f "$PWD/$HONEYPI_ENVIRONMENT.env" ] && loadEnv "$PWD/$HONEYPI_ENVIRONMENT.env"
   echo "Deploying stacks: '${@}'"
+  COMPOSE_FILE=""
   for arg in "${@}"
   do
-    export UID
-    COMPOSE_FILE="$SCRIPT_DIR/stacks/$arg/docker-compose.yml"
-    docker compose -f $COMPOSE_FILE -f "$HONEYPI_COMPOSE_FILE" --env-file $PWD/$HONEYPI_ENVIRONMENT.env up -d
+    COMPOSE_FILE="$COMPOSE_FILE -f $SCRIPT_DIR/stacks/$arg/docker-compose.yml"
   done
+  export UID
+  docker compose $COMPOSE_FILE -f "$HONEYPI_COMPOSE_FILE" --env-file $PWD/$HONEYPI_ENVIRONMENT.env up -d
 else
   echo "No argument(s) provided. Run -h for help."
   exit 0
