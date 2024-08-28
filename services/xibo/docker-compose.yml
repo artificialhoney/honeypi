@@ -1,22 +1,26 @@
 services:
-    xibo-xmr:
-        image: ghcr.io/xibosignage/xibo-xmr:${HONEYPI_APP_VERSION:-latest}
-        restart: unless-stopped
-        container_name: xibo-xmr
-        extends:
-          file: ../../commons/compose.yml
-          service: base
-    xibo-web:
-        image: ghcr.io/xibosignage/xibo-cms:${HONEYPI_APP_VERSION:-latest}
-        volumes:
-            - ${HONEYPI_HOME}/xibo/cms/custom:/var/www/cms/custom:Z
-            - ${HONEYPI_HOME}/xibo/backup:/var/www/backup:Z
-            - ${HONEYPI_HOME}/xibo/cms/web/theme/custom:/var/www/cms/web/theme/custom:Z
-            - ${HONEYPI_HOME}/xibo/cms/library:/var/www/cms/library:Z
-            - ${HONEYPI_HOME}/xibo/cms/web/userscripts:/var/www/cms/web/userscripts:Z
-            - ${HONEYPI_HOME}/xibo/cms/ca-certs:/var/www/cms/ca-certs:Z
-        restart: unless-stopped
-        container_name: xibo-web
-        extends:
-          file: ../../commons/compose.yml
-          service: base
+  xibo-xmr:
+    image: ghcr.io/xibosignage/xibo-xmr:${HONEYPI_APP_VERSION:-latest}
+    restart: unless-stopped
+    container_name: xibo-xmr
+    extends:
+      file: ../../commons/compose.yml
+      service: base
+    env_file:
+      - ./service.env
+  xibo-web:
+    image: ghcr.io/xibosignage/xibo-cms:${HONEYPI_APP_VERSION:-latest}
+    volumes:
+      - ${HONEYPI_HOME}/xibo/cms/custom:/var/www/cms/custom:Z
+      - ${HONEYPI_HOME}/xibo/backup:/var/www/backup:Z
+      - ${HONEYPI_HOME}/xibo/cms/web/theme/custom:/var/www/cms/web/theme/custom:Z
+      - ${HONEYPI_HOME}/xibo/cms/library:/var/www/cms/library:Z
+      - ${HONEYPI_HOME}/xibo/cms/web/userscripts:/var/www/cms/web/userscripts:Z
+      - ${HONEYPI_HOME}/xibo/cms/ca-certs:/var/www/cms/ca-certs:Z
+    restart: unless-stopped
+    container_name: xibo-web
+    extends:
+      file: ../../commons/compose.yml
+      service: base
+    env_file:
+      - ./service.env

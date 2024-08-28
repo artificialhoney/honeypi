@@ -8,3 +8,5 @@ services:
     extends:
       file: ../../commons/compose.yml
       service: base
+    env_file:
+      - ./service.env

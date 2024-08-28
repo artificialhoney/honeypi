@@ -9,3 +9,5 @@ services:
     volumes:
       - ${HONEYPI_HOME}/jellyfin/config:/config
       - ${HONEYPI_HOME}/jellyfin/cache:/cache
+    env_file:
+      - ./service.env

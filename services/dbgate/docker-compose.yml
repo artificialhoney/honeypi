@@ -1,6 +1,6 @@
 services:
   dbgate:
-    image: dbgate/dbgate
+    image: dbgate/dbgate:${HONEYPI_APP_VERSION:-latest}
     restart: always
     container_name: dbgate
     volumes:
@@ -8,3 +8,5 @@ services:
     extends:
       file: ../../commons/compose.yml
       service: base
+    env_file:
+      - ./service.env

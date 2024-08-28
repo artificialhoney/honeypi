@@ -7,6 +7,8 @@ services:
     extends:
       file: ../../commons/compose.yml
       service: base
+    env_file:
+      - ./service.env
   rocketchat-mongo-init:
     image: arm64v8/mongo:4.4.1
     container_name: rocketchat-mongo-init
@@ -15,3 +17,5 @@ services:
     extends:
       file: ../../commons/compose.yml
       service: base
+    env_file:
+      - ./service.env
