@@ -13,10 +13,11 @@ services:
       - 8080:8080
     devices:
       - /dev/ttyUSB0:/dev/ttyUSB0
-  mosquitto:
+  mqtt:
     extends:
       file: ../../services/mosquitto/docker-compose.yml
       service: mosquitto
+    container_name: mqtt
     ports:
       - 1883:1883
       - 9001:9001
