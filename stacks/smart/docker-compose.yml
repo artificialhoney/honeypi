@@ -1,10 +1,4 @@
-services:  
-  homeassistant:
-    extends:
-      file: ../../services/homeassistant/docker-compose.yml
-      service: homeassistant
-    ports:
-      - 8123:8123
+services:
   zigbee2mqtt:
     extends:
       file: ../../services/zigbee2mqtt/docker-compose.yml

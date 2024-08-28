@@ -44,6 +44,12 @@ services:
       service: rocketchat-mongo-init
     depends_on:
       - mongo
+  homeassistant:
+    extends:
+      file: ../../services/homeassistant/docker-compose.yml
+      service: homeassistant
+    ports:
+      - 8123:8123
   photoprism:
     extends:
       file: ../../services/photoprism/docker-compose.yml
