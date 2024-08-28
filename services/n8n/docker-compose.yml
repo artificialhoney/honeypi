@@ -1,6 +1,6 @@
 services:
   n8n:
-    image: docker.n8n.io/n8nio/n8n:{HONEYPI_APP_VERSION:-latest}
+    image: docker.n8n.io/n8nio/n8n:${HONEYPI_APP_VERSION:-latest}
     container_name: n8n
     restart: unless-stopped
     volumes:
