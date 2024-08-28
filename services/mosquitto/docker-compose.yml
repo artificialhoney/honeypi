@@ -1,0 +1,7 @@
+services:
+  mqtt:
+    image: eclipse-mosquitto:${HONEYPI_APP_VERSION:-latest}
+    restart: unless-stopped
+    volumes:
+      - ${HONEYPI_HOME}/mosquitto/data:/mosquitto
+    command: "mosquitto -c /mosquitto-no-auth.conf"

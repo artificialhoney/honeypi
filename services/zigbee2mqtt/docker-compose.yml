@@ -1,0 +1,12 @@
+services:
+  zigbee2mqtt:
+    image: koenkk/zigbee2mqtt:${HONEYPI_APP_VERSION:-latest}
+    container_name: zigbee2mqtt
+    restart: unless-stopped
+    volumes:
+      - ${HONEYPI_HOME}/zigbee2mqtt/data:/app/data
+      - ${HONEYPI_CONFIG}/zigbee2mqtt/config/configuration.yaml:/app/data/configuration.yaml
+      - /run/udev:/run/udev:ro
+    extends:
+      file: ../../commons/compose.yml
+      service: base

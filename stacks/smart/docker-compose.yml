@@ -1,0 +1,22 @@
+services:  
+  homeassistant:
+    extends:
+      file: ../../services/homeassistant/docker-compose.yml
+      service: homeassistant
+    ports:
+      - 8123:8123
+  zigbee2mqtt:
+    extends:
+      file: ../../services/zigbee2mqtt/docker-compose.yml
+      service: zigbee2mqtt
+    ports:
+      - 8080:8080
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
+  mosquitto:
+    extends:
+      file: ../../services/mosquitto/docker-compose.yml
+      service: mosquitto
+    ports:
+      - 1883:1883
+      - 9001:9001
