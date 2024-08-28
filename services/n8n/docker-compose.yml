@@ -1,0 +1,10 @@
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:{HONEYPI_APP_VERSION:-latest}
+    container_name: n8n
+    restart: unless-stopped
+    volumes:
+      - ${HONEYPI_HOME}/n8n/data:/home/node/.n8n
+    extends:
+      file: ../../commons/compose.yml
+      service: base

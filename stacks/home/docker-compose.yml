@@ -60,6 +60,12 @@ services:
       - 2342:2342
     depends_on:
       - mariadb
+  n8n:
+    extends:
+      file: ../../services/n8n/docker-compose.yml
+      service: n8n
+    ports:
+      - 5678:5678
   authentik-worker:
     extends:
       file: ../../services/authentik/docker-compose.yml
