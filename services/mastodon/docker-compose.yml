@@ -1,9 +1,27 @@
+# docker run -e "SECRET_KEY_BASE=$HONEYPI_MASTODON_SECRET_KEY_BASE" -e "OTP_SECRET=$HONEYPI_MASTODON_OTP_SECRET" \
+# -e DB_HOST=postgres -e DB_PASS=$HONEYPI_POSTGRES_PASSWORD -e DB_USER=honeypi -e DB_NAME=mastodon -e REDIS_HOST=redis \
+# -v /srv/honeypi/mastodon/public/system:/mastodon/public/system \
+# --network home_default \
+# --rm ghcr.io/mastodon/mastodon rake db:migrate
+
 services:
   mastodon:
     image: ghcr.io/mastodon/mastodon:${HONEYPI_APP_VERSION:-latest}
     restart: unless-stopped
     container_name: mastodon
     command: bundle exec puma -C config/puma.rb
+    volumes:
+      - ${HONEYPI_HOME}/mastodon/public/system:/mastodon/public/system
+    extends:
+      file: ../../commons/compose.yml
+      service: base
+    env_file:
+      - ./service.env
+  mastodon-init:
+    image: ghcr.io/mastodon/mastodon:${HONEYPI_APP_VERSION:-latest}
+    restart: never
+    container_name: mastodon-init
+    command: rake db:migrate
     volumes:
       - ${HONEYPI_HOME}/mastodon/public/system:/mastodon/public/system
     extends:

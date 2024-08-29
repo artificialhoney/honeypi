@@ -22,6 +22,12 @@ services:
     ports:
       - 3000:3000
     depends_on:
+      - mastodon-init
+  mastodon-init:
+    extends:
+      file: ../../services/mastodon/docker-compose.yml
+      service: mastodon-init
+    depends_on:
       - redis
       - postgres
   mastodon-streaming:
