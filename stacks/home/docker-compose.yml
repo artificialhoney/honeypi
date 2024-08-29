@@ -15,8 +15,20 @@ services:
     extends:
       file: ../../services/elasticsearch/docker-compose.yml
       service: elasticsearch
-
-
+  mastodon-web:
+    extends:
+      file: ../../services/mastodon/docker-compose.yml
+      service: mastodon-web
+    ports:
+      - 3000:3000
+  mastodon-streaming:
+    extends:
+      file: ../../services/mastodon/docker-compose.yml
+      service: mastodon-streaming
+  mastodon-sidekiq:
+    extends:
+      file: ../../services/mastodon/docker-compose.yml
+      service: mastodon-sidekiq
   gitlab:
     extends:
       file: ../../services/gitlab/docker-compose.yml
