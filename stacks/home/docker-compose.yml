@@ -15,10 +15,10 @@ services:
     extends:
       file: ../../services/elasticsearch/docker-compose.yml
       service: elasticsearch
-  mastodon-web:
+  mastodon:
     extends:
       file: ../../services/mastodon/docker-compose.yml
-      service: mastodon-web
+      service: mastodon
     ports:
       - 3000:3000
     depends_on:

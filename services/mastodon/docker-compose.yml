@@ -1,8 +1,8 @@
 services:
-  mastodon-web:
+  mastodon:
     image: ghcr.io/mastodon/mastodon:${HONEYPI_APP_VERSION:-latest}
     restart: unless-stopped
-    container_name: mastodon-web
+    container_name: mastodon
     command: bundle exec puma -C config/puma.rb
     volumes:
       - ${HONEYPI_HOME}/mastodon/public/system:/mastodon/public/system
