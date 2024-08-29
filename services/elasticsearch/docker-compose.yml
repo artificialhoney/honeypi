@@ -1,0 +1,19 @@
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:${HONEYPI_APP_VERSION:-latest}
+    restart: unless-stopped
+    container_name: elasticsearch
+    volumes:
+      - ${HONEYPI_HOME}/elasticsearch/data:/usr/share/elasticsearch/data
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    extends:
+      file: ../../commons/compose.yml
+      service: base
+    env_file:
+      - ./service.env

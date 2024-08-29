@@ -3,10 +3,6 @@ services:
     extends:
       file: ../../services/mariadb/docker-compose.yml
       service: mariadb
-  mongo:
-    extends:
-      file: ../../services/mongo/docker-compose.yml
-      service: mongo
   postgres:
     extends:
       file: ../../services/postgres/docker-compose.yml
@@ -15,6 +11,12 @@ services:
     extends:
       file: ../../services/redis/docker-compose.yml
       service: redis
+  elasticsearch:
+    extends:
+      file: ../../services/elasticsearch/docker-compose.yml
+      service: elasticsearch
+
+
   gitlab:
     extends:
       file: ../../services/gitlab/docker-compose.yml
@@ -28,22 +30,6 @@ services:
       - 10022:22
     depends_on:
       - postgres
-  rocketchat:
-    extends:
-      file: ../../services/rocketchat/docker-compose.yml
-      service: rocketchat
-    expose:
-      - 3000
-    ports:
-      - 3000:3000
-    depends_on:
-      - rocketchat-mongo-init
-  rocketchat-mongo-init:
-    extends:
-      file: ../../services/rocketchat/docker-compose.yml
-      service: rocketchat-mongo-init
-    depends_on:
-      - mongo
   homeassistant:
     extends:
       file: ../../services/homeassistant/docker-compose.yml
