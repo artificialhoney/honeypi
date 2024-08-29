@@ -19,7 +19,7 @@ services:
       - ./service.env
   mastodon-init:
     image: ghcr.io/mastodon/mastodon:${HONEYPI_APP_VERSION:-latest}
-    restart: never
+    restart: unless-stopped
     container_name: mastodon-init
     command: rake db:migrate
     volumes:
