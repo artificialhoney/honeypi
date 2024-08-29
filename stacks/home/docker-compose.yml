@@ -21,14 +21,23 @@ services:
       service: mastodon-web
     ports:
       - 3000:3000
+    depends_on:
+      - redis
+      - postgres
   mastodon-streaming:
     extends:
       file: ../../services/mastodon/docker-compose.yml
       service: mastodon-streaming
+    depends_on:
+      - redis
+      - postgres
   mastodon-sidekiq:
     extends:
       file: ../../services/mastodon/docker-compose.yml
       service: mastodon-sidekiq
+    depends_on:
+      - redis
+      - postgres
   gitlab:
     extends:
       file: ../../services/gitlab/docker-compose.yml
@@ -96,5 +105,4 @@ services:
       - 4000:3000
     depends_on:
       - mariadb
-      - mongo
       - postgres
