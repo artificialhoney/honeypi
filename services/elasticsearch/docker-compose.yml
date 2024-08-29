@@ -1,6 +1,6 @@
 services:
   elasticsearch:
-    image: arm64v8/elasticsearch:${HONEYPI_APP_VERSION:-latest}
+    image: arm64v8/elasticsearch
     restart: unless-stopped
     container_name: elasticsearch
     volumes:
