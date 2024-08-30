@@ -18,7 +18,8 @@ services:
     env_file:
       - ./service.env
     environment:
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m -Des.enforce.bootstrap.checks=true"
+      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
+      - "es.enforce.bootstrap.checks=true"
       - "xpack.license.self_generated.type=basic"
       - "xpack.security.enabled=false"
       - "xpack.watcher.enabled=false"
@@ -31,3 +32,4 @@ services:
       - "discovery.type=single-node"
       - "thread_pool.write.queue_size=1000"
       - "network.host=0.0.0.0"
+      - "vm.max_map_count=262144"
