@@ -24,13 +24,13 @@ services:
       - 2222:2222
   woodpecker-server:
     extends:
-      file: ../../services/woodpecker-server/docker-compose.yml
+      file: ../../services/woodpecker/docker-compose.yml
       service: woodpecker-server
     ports:
       - 8000:8000
   woodpecker-agent:
     extends:
-      file: ../../services/woodpecker-agent/docker-compose.yml
+      file: ../../services/woodpecker/docker-compose.yml
       service: woodpecker-agent
   mastodon:
     extends:
