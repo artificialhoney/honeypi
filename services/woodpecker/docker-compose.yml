@@ -1,0 +1,24 @@
+services:
+  woodpecker-server:
+    image: woodpeckerci/woodpecker-server:{HONEYPI_APP_VERSION:-latest}
+    container_name: woodpecker-server
+    restart: unless-stopped
+    extends:
+      file: ../../commons/compose.yml
+      service: base
+    env_file:
+      - ./service.env
+    volumes:
+      - ${HONEYPI_HOME}/woodpecker:/var/lib/woodpecker
+  woodpecker-agent:
+    image: woodpeckerci/woodpecker-agent:{HONEYPI_APP_VERSION:-latest}
+    container_name: woodpecker-agent
+    command: agent
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    extends:
+      file: ../../commons/compose.yml
+      service: base
+    env_file:
+      - ./service.env

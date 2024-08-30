@@ -1,0 +1,16 @@
+services:
+  gitea:
+    container_name: gitea
+    image: gitea/gitea:${HONEYPI_APP_VERSION:-latest}
+    restart: unless-stopped
+    extends:
+      file: ../../commons/compose.yml
+      service: base
+    env_file:
+      - ./service.env
+    volumes:
+      - ${HONEYPI_HOME}/gitea/data:/var/lib/gitea
+      - ${HONEYPI_HOME}/gitea/config:/etc/gitea
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    

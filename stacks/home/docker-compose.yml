@@ -15,6 +15,23 @@ services:
     extends:
       file: ../../services/elasticsearch/docker-compose.yml
       service: elasticsearch
+  gitea:
+    extends:
+      file: ../../services/gitea/docker-compose.yml
+      service: gitea
+    ports:
+      - 9000:3000
+      - 2222:2222
+  woodpecker-server:
+    extends:
+      file: ../../services/woodpecker-server/docker-compose.yml
+      service: woodpecker-server
+    ports:
+      - 8000:8000
+  woodpecker-agent:
+    extends:
+      file: ../../services/woodpecker-agent/docker-compose.yml
+      service: woodpecker-agent
   mastodon:
     extends:
       file: ../../services/mastodon/docker-compose.yml
