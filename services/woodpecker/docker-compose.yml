@@ -1,6 +1,6 @@
 services:
   woodpecker-server:
-    image: woodpeckerci/woodpecker-server:{HONEYPI_APP_VERSION:-latest}
+    image: woodpeckerci/woodpecker-server:${HONEYPI_APP_VERSION:-latest}
     container_name: woodpecker-server
     restart: unless-stopped
     extends:
@@ -11,7 +11,7 @@ services:
     volumes:
       - ${HONEYPI_HOME}/woodpecker:/var/lib/woodpecker
   woodpecker-agent:
-    image: woodpeckerci/woodpecker-agent:{HONEYPI_APP_VERSION:-latest}
+    image: woodpeckerci/woodpecker-agent:${HONEYPI_APP_VERSION:-latest}
     container_name: woodpecker-agent
     command: agent
     restart: unless-stopped
