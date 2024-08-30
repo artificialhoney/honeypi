@@ -18,14 +18,14 @@ services:
     ports:
       - 0.0.0.0:9200:9200
       - 0.0.0.0:9300:9300
-  sirboobs_tor:
+  sirboobs-tor:
     extends:
       file: ../../services/sirboobs/docker-compose.yml
-      service: sirboobs_tor
-  sirboobs_privoxy:
+      service: sirboobs-tor
+  sirboobs-privoxy:
     extends:
       file: ../../services/sirboobs/docker-compose.yml
-      service: sirboobs_privoxy
+      service: sirboobs-privoxy
   mastodon:
     extends:
       file: ../../services/mastodon/docker-compose.yml
