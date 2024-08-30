@@ -11,6 +11,8 @@ services:
     extends:
       file: ../../services/redis/docker-compose.yml
       service: redis
+    ports:
+      - 0.0.0.0:6379:6379
   elasticsearch:
     extends:
       file: ../../services/elasticsearch/docker-compose.yml
