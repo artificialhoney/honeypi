@@ -30,3 +30,4 @@ services:
       - "cluster.initial_master_nodes: ['node-0']"
       - "discovery.type=single-node"
       - "thread_pool.write.queue_size=1000"
+      - "network.host=0.0.0.0"
