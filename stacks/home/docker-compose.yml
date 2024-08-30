@@ -15,6 +15,8 @@ services:
     extends:
       file: ../../services/elasticsearch/docker-compose.yml
       service: elasticsearch
+    ports:
+      - 9200:9200
   mastodon:
     extends:
       file: ../../services/mastodon/docker-compose.yml
