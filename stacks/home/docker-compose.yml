@@ -11,6 +11,21 @@ services:
     extends:
       file: ../../services/redis/docker-compose.yml
       service: redis
+  elasticsearch:
+    extends:
+      file: ../../services/elasticsearch/docker-compose.yml
+      service: elasticsearch
+    ports:
+      - 0.0.0.0:9200:9200
+      - 0.0.0.0:9300:9300
+  sirboobs_tor:
+    extends:
+      file: ../../services/sirboobs/docker-compose.yml
+      service: sirboobs_tor
+  sirboobs_privoxy:
+    extends:
+      file: ../../services/sirboobs/docker-compose.yml
+      service: sirboobs_privoxy
   mastodon:
     extends:
       file: ../../services/mastodon/docker-compose.yml

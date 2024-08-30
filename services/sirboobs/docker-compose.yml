@@ -1,0 +1,9 @@
+services:
+  sirboobs-tor:
+    image: sirboops/tor
+    container_name: sirboobs-tor
+  sirboobs-privoxy:
+    image: sirboops/privoxy
+    container_name: sirboobs-privoxy
+    volumes:
+      - ${HONEYPI_HOME}/sirboobs/privoxy/config:/opt/config
