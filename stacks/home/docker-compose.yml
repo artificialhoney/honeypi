@@ -11,12 +11,6 @@ services:
     extends:
       file: ../../services/redis/docker-compose.yml
       service: redis
-  elasticsearch:
-    extends:
-      file: ../../services/elasticsearch/docker-compose.yml
-      service: elasticsearch
-    ports:
-      - 127.0.0.1:9200:9200
   mastodon:
     extends:
       file: ../../services/mastodon/docker-compose.yml
