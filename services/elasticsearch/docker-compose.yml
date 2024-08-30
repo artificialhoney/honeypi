@@ -7,27 +7,16 @@ services:
       - ${HONEYPI_HOME}/elasticsearch/data:/usr/share/elasticsearch/data
     ulimits:
       memlock:
-        soft: -1
-        hard: -1
-      nofile:
-        soft: 65536
-        hard: 65536
+          soft: -1
+          hard: -1
     extends:
       file: ../../commons/compose.yml
       service: base
     env_file:
       - ./service.env
     environment:
-      - "ES_JAVA_OPTS=-Xms256m -Xmx256m -Des.enforce.bootstrap.checks=true"
-      - "xpack.license.self_generated.type=basic"
-      - "xpack.security.enabled=false"
-      - "xpack.watcher.enabled=false"
-      - "xpack.graph.enabled=false"
-      - "xpack.ml.enabled=false"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx1024m -Des.enforce.bootstrap.checks=true"
       - "bootstrap.memory_lock=true"
-      - "cluster.name=honeypi"
-      - "node.name: node-0"
-      - "cluster.initial_master_nodes: ['node-0']"
+      - "node.name: es01"
       - "discovery.type=single-node"
-      - "thread_pool.write.queue_size=1000"
-      - "network.host=0.0.0.0"
+      
