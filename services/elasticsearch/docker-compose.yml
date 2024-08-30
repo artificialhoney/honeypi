@@ -15,8 +15,11 @@ services:
     env_file:
       - ./service.env
     environment:
-      - "ES_JAVA_OPTS=-Xms512m -Xmx1024m -Des.enforce.bootstrap.checks=true"
-      - "bootstrap.memory_lock=true"
-      - "node.name: es01"
-      - "discovery.type=single-node"
+      - ES_JAVA_OPTS=-Xms512m -Xmx1024m
+      - es.enforce.bootstrap.checks=true
+      - bootstrap.memory_lock=true
+      - node.name=es01
+      - xpack.security.enabled=false
+      - cluster.name=es
+      - discovery.type=single-node
       
