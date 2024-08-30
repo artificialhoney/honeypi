@@ -32,4 +32,3 @@ services:
       - "discovery.type=single-node"
       - "thread_pool.write.queue_size=1000"
       - "network.host=0.0.0.0"
-      - "vm.max_map_count=262144"
