@@ -20,7 +20,7 @@ services:
       file: ../../services/gitea/docker-compose.yml
       service: gitea
     ports:
-      - 9000:3000
+      - 7000:3000
       - 2222:2222
   woodpecker-server:
     extends:
