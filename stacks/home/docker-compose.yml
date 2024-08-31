@@ -114,6 +114,11 @@ services:
     ports:
       - 9000:9000
       - 9443:9443
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.homeassistant.rule=Host(`${HONEYPI_AUTHENTIK_HOST}`)
+      - traefik.http.routers.whoami.entrypoints=websecure
+      - traefik.http.routers.whoami.tls.certresolver=resolver
     depends_on:
       - redis
       - postgres
