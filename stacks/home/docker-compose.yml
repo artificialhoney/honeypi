@@ -38,6 +38,11 @@ services:
       - 3000:3000
     depends_on:
       - mastodon-init
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.mastodon.rule=Host(`${HONEYPI_MASTODON_HOST}`)
+      - traefik.http.routers.whoami.entrypoints=websecure
+      - traefik.http.routers.whoami.tls.certresolver=resolver
   mastodon-init:
     extends:
       file: ../../services/mastodon/docker-compose.yml
@@ -67,6 +72,11 @@ services:
       - 8123:8123
     depends_on:
       - postgres
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.homeassistant.rule=Host(`${HONEYPI_HOMEASSISTANT_HOST}`)
+      - traefik.http.routers.whoami.entrypoints=websecure
+      - traefik.http.routers.whoami.tls.certresolver=resolver
   photoprism:
     extends:
       file: ../../services/photoprism/docker-compose.yml
@@ -75,12 +85,22 @@ services:
       - 2342:2342
     depends_on:
       - postgres
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.homeassistant.rule=Host(`${HONEYPI_PHOTOPRISM_HOST}`)
+      - traefik.http.routers.whoami.entrypoints=websecure
+      - traefik.http.routers.whoami.tls.certresolver=resolver
   n8n:
     extends:
       file: ../../services/n8n/docker-compose.yml
       service: n8n
     ports:
       - 5678:5678
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.homeassistant.rule=Host(`${HONEYPI_N8N_HOST}`)
+      - traefik.http.routers.whoami.entrypoints=websecure
+      - traefik.http.routers.whoami.tls.certresolver=resolver
   authentik-worker:
     extends:
       file: ../../services/authentik/docker-compose.yml
@@ -97,13 +117,13 @@ services:
     depends_on:
       - redis
       - postgres
-  nginxproxymanager:
+  traefik:
     extends:
-      file: ../../services/nginxproxymanager/docker-compose.yml
-      service: nginxproxymanager
+      file: ../../services/traefik/docker-compose.yml
+      service: traefik
     ports:
       - 80:80
-      - 81:81
+      - 8080:8080
       - 443:443
   dbgate:
     extends:

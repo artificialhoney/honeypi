@@ -1,0 +1,19 @@
+services:
+  traefik:
+    image: traefik:${HONEYPI_APP_VERSION:-latest}
+    container_name: traefik
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entryPoints.websecure.address=:443"
+      - "--certificatesresolvers.resolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.resolver.acme.email=${HONEYPI_LETSENCRYPT_EMAIL}"
+      - "--certificatesresolvers.resolver.acme.storage=/letsencrypt/acme.json"
+    restart: unless-stopped
+    extends:
+      file: ../../commons/compose.yml
+      service: base
+    volumes:
+      - ${HONEYPI_HOME}/letsencrypt:/letsencrypt
+      - /var/run/docker.sock:/var/run/docker.sock
