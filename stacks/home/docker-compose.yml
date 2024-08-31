@@ -77,7 +77,10 @@ services:
       - traefik.http.routers.homeassistant.rule=Host(`${HONEYPI_HOMEASSISTANT_HOST}`)
       - traefik.http.routers.homeassistant.entrypoints=websecure
       - traefik.http.routers.homeassistant.tls.certresolver=resolver
-      - traefik.http.routers.homeassistant.middlewares=authentik
+      - traefik.http.middlewares.authentik.forwardauth.address=http://authentik:9000/outpost.goauthentik.io/auth/traefik
+      - traefik.http.middlewares.authentik.forwardauth.trustForwardHeader=true
+      - traefik.http.middlewares.authentik.forwardauth.authResponseHeaders=X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid,X-authentik-jwt,X-authentik-meta-jwks,X-authentik-meta-outpost,X-authentik-meta-provider,X-authentik-meta-app,X-authentik-meta-version
+      - traefik.http.routers.homeassistant.middlewares=authentik@docker
   photoprism:
     extends:
       file: ../../services/photoprism/docker-compose.yml
@@ -102,7 +105,10 @@ services:
       - traefik.http.routers.n8n.rule=Host(`${HONEYPI_N8N_HOST}`)
       - traefik.http.routers.n8n.entrypoints=websecure
       - traefik.http.routers.n8n.tls.certresolver=resolver
-      - traefik.http.routers.n8n.middlewares=authentik
+      - traefik.http.middlewares.authentik.forwardauth.address=http://authentik:9000/outpost.goauthentik.io/auth/traefik
+      - traefik.http.middlewares.authentik.forwardauth.trustForwardHeader=true
+      - traefik.http.middlewares.authentik.forwardauth.authResponseHeaders=X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid,X-authentik-jwt,X-authentik-meta-jwks,X-authentik-meta-outpost,X-authentik-meta-provider,X-authentik-meta-app,X-authentik-meta-version
+      - traefik.http.routers.n8n.middlewares=authentik@docker
   authentik-worker:
     extends:
       file: ../../services/authentik/docker-compose.yml
@@ -132,10 +138,6 @@ services:
       - 80:80
       - 8080:8080
       - 443:443
-    labels:
-      - traefik.http.middlewares.authentik.forwardauth.address=http://authentik:9000/outpost.goauthentik.io/auth/traefik
-      - traefik.http.middlewares.authentik.forwardauth.trustForwardHeader=true
-      - traefik.http.middlewares.authentik.forwardauth.authResponseHeaders=X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid,X-authentik-jwt,X-authentik-meta-jwks,X-authentik-meta-outpost,X-authentik-meta-provider,X-authentik-meta-app,X-authentik-meta-version
   dbgate:
     extends:
       file: ../../services/dbgate/docker-compose.yml
