@@ -77,6 +77,7 @@ services:
       - traefik.http.routers.homeassistant.rule=Host(`${HONEYPI_HOMEASSISTANT_HOST}`)
       - traefik.http.routers.homeassistant.entrypoints=websecure
       - traefik.http.routers.homeassistant.tls.certresolver=resolver
+      - traefik.http.routers.homeassistant.middlewares=authentik-proxy@docker
   photoprism:
     extends:
       file: ../../services/photoprism/docker-compose.yml
@@ -101,6 +102,22 @@ services:
       - traefik.http.routers.n8n.rule=Host(`${HONEYPI_N8N_HOST}`)
       - traefik.http.routers.n8n.entrypoints=websecure
       - traefik.http.routers.n8n.tls.certresolver=resolver
+      - traefik.http.routers.n8n.middlewares=authentik-proxy@docker
+  authentik-proxy:
+    extends:
+      file: ../../services/authentik/docker-compose.yml
+      service: authentik-proxy
+    ports:
+      - 9000:9000
+      - 9443:9443
+    labels:
+      traefik.enable: true
+      traefik.port: 9000
+      traefik.http.routers.authentik-proxy.rule: (Host(`${HONEYPI_N8N_HOST}`) || Host(`${HONEYPI_HOMEASSITANT_HOST}`)) && PathPrefix(`/outpost.goauthentik.io/`)
+      # `authentik-proxy` refers to the service name in the compose file.
+      traefik.http.middlewares.authentik-proxy.forwardauth.address: http://authentik-proxy:9000/outpost.goauthentik.io/auth/traefik
+      traefik.http.middlewares.authentik-proxy.forwardauth.trustForwardHeader: true
+      traefik.http.middlewares.authentik-proxy.forwardauth.authResponseHeaders: X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid,X-authentik-jwt,X-authentik-meta-jwks,X-authentik-meta-outpost,X-authentik-meta-provider,X-authentik-meta-app,X-authentik-meta-version
   authentik-worker:
     extends:
       file: ../../services/authentik/docker-compose.yml
