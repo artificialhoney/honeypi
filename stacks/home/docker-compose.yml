@@ -87,7 +87,7 @@ services:
       - postgres
     labels:
       - traefik.enable=true
-      - traefik.http.routers.homeassistant.rule=Host(`${HONEYPI_PHOTOPRISM_HOST}`)
+      - traefik.http.routers.photoprism.rule=Host(`${HONEYPI_PHOTOPRISM_HOST}`)
       - traefik.http.routers.whoami.entrypoints=websecure
       - traefik.http.routers.whoami.tls.certresolver=resolver
   n8n:
@@ -98,7 +98,7 @@ services:
       - 5678:5678
     labels:
       - traefik.enable=true
-      - traefik.http.routers.homeassistant.rule=Host(`${HONEYPI_N8N_HOST}`)
+      - traefik.http.routers.n8n.rule=Host(`${HONEYPI_N8N_HOST}`)
       - traefik.http.routers.whoami.entrypoints=websecure
       - traefik.http.routers.whoami.tls.certresolver=resolver
   authentik-worker:
@@ -116,7 +116,7 @@ services:
       - 9443:9443
     labels:
       - traefik.enable=true
-      - traefik.http.routers.homeassistant.rule=Host(`${HONEYPI_AUTHENTIK_HOST}`)
+      - traefik.http.routers.authentik.rule=Host(`${HONEYPI_AUTHENTIK_HOST}`)
       - traefik.http.routers.whoami.entrypoints=websecure
       - traefik.http.routers.whoami.tls.certresolver=resolver
     depends_on:
