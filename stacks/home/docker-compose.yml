@@ -102,19 +102,7 @@ services:
       - traefik.http.routers.n8n.rule=Host(`${HONEYPI_N8N_HOST}`)
       - traefik.http.routers.n8n.entrypoints=websecure
       - traefik.http.routers.n8n.tls.certresolver=resolver
-      - traefik.http.routers.n8n.middlewares=authentik-proxy@docker
-  authentik-proxy:
-    extends:
-      file: ../../services/authentik/docker-compose.yml
-      service: authentik-proxy
-    labels:
-      traefik.enable: true
-      traefik.port: 9000
-      traefik.http.routers.authentik-proxy.rule: (Host(`${HONEYPI_N8N_HOST}`) || Host(`${HONEYPI_HOMEASSISTANT_HOST}`)) && PathPrefix(`/outpost.goauthentik.io/`)
-      # `authentik-proxy` refers to the service name in the compose file.
-      traefik.http.middlewares.authentik-proxy.forwardauth.address: http://authentik:9000/outpost.goauthentik.io/auth/traefik
-      traefik.http.middlewares.authentik-proxy.forwardauth.trustForwardHeader: true
-      traefik.http.middlewares.authentik-proxy.forwardauth.authResponseHeaders: X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid,X-authentik-jwt,X-authentik-meta-jwks,X-authentik-meta-outpost,X-authentik-meta-provider,X-authentik-meta-app,X-authentik-meta-version
+      - traefik.http.routers.n8n.middlewares=authentik@docker
   authentik-worker:
     extends:
       file: ../../services/authentik/docker-compose.yml
@@ -130,9 +118,13 @@ services:
       - 9443:9443
     labels:
       - traefik.enable=true
-      - traefik.http.routers.authentik.rule=Host(`${HONEYPI_AUTHENTIK_HOST}`)
+      - traefik.port=9000
+      - traefik.http.routers.authentik.rule=Host(`${HONEYPI_AUTHENTIK_HOST}`) || ((Host(`${HONEYPI_N8N_HOST}`) || Host(`${HONEYPI_HOMEASSITANT_HOST}`)) && PathPrefix(`/outpost.goauthentik.io/`))
       - traefik.http.routers.authentik.entrypoints=websecure
       - traefik.http.routers.authentik.tls.certresolver=resolver
+      - traefik.http.middlewares.authentik.forwardauth.address=http://authentik:9000/outpost.goauthentik.io/auth/traefik
+      - traefik.http.middlewares.authentik.forwardauth.trustForwardHeader=true
+      - traefik.http.middlewares.authentik.forwardauth.authResponseHeaders=X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid,X-authentik-jwt,X-authentik-meta-jwks,X-authentik-meta-outpost,X-authentik-meta-provider,X-authentik-meta-app,X-authentik-meta-version
     depends_on:
       - redis
       - postgres
