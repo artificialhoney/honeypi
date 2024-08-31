@@ -26,12 +26,3 @@ services:
       service: base
     env_file:
       - ./service.env
-  authentik-proxy:
-    image: ghcr.io/goauthentik/proxy:${HONEYPI_APP_VERSION:-latest}
-    container_name: authentik-proxy
-    extends:
-      file: ../../commons/compose.yml
-      service: base
-    env_file:
-      - ./service.env
-    restart: unless-stopped
