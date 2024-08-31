@@ -41,8 +41,8 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.mastodon.rule=Host(`${HONEYPI_MASTODON_HOST}`)
-      - traefik.http.routers.whoami.entrypoints=websecure
-      - traefik.http.routers.whoami.tls.certresolver=resolver
+      - traefik.http.routers.mastodon.entrypoints=websecure
+      - traefik.http.routers.mastodon.tls.certresolver=resolver
   mastodon-init:
     extends:
       file: ../../services/mastodon/docker-compose.yml
@@ -75,8 +75,8 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.homeassistant.rule=Host(`${HONEYPI_HOMEASSISTANT_HOST}`)
-      - traefik.http.routers.whoami.entrypoints=websecure
-      - traefik.http.routers.whoami.tls.certresolver=resolver
+      - traefik.http.routers.homeassistant.entrypoints=websecure
+      - traefik.http.routers.homeassistant.tls.certresolver=resolver
   photoprism:
     extends:
       file: ../../services/photoprism/docker-compose.yml
@@ -88,8 +88,8 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.photoprism.rule=Host(`${HONEYPI_PHOTOPRISM_HOST}`)
-      - traefik.http.routers.whoami.entrypoints=websecure
-      - traefik.http.routers.whoami.tls.certresolver=resolver
+      - traefik.http.routers.photoprism.entrypoints=websecure
+      - traefik.http.routers.photoprism.tls.certresolver=resolver
   n8n:
     extends:
       file: ../../services/n8n/docker-compose.yml
@@ -99,8 +99,8 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.n8n.rule=Host(`${HONEYPI_N8N_HOST}`)
-      - traefik.http.routers.whoami.entrypoints=websecure
-      - traefik.http.routers.whoami.tls.certresolver=resolver
+      - traefik.http.routers.n8n.entrypoints=websecure
+      - traefik.http.routers.n8n.tls.certresolver=resolver
   authentik-worker:
     extends:
       file: ../../services/authentik/docker-compose.yml
@@ -117,8 +117,8 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.authentik.rule=Host(`${HONEYPI_AUTHENTIK_HOST}`)
-      - traefik.http.routers.whoami.entrypoints=websecure
-      - traefik.http.routers.whoami.tls.certresolver=resolver
+      - traefik.http.routers.authentik.entrypoints=websecure
+      - traefik.http.routers.authentik.tls.certresolver=resolver
     depends_on:
       - redis
       - postgres
