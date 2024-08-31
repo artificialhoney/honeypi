@@ -107,14 +107,13 @@ services:
     extends:
       file: ../../services/authentik/docker-compose.yml
       service: authentik-proxy
-    ports:
-      - 9000:9000
-      - 9443:9443
+    # ports:
+      # - 9000:9000
+      # - 9443:9443
     labels:
       traefik.enable: true
       traefik.port: 9000
       traefik.http.routers.authentik-proxy.rule: (Host(`${HONEYPI_N8N_HOST}`) || Host(`${HONEYPI_HOMEASSISTANT_HOST}`)) && PathPrefix(`/outpost.goauthentik.io/`)
-      # `authentik-proxy` refers to the service name in the compose file.
       traefik.http.middlewares.authentik-proxy.forwardauth.address: http://authentik-proxy:9000/outpost.goauthentik.io/auth/traefik
       traefik.http.middlewares.authentik-proxy.forwardauth.trustForwardHeader: true
       traefik.http.middlewares.authentik-proxy.forwardauth.authResponseHeaders: X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid,X-authentik-jwt,X-authentik-meta-jwks,X-authentik-meta-outpost,X-authentik-meta-provider,X-authentik-meta-app,X-authentik-meta-version
@@ -132,7 +131,7 @@ services:
       service: authentik
     ports:
       - 9000:9000
-      # - 9443:9443
+      - 9443:9443
     labels:
       - traefik.enable=true
       - traefik.http.routers.authentik.rule=Host(`${HONEYPI_AUTHENTIK_HOST}`)
