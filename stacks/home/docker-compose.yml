@@ -1,4 +1,8 @@
 services:
+  mariadb:
+    extends:
+      file: ../../services/mariadb/docker-compose.yml
+      service: mariadb
   postgres:
     extends:
       file: ../../services/postgres/docker-compose.yml
