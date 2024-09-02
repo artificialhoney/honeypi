@@ -92,7 +92,7 @@ services:
     ports:
       - 2342:2342
     depends_on:
-      - postgres
+      - mariadb
     labels:
       - traefik.enable=true
       - traefik.http.routers.photoprism.rule=Host(`${HONEYPI_PHOTOPRISM_HOST}`)
