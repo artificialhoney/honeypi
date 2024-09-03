@@ -31,7 +31,7 @@ services:
       - traefik.http.routers.gitea.tls.certresolver=resolver
       - traefik.http.routers.gitea.service=gitea
       - traefik.http.services.gitea.loadbalancer.server.port=3000
-      - traefik.tcp.routers.gitea-ssh.rule=HostSNI(`*`)
+      - traefik.tcp.routers.gitea-ssh.rule=Host(`${HONEYPI_GITEA_HOST}`)
       - traefik.tcp.routers.gitea-ssh.entrypoints=ssh
       - traefik.tcp.routers.gitea-ssh.service=gitea-ssh
       - traefik.tcp.services.gitea-ssh.loadbalancer.server.port=2222
