@@ -30,7 +30,7 @@ services:
       - traefik.http.routers.gitea.entrypoints=websecure
       - traefik.http.routers.gitea.tls.certresolver=resolver
       - traefik.http.routers.gitea.service=gitea
-      - traefik.http.services.gitea.loadbalacer.server.port=3000
+      - traefik.http.services.gitea.loadbalancer.server.port=3000
   woodpecker-server:
     extends:
       file: ../../services/woodpecker/docker-compose.yml
@@ -43,7 +43,7 @@ services:
       - traefik.http.routers.woodpecker.entrypoints=websecure
       - traefik.http.routers.woodpecker.tls.certresolver=resolver
       - traefik.http.routers.woodpecker.service=woodpecker
-      - traefik.http.services.woodpecker.loadbalacer.server.port=8000
+      - traefik.http.services.woodpecker.loadbalancer.server.port=8000
   woodpecker-agent:
     extends:
       file: ../../services/woodpecker/docker-compose.yml
@@ -62,7 +62,7 @@ services:
       - traefik.http.routers.mastodon.entrypoints=websecure
       - traefik.http.routers.mastodon.tls.certresolver=resolver
       - traefik.http.routers.mastodon.service=mastodon
-      - traefik.http.services.mastodon.loadbalacer.server.port=3000
+      - traefik.http.services.mastodon.loadbalancer.server.port=3000
   mastodon-init:
     extends:
       file: ../../services/mastodon/docker-compose.yml
@@ -98,7 +98,7 @@ services:
       - traefik.http.routers.homeassistant.entrypoints=websecure
       - traefik.http.routers.homeassistant.tls.certresolver=resolver
       - traefik.http.routers.homeassistant.service=homeassistant
-      - traefik.http.services.homeassistant.loadbalacer.server.port=8123
+      - traefik.http.services.homeassistant.loadbalancer.server.port=8123
       - traefik.http.middlewares.authentik.forwardauth.address=http://authentik:9000/outpost.goauthentik.io/auth/traefik
       - traefik.http.middlewares.authentik.forwardauth.trustForwardHeader=true
       - traefik.http.middlewares.authentik.forwardauth.authResponseHeaders=X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid,X-authentik-jwt,X-authentik-meta-jwks,X-authentik-meta-outpost,X-authentik-meta-provider,X-authentik-meta-app,X-authentik-meta-version
@@ -117,7 +117,7 @@ services:
       - traefik.http.routers.photoprism.entrypoints=websecure
       - traefik.http.routers.photoprism.tls.certresolver=resolver
       - traefik.http.routers.photoprism.service=photoprism
-      - traefik.http.services.photoprism.loadbalacer.server.port=2342
+      - traefik.http.services.photoprism.loadbalancer.server.port=2342
   n8n:
     extends:
       file: ../../services/n8n/docker-compose.yml
@@ -130,7 +130,7 @@ services:
       - traefik.http.routers.n8n.entrypoints=websecure
       - traefik.http.routers.n8n.tls.certresolver=resolver
       - traefik.http.routers.n8n.service=n8n
-      - traefik.http.services.n8n.loadbalacer.server.port=5678
+      - traefik.http.services.n8n.loadbalancer.server.port=5678
       - traefik.http.middlewares.authentik.forwardauth.address=http://authentik:9000/outpost.goauthentik.io/auth/traefik
       - traefik.http.middlewares.authentik.forwardauth.trustForwardHeader=true
       - traefik.http.middlewares.authentik.forwardauth.authResponseHeaders=X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid,X-authentik-jwt,X-authentik-meta-jwks,X-authentik-meta-outpost,X-authentik-meta-provider,X-authentik-meta-app,X-authentik-meta-version
@@ -154,7 +154,7 @@ services:
       - traefik.http.routers.authentik.entrypoints=websecure
       - traefik.http.routers.authentik.tls.certresolver=resolver
       - traefik.http.routers.authentik.service=authentik
-      - traefik.http.services.authentik.loadbalacer.server.port=9000
+      - traefik.http.services.authentik.loadbalancer.server.port=9000
     depends_on:
       - redis
       - postgres
