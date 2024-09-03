@@ -20,15 +20,20 @@ services:
       file: ../../services/gitea/docker-compose.yml
       service: gitea
     ports:
-      - 7000:3000
+      - 7000:7000
       - 2222:22
     depends_on:
       - postgres
+    environment:
+      - GITEA_HTTP_PORT=7000
     labels:
       - traefik.enable=true
       - traefik.http.routers.gitea.rule=Host(`${HONEYPI_GITEA_HOST}`)
       - traefik.http.routers.gitea.entrypoints=websecure
       - traefik.http.routers.gitea.tls.certresolver=resolver
+      - traefik.tcp.routers.gitea-ssh.rule=HostSNI(`*`)"
+      - traefik.tcp.routers.gitea-ssh.service=gitea-ssh"
+      - traefik.tcp.routers.gitea-ssh.entrypoints=ssh"
   woodpecker-server:
     extends:
       file: ../../services/woodpecker/docker-compose.yml
