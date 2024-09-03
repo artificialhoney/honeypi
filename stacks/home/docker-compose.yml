@@ -21,8 +21,6 @@ services:
       service: gitea
     depends_on:
       - postgres
-    ports:
-      - 2222:22
     labels:
       - traefik.enable=true
       - traefik.http.routers.gitea.rule=Host(`${HONEYPI_GITEA_HOST}`)
@@ -33,7 +31,7 @@ services:
       - traefik.tcp.routers.gitea-ssh.rule=HostSNI(`*`)
       - traefik.tcp.routers.gitea-ssh.entrypoints=ssh
       - traefik.tcp.routers.gitea-ssh.service=gitea-ssh
-      - traefik.tcp.services.gitea-ssh.loadbalancer.server.port=2222
+      - traefik.tcp.services.gitea-ssh.loadbalancer.server.port=22
   woodpecker-server:
     extends:
       file: ../../services/woodpecker/docker-compose.yml
