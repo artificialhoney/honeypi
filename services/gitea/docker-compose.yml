@@ -9,8 +9,7 @@ services:
     env_file:
       - ./service.env
     volumes:
-      - ${HONEYPI_HOME}/gitea/data:/var/lib/gitea
-      - ${HONEYPI_HOME}/gitea/config:/etc/gitea
+      - ${HONEYPI_HOME}/gitea/data:/data
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     
