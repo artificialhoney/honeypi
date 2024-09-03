@@ -26,9 +26,9 @@ services:
       - postgres
     labels:
       - traefik.enable=true
-      - traefik.http.routers.photoprism.rule=Host(`${HONEYPI_GITEA_HOST}`)
-      - traefik.http.routers.photoprism.entrypoints=websecure
-      - traefik.http.routers.photoprism.tls.certresolver=resolver
+      - traefik.http.routers.gitea.rule=Host(`${HONEYPI_GITEA_HOST}`)
+      - traefik.http.routers.gitea.entrypoints=websecure
+      - traefik.http.routers.gitea.tls.certresolver=resolver
   woodpecker-server:
     extends:
       file: ../../services/woodpecker/docker-compose.yml
@@ -37,9 +37,9 @@ services:
       - 8000:8000
     labels:
       - traefik.enable=true
-      - traefik.http.routers.photoprism.rule=Host(`${HONEYPI_WOODPECKER_HOST}`)
-      - traefik.http.routers.photoprism.entrypoints=websecure
-      - traefik.http.routers.photoprism.tls.certresolver=resolver
+      - traefik.http.routers.woodpecker.rule=Host(`${HONEYPI_WOODPECKER_HOST}`)
+      - traefik.http.routers.woodpecker.entrypoints=websecure
+      - traefik.http.routers.woodpecker.tls.certresolver=resolver
   woodpecker-agent:
     extends:
       file: ../../services/woodpecker/docker-compose.yml
