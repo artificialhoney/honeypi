@@ -24,12 +24,22 @@ services:
       - 2222:22
     depends_on:
       - postgres
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.photoprism.rule=Host(`${HONEYPI_GITEA_HOST}`)
+      - traefik.http.routers.photoprism.entrypoints=websecure
+      - traefik.http.routers.photoprism.tls.certresolver=resolver
   woodpecker-server:
     extends:
       file: ../../services/woodpecker/docker-compose.yml
       service: woodpecker-server
     ports:
       - 8000:8000
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.photoprism.rule=Host(`${HONEYPI_WOODPECKER_HOST}`)
+      - traefik.http.routers.photoprism.entrypoints=websecure
+      - traefik.http.routers.photoprism.tls.certresolver=resolver
   woodpecker-agent:
     extends:
       file: ../../services/woodpecker/docker-compose.yml
