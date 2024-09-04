@@ -10,6 +10,7 @@ services:
       - ./service.env
     volumes:
       - ${HONEYPI_HOME}/gitea/data:/data
+      - ${HONEYPI_CONFIG}/gitea/theme:/data/gitea
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     
