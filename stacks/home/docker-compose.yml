@@ -78,6 +78,13 @@ services:
     depends_on:
       - redis
       - postgres
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.mastodon-streaming.rule=(Host(`${HONEYPI_MASTODON_HOST}`) && PathPrefix(`/api/v1/streaming`))"
+      - traefik.http.routers.mastodon-streaming.entrypoints=websecure
+      - traefik.http.routers.mastodon-streaming.tls.certresolver=letsencrypt
+      - traefik.http.routers.mastodon-streaming.service=mastodon-streaming
+      - traefik.http.services.mastodon-streaming.loadbalancer.server.port=4000
   mastodon-sidekiq:
     extends:
       file: ../../services/mastodon/docker-compose.yml
