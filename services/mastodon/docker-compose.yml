@@ -6,7 +6,7 @@
 
 services:
   mastodon:
-    image: ghcr.io/mastodon/mastodon:${HONEYPI_APP_VERSION:-latest}
+    image: ghcr.io/${HONEYPI_MASTODON_GHCR_USER:-mastodon}/mastodon:${HONEYPI_APP_VERSION:-latest}
     restart: unless-stopped
     container_name: mastodon
     command: bundle exec puma -C config/puma.rb
@@ -18,7 +18,7 @@ services:
     env_file:
       - ./service.env
   mastodon-init:
-    image: ghcr.io/mastodon/mastodon:${HONEYPI_APP_VERSION:-latest}
+    image: ghcr.io/${HONEYPI_MASTODON_GHCR_USER:-mastodon}/mastodon:${HONEYPI_APP_VERSION:-latest}
     restart: unless-stopped
     container_name: mastodon-init
     command: rake db:migrate
@@ -30,7 +30,7 @@ services:
     env_file:
       - ./service.env
   mastodon-streaming:
-    image: ghcr.io/mastodon/mastodon-streaming:${HONEYPI_APP_VERSION:-latest}
+    image: ghcr.io/${HONEYPI_MASTODON_GHCR_USER:-mastodon}/mastodon-streaming:${HONEYPI_APP_VERSION:-latest}
     restart: unless-stopped
     container_name: mastodon-streaming
     command: node ./streaming/index.js
@@ -40,7 +40,7 @@ services:
     env_file:
       - ./service.env
   mastodon-sidekiq:
-    image: ghcr.io/mastodon/mastodon:${HONEYPI_APP_VERSION:-latest}
+    image: ghcr.io/${HONEYPI_MASTODON_GHCR_USER:-mastodon}/mastodon:${HONEYPI_APP_VERSION:-latest}
     restart: unless-stopped
     container_name: mastodon-sidekiq
     command: bundle exec sidekiq
