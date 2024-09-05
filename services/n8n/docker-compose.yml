@@ -5,6 +5,7 @@ services:
     restart: unless-stopped
     volumes:
       - ${HONEYPI_HOME}/n8n/data:/home/node/.n8n
+      - ${HONEYPI_CONFIG}/n8n/theme/favicon.ico:/usr/local/lib/node_modules/n8n/node_modules/n8n-editor-ui/dist/favicon.ico
     extends:
       file: ../../commons/compose.yml
       service: base
