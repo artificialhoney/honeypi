@@ -11,9 +11,8 @@ services:
     volumes:
       - ${HONEYPI_HOME}/photoprism/originals:/photoprism/originals
       - ${HONEYPI_HOME}/photoprism/storage:/photoprism/storage
-      - "${HONEYPI_CONFIG}/photoprism/theme/favicon.png:/photoprism/storage/config/theme/favicon.png"
-      - ${HONEYPI_CONFIG}/photoprism/theme/app.js:/photoprism/storage/config/theme/app.js
-      - ${HONEYPI_CONFIG}/photoprism/theme/app.css:/photoprism/storage/config/theme/app.css
+      - ${HONEYPI_CONFIG}/photoprism/theme:/photoprism/storage/config/theme
+
     extends:
       file: ../../commons/compose.yml
       service: base
