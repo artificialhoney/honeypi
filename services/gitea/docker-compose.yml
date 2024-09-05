@@ -10,8 +10,8 @@ services:
       - ./service.env
     volumes:
       - ${HONEYPI_HOME}/gitea/data:/data
-      - ${HONEYPI_CONFIG}/gitea/theme/public:${HONEYPI_HOME}/gitea/data/gitea/public
-      - ${HONEYPI_CONFIG}/gitea/theme/templates:${HONEYPI_HOME}/gitea/data/gitea/templates
+      - ${HONEYPI_CONFIG}/gitea/theme/public:/data/gitea/public
+      - ${HONEYPI_CONFIG}/gitea/theme/templates:/data/gitea/templates
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     
