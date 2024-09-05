@@ -7,7 +7,7 @@ services:
     volumes:
       - ${HONEYPI_HOME}/authentik/media:/media
       - ${HONEYPI_HOME}/authentik/templates:/templates
-      - ${HONEYPI_CONFIG}/authentik/theme/icons:/web/dist/assets/icons
+      - ${HONEYPI_CONFIG}/authentik/theme/icons/icon.png:/web/dist/assets/icons/icon.png
     extends:
       file: ../../commons/compose.yml
       service: base
