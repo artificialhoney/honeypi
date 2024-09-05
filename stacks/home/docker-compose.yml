@@ -15,6 +15,17 @@ services:
     extends:
       file: ../../services/elasticsearch/docker-compose.yml
       service: elasticsearch
+  homer:
+    extends:
+      file: ../../services/homer/docker-compose.yml
+      service: homer
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.homer.rule=Host(`${HONEYPI_HOMER_HOST}`)
+      - traefik.http.routers.homer.entrypoints=websecure
+      - traefik.http.routers.homer.tls.certresolver=resolver
+      - traefik.http.routers.homer.service=homer
+      - traefik.http.services.homer.loadbalancer.server.port=8080
   gitea:
     extends:
       file: ../../services/gitea/docker-compose.yml

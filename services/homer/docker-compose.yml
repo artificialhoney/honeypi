@@ -1,0 +1,12 @@
+services:
+  homer:
+    container_name: homer
+    image: b4bz/homer:${HONEYPI_APP_VERSION:-latest}
+    restart: unless-stopped
+    volumes:
+      - ${HONEYPI_CONFIG}/homer/theme/assets:/www/assets
+    extends:
+      file: ../../commons/compose.yml
+      service: base
+    env_file:
+        - ./service.env
