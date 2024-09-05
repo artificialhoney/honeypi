@@ -10,7 +10,6 @@ services:
       - ./service.env
     volumes:
       - ${HONEYPI_HOME}/woodpecker:/var/lib/woodpecker
-      - ${HONEYPI_HOME}/woodpecker/var:/var
   woodpecker-agent:
     image: woodpeckerci/woodpecker-agent:${HONEYPI_APP_VERSION:-latest}
     container_name: woodpecker-agent
