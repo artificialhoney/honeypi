@@ -80,6 +80,7 @@ services:
     environment:
       - WOODPECKER_SERVER=woodpecker-server:9000
       - WOODPECKER_HEALTHCHECK=false
+      - WOODPECKER_BACKEND_DOCKER_NETWORK=home_default
   mastodon:
     extends:
       file: ../../services/mastodon/docker-compose.yml
