@@ -194,3 +194,7 @@ services:
       - 4000:3000
     depends_on:
       - postgres
+  kopia:
+    extends:
+      file: ../../services/kopia/docker-compose.yml
+      service: kopia
