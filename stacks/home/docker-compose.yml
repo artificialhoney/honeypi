@@ -60,6 +60,8 @@ services:
     extends:
       file: ../../services/woodpecker/docker-compose.yml
       service: woodpecker-agent
+    environment:
+      - WOODPECKER_SERVER=woodpecker-server:8000
   mastodon:
     extends:
       file: ../../services/mastodon/docker-compose.yml
