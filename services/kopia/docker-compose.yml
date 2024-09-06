@@ -3,6 +3,7 @@ services:
     image: kopia/kopia:${HONEYPI_APP_VERSION:-latest}
     container_name: kopia
     restart: unless-stopped
+    hostname: hive
     ports:
       - 51515:51515
     command:
