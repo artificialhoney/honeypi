@@ -62,29 +62,29 @@ if [ "$1" = "env" ]; then
 elif [ "$1" = "module" ]; then
   shift
   [ -f "$PWD/$HONEYPI_ENVIRONMENT.env" ] && loadEnv "$PWD/$HONEYPI_ENVIRONMENT.env"
-  echo "Deploying module: '$1'"
+  echo "Module: '$1'"
   . $SCRIPT_DIR/modules/$1/install.sh
   exit 0
 elif [ "$1" = "service" ]; then
   shift
   [ -f "$PWD/$HONEYPI_ENVIRONMENT.env" ] && loadEnv "$PWD/$HONEYPI_ENVIRONMENT.env"
-  echo "Deploying service: '$1'"
+  echo "Service: '$1'"
   COMPOSE_FILE="$COMPOSE_FILE -f $SCRIPT_DIR/service/$1/docker-compose.yml"
   [ -f "$HONEYPI_COMPOSE_FILE" ] && COMPOSE_FILE="$COMPOSE_FILE -f $HONEYPI_COMPOSE_FILE"
   shift
   ACTION="up -d"
-  [ ! -z "${@}" ] && ACTION="${@}"
+  [ ! -z "${*}" ] && ACTION="${*}"
   docker compose $COMPOSE_FILE --env-file $PWD/$HONEYPI_ENVIRONMENT.env $ACTION
   exit 0
 elif [ "$1" = "stack" ]; then
   shift
   [ -f "$PWD/$HONEYPI_ENVIRONMENT.env" ] && loadEnv "$PWD/$HONEYPI_ENVIRONMENT.env"
-  echo "Deploying stack: '$1'"
+  echo "Stack: '$1'"
   COMPOSE_FILE="$COMPOSE_FILE -f $SCRIPT_DIR/stacks/$1/docker-compose.yml"
   [ -f "$HONEYPI_COMPOSE_FILE" ] && COMPOSE_FILE="$COMPOSE_FILE -f $HONEYPI_COMPOSE_FILE"
   shift
   ACTION="up -d"
-  [ ! -z "${@}" ] && ACTION="${@}"
+  [ ! -z "${*}" ] && ACTION="${*}"
   docker compose $COMPOSE_FILE --env-file $PWD/$HONEYPI_ENVIRONMENT.env $ACTION
   exit 0
 else
