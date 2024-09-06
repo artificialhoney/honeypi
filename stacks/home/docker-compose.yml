@@ -198,3 +198,5 @@ services:
     extends:
       file: ../../services/kopia/docker-compose.yml
       service: kopia
+    ports:
+      - 51515:51515
