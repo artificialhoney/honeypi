@@ -20,7 +20,7 @@ services:
       - ${HONEYPI_HOME}/kopia/config:/app/config
       - ${HONEYPI_HOME}/kopia/cache:/app/cache
       - ${HONEYPI_HOME}/kopia/logs:/app/logs
-      - ${HONEYPI_HOME}:/data:ro
+      - /:/data:ro
       - ${HONEYPI_KOPIA_REPOSITORY}:/repository
       - /mnt/kopia:/tmp:shared
     env_file:
