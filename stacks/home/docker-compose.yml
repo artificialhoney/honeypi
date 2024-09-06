@@ -60,11 +60,9 @@ services:
     extends:
       file: ../../services/woodpecker/docker-compose.yml
       service: woodpecker-agent
-    ports:
-      - 5000:5000
     environment:
       - WOODPECKER_SERVER=woodpecker-server:8000
-      - WOODPECKER_HEALTHCHECK_ADDR=:5000
+      - WOODPECKER_HEALTHCHECK=false
   mastodon:
     extends:
       file: ../../services/mastodon/docker-compose.yml
