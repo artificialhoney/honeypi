@@ -49,7 +49,6 @@ services:
       service: woodpecker-server
     ports:
       - 8000:8000
-      - 9000:9000
     labels:
       - traefik.enable=true
       - traefik.http.routers.woodpecker.rule=Host(`${HONEYPI_WOODPECKER_HOST}`)
