@@ -56,6 +56,14 @@ services:
       - traefik.http.routers.woodpecker.tls.certresolver=resolver
       - traefik.http.routers.woodpecker.service=woodpecker
       - traefik.http.services.woodpecker.loadbalancer.server.port=8000
+
+      - traefik.http.routers.woodpecker-http.rule=Host(`${HONEYPI_WOODPECKER_HOST}`)
+      - traefik.http.routers.woodpecker-http.entrypoints=web
+      - traefik.http.routers.woodpecker-http.service=woodpecker-http
+
+      - traefik.http.middlewares.woodpecker-redirect.redirectscheme.scheme=https
+      - traefik.http.middlewares.woodpecker-redirect.redirectscheme.permanent=true
+      - traefik.http.routers.woodpecker-http.middlewares=woodpecker-redirect
   woodpecker-agent:
     extends:
       file: ../../services/woodpecker/docker-compose.yml
