@@ -43,15 +43,6 @@ services:
       - traefik.tcp.routers.gitea-ssh.entrypoints=ssh
       - traefik.tcp.routers.gitea-ssh.service=gitea-ssh
       - traefik.tcp.services.gitea-ssh.loadbalancer.server.port=2222
-
-
-      - traefik.http.routers.gitea-http.rule=Host(`${HONEYPI_GITEA_HOST}`)
-      - traefik.http.routers.gitea-http.entrypoints=web
-      - traefik.http.routers.gitea-http.service=gitea-http
-
-      - traefik.http.middlewares.gitea-redirect.redirectscheme.scheme=https
-      - traefik.http.middlewares.gitea-redirect.redirectscheme.permanent=true
-      - traefik.http.routers.gitea-http.middlewares=gitea-redirect
   woodpecker-server:
     extends:
       file: ../../services/woodpecker/docker-compose.yml
