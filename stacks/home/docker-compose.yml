@@ -178,6 +178,7 @@ services:
       - traefik.http.routers.authentik.tls.certresolver=resolver
       - traefik.http.routers.authentik.service=authentik
       - traefik.http.services.authentik.loadbalancer.server.port=9000
+      - traefik.providers.file.filename=/etc/traefik/dynamic.yml
     depends_on:
       - redis
       - postgres
