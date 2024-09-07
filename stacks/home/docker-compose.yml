@@ -191,6 +191,7 @@ services:
       - 2222:2222
       - 443:443
     labels:
+      - traefik.enable=true
       - traefik.providers.file.directory=/etc/traefik/config
       - traefik.providers.file.watch=true
   dbgate:
