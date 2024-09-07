@@ -178,8 +178,6 @@ services:
       - traefik.http.routers.authentik.tls.certresolver=resolver
       - traefik.http.routers.authentik.service=authentik
       - traefik.http.services.authentik.loadbalancer.server.port=9000
-      - traefik.providers.file.directory=/etc/traefik/config
-      - traefik.providers.file.watch=true
     depends_on:
       - redis
       - postgres
@@ -192,6 +190,9 @@ services:
       - 8080:8080
       - 2222:2222
       - 443:443
+    labels:
+      - traefik.providers.file.directory=/etc/traefik/config
+      - traefik.providers.file.watch=true
   dbgate:
     extends:
       file: ../../services/dbgate/docker-compose.yml
