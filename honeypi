@@ -7,7 +7,7 @@ POSITIONAL_ARGS=()
 MODULES=$(ls $SCRIPT_DIR/modules | xargs -n 1 basename)
 SERVICE_MODULES=$(ls $SCRIPT_DIR/services | xargs -n 1 basename)
 STACK_MODULES=$(ls $SCRIPT_DIR/stacks | xargs -n 1 basename)
-HONEYPI_COMPOSE_FILE=$PWD/docker-compose.yml
+# HONEYPI_COMPOSE_FILE=$PWD/docker-compose.yml
 
 loadEnv() {
   source $1
@@ -29,7 +29,7 @@ Usage:
 Options:
   -h --help                  Show this screen.
   -e --environment=<env>     Environment [default: local].
-  -f --file=<path>           Path to docker-compose.yml [default: local].
+  -f --file=<path>           Path to docker-compose.yml.
 "
       shift # past argument
       exit 0
@@ -69,7 +69,7 @@ elif [ "$1" = "service" ]; then
   shift
   [ -f "$PWD/$HONEYPI_ENVIRONMENT.env" ] && loadEnv "$PWD/$HONEYPI_ENVIRONMENT.env"
   echo "Service: '$1'"
-  COMPOSE_FILE="$COMPOSE_FILE -f $SCRIPT_DIR/service/$1/docker-compose.yml"
+  COMPOSE_FILE="$COMPOSE_FILE -f $SCRIPT_DIR/services/$1/docker-compose.yml"
   [ -f "$HONEYPI_COMPOSE_FILE" ] && COMPOSE_FILE="$COMPOSE_FILE -f $HONEYPI_COMPOSE_FILE"
   shift
   ACTION="up -d"
