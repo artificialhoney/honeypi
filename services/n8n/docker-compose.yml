@@ -1,13 +1,16 @@
 services:
   n8n:
-    image: docker.n8n.io/n8nio/n8n:${HONEYPI_APP_VERSION:-latest}
+    image: docker.n8n.io/n8nio/n8n:${HONEYPI_N8N_VERSION:-latest}
     container_name: n8n
     restart: unless-stopped
     volumes:
-      - ${HONEYPI_HOME}/n8n/data:/home/node/.n8n
-      - ${HONEYPI_CONFIG}/n8n/theme/favicon.ico:/usr/local/lib/node_modules/n8n/node_modules/n8n-editor-ui/dist/favicon.ico
-    extends:
-      file: ../../commons/compose.yml
-      service: base
+      - ${HONEYPI_DATA}/n8n:/home/node/.n8n
     env_file:
       - ./service.env
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.n8n.rule=Host(`${HONEYPI_N8N_HOST}`)
+      - traefik.http.routers.n8n.entrypoints=websecure
+      - traefik.http.routers.n8n.tls.certresolver=resolver
+      - traefik.http.routers.n8n.service=n8n
+      - traefik.http.services.n8n.loadbalancer.server.port=5678

@@ -1,6 +1,6 @@
 services:
   photoprism:
-    image: photoprism/photoprism:${HONEYPI_APP_VERSION:-latest}
+    image: photoprism/photoprism:${HONEYPI_PHOTOPRISM_VERSION:-latest}
     container_name: photoprism
     restart: unless-stopped
     stop_grace_period: 10s
@@ -9,10 +9,14 @@ services:
       - apparmor:unconfined
     working_dir: /photoprism
     volumes:
-      - ${HONEYPI_HOME}/photoprism/originals:/photoprism/originals
-      - ${HONEYPI_HOME}/photoprism/storage:/photoprism/storage
-    extends:
-      file: ../../commons/compose.yml
-      service: base
+      - ${HONEYPI_DATA}/photoprism/originals:/photoprism/originals
+      - ${HONEYPI_DATA}/photoprism/storage:/photoprism/storage
     env_file:
       - ./service.env
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.photoprism.rule=Host(`${HONEYPI_PHOTOPRISM_HOST}`)
+      - traefik.http.routers.photoprism.entrypoints=websecure
+      - traefik.http.routers.photoprism.tls.certresolver=resolver
+      - traefik.http.routers.photoprism.service=photoprism
+      - traefik.http.services.photoprism.loadbalancer.server.port=2342

@@ -1,15 +1,12 @@
 services:
   gitlab:
-    image: yrzr/gitlab-ce-arm64v8:${HONEYPI_APP_VERSION:-latest}
+    image: yrzr/gitlab-ce-arm64v8:${HONEYPI_GITLAB_VERSION:-latest}
     restart: unless-stopped
     container_name: gitlab
     shm_size: 256m
     volumes:
-      - ${HONEYPI_HOME}/gitlab/config:/etc/gitlab
-      - ${HONEYPI_CONFIG}/gitlab/config/gitlab.rb:/etc/gitlab/gitlab.rb
-      - ${HONEYPI_HOME}/gitlab/logs:/var/log/gitlab
-    extends:
-      file: ../../commons/compose.yml
-      service: base
+      - ${HONEYPI_DATA}/gitlab/config:/etc/gitlab
+      - ${HONEYPI_CONFIG}/gitlab/gitlab.rb:/etc/gitlab/gitlab.rb
+      - ${HONEYPI_DATA}/gitlab/logs:/var/log/gitlab
     env_file:
       - ./service.env

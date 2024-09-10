@@ -1,16 +1,12 @@
 services:
   nextcloud-aio-mastercontainer:
-    image: nextcloud/all-in-one:${HONEYPI_APP_VERSION:-latest}
+    image: nextcloud/all-in-one:${HONEYPI_NEXTCLOUD_VERSION:-latest}
     init: true
     restart: unless-stopped
     container_name: nextcloud-aio-mastercontainer
     volumes:
       - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    extends:
-      file: ../../commons/compose.yml
-      service: base
-    
 volumes:
   nextcloud_aio_mastercontainer:
     name: nextcloud_aio_mastercontainer

@@ -1,13 +1,10 @@
 services:
   mediamtx:
-    image: bluenviron/mediamtx:${HONEYPI_APP_VERSION:-latest}-ffmpeg
+    image: bluenviron/mediamtx:${HONEYPI_MEDIAMTX_VERSION:-latest}-ffmpeg
     container_name: mediamtx
     restart: unless-stopped
     volumes:
-      - ${HONEYPI_CONFIG}/mediamtx/config/mediamtx.yml:/mediamtx.yml
-      - ${HONEYPI_CONFIG}/mediamtx/config/server.crt:/server.crt
-      - ${HONEYPI_CONFIG}/mediamtx/config/server.key:/server.key
-    extends:
-      file: ../../commons/compose.yml
-      service: base
+      - ${HONEYPI_CONFIG}/mediamtx/mediamtx.yml:/mediamtx.yml
+
+
     

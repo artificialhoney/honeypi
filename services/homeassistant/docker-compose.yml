@@ -1,16 +1,20 @@
 services:
   homeassistant:
     container_name: homeassistant
-    image: homeassistant/home-assistant:${HONEYPI_APP_VERSION:-latest}
+    image: homeassistant/home-assistant:${HONEYPI_HOMEASSISTANT_VERSION:-latest}
     restart: unless-stopped
     volumes:
-      - ${HONEYPI_HOME}/homeassistant/config:/config
-      - ${HONEYPI_CONFIG}/homeassistant/config/custom_components:/config/custom_components
-      - ${HONEYPI_CONFIG}/homeassistant/config/configuration.yaml:/config/configuration.yaml
+      - ${HONEYPI_DATA}/homeassistant/config:/config
+      - ${HONEYPI_CONFIG}/homeassistant/custom_components:/config/custom_components
+      - ${HONEYPI_CONFIG}/homeassistant/configuration.yaml:/config/configuration.yaml
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
-    extends:
-      file: ../../commons/compose.yml
-      service: base
     env_file:
-      - ./service.env    
+      - ./service.env
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.homeassistant.rule=Host(`${HONEYPI_HOMEASSISTANT_HOST}`)
+      - traefik.http.routers.homeassistant.entrypoints=websecure
+      - traefik.http.routers.homeassistant.tls.certresolver=resolver
+      - traefik.http.routers.homeassistant.service=homeassistant
+      - traefik.http.services.homeassistant.loadbalancer.server.port=8123

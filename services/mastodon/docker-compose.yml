@@ -1,53 +1,51 @@
-# docker run -e "SECRET_KEY_BASE=$HONEYPI_MASTODON_SECRET_KEY_BASE" -e "OTP_SECRET=$HONEYPI_MASTODON_OTP_SECRET" \
-# -e DB_HOST=postgres -e DB_PASS=$HONEYPI_POSTGRES_PASSWORD -e DB_USER=honeypi -e DB_NAME=mastodon -e REDIS_HOST=redis \
-# -v /srv/honeypi/mastodon/public/system:/mastodon/public/system \
-# --network home_default \
-# --rm ghcr.io/mastodon/mastodon rake db:migrate
-
 services:
   mastodon:
-    image: ghcr.io/${HONEYPI_MASTODON_GHCR_USER:-mastodon}/mastodon:${HONEYPI_APP_VERSION:-latest}
+    image: ghcr.io/${HONEYPI_MASTODON_GHCR_USER:-mastodon}/mastodon:${HONEYPI_MASTODON_VERSION:-latest}
     restart: unless-stopped
     container_name: mastodon
     command: bundle exec puma -C config/puma.rb
     volumes:
-      - ${HONEYPI_HOME}/mastodon/public/system:/mastodon/public/system
-    extends:
-      file: ../../commons/compose.yml
-      service: base
+      - ${HONEYPI_DATA}/mastodon/public/system:/mastodon/public/system
     env_file:
       - ./service.env
+    depends_on:
+      - mastodon-init
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.mastodon.rule=Host(`${HONEYPI_MASTODON_HOST}`)
+      - traefik.http.routers.mastodon.entrypoints=websecure
+      - traefik.http.routers.mastodon.tls.certresolver=resolver
+      - traefik.http.routers.mastodon.service=mastodon
+      - traefik.http.services.mastodon.loadbalancer.server.port=3000
   mastodon-init:
-    image: ghcr.io/${HONEYPI_MASTODON_GHCR_USER:-mastodon}/mastodon:${HONEYPI_APP_VERSION:-latest}
+    image: ghcr.io/${HONEYPI_MASTODON_GHCR_USER:-mastodon}/mastodon:${HONEYPI_MASTODON_VERSION:-latest}
     restart: unless-stopped
     container_name: mastodon-init
     command: rake db:migrate
     volumes:
-      - ${HONEYPI_HOME}/mastodon/public/system:/mastodon/public/system
-    extends:
-      file: ../../commons/compose.yml
-      service: base
+      - ${HONEYPI_DATA}/mastodon/public/system:/mastodon/public/system
     env_file:
       - ./service.env
   mastodon-streaming:
-    image: ghcr.io/${HONEYPI_MASTODON_GHCR_USER:-mastodon}/mastodon-streaming:${HONEYPI_APP_VERSION:-latest}
+    image: ghcr.io/${HONEYPI_MASTODON_GHCR_USER:-mastodon}/mastodon-streaming:${HONEYPI_MASTODON_VERSION:-latest}
     restart: unless-stopped
     container_name: mastodon-streaming
     command: node ./streaming/index.js
-    extends:
-      file: ../../commons/compose.yml
-      service: base
     env_file:
       - ./service.env
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.mastodon-streaming.rule=Host(`${HONEYPI_MASTODON_HOST}`) && PathPrefix(`/api/v1/streaming`)
+      - traefik.http.routers.mastodon-streaming.entrypoints=websecure
+      - traefik.http.routers.mastodon-streaming.tls.certresolver=resolver
+      - traefik.http.routers.mastodon-streaming.service=mastodon-streaming
+      - traefik.http.services.mastodon-streaming.loadbalancer.server.port=4000
   mastodon-sidekiq:
-    image: ghcr.io/${HONEYPI_MASTODON_GHCR_USER:-mastodon}/mastodon:${HONEYPI_APP_VERSION:-latest}
+    image: ghcr.io/${HONEYPI_MASTODON_GHCR_USER:-mastodon}/mastodon:${HONEYPI_MASTODON_VERSION:-latest}
     restart: unless-stopped
     container_name: mastodon-sidekiq
     command: bundle exec sidekiq
     volumes:
-      - ${HONEYPI_HOME}/mastodon/public/system:/mastodon/public/system
-    extends:
-      file: ../../commons/compose.yml
-      service: base
+      - ${HONEYPI_DATA}/mastodon/public/system:/mastodon/public/system
     env_file:
       - ./service.env

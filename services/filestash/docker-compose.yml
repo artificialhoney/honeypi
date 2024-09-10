@@ -1,11 +1,9 @@
 services:
   filestash:
     container_name: filestash
-    image: machines/filestash:${HONEYPI_APP_VERSION:-latest}
+    image: machines/filestash:${HONEYPI_FILESTASH_VERSION:-latest}
     restart: unless-stopped
     volumes:
-      - ${HONEYPI_HOME}/filestash/state:/app/data/state/
-    extends:
-      file: ../../commons/compose.yml
-      service: base
+      - ${HONEYPI_DATA}/filestash/state:/app/data/state/
+
     

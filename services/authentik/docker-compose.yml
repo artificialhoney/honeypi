@@ -1,29 +1,31 @@
 services:
   authentik:
-    image: ghcr.io/goauthentik/server:${HONEYPI_APP_VERSION:-latest}
+    image: ghcr.io/goauthentik/server:${HONEYPI_AUTHENTIK_VERSION:-latest}
     restart: unless-stopped
     container_name: authentik
     command: server
     volumes:
-      - ${HONEYPI_HOME}/authentik/media:/media
-      - ${HONEYPI_HOME}/authentik/templates:/templates
-      - ${HONEYPI_CONFIG}/authentik/theme/icons/icon.png:/web/dist/assets/icons/icon.png
-    extends:
-      file: ../../commons/compose.yml
-      service: base
+      - ${HONEYPI_DATA}/authentik/media:/media
+      - ${HONEYPI_DATA}/authentik/templates:/templates
     env_file:
       - ./service.env
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.authentik.rule=Host(`${HONEYPI_AUTHENTIK_HOST}`)
+      - traefik.http.routers.authentik.entrypoints=websecure
+      - traefik.http.routers.authentik.tls.certresolver=resolver
+      - traefik.http.routers.authentik.service=authentik
+      - traefik.http.services.authentik.loadbalancer.server.port=9000
   authentik-worker:
-    image: ghcr.io/goauthentik/server:${HONEYPI_APP_VERSION:-latest}
+    image: ghcr.io/goauthentik/server:${HONEYPI_AUTHENTIK_VERSION:-latest}
     restart: unless-stopped
     container_name: authentik-worker
     command: worker
     volumes:
-      - ${HONEYPI_HOME}/authentik/media:/media
-      - ${HONEYPI_HOME}/authentik/certs:/certs
-      - ${HONEYPI_HOME}/authentik/templates:/templates
-    extends:
-      file: ../../commons/compose.yml
-      service: base
+      - ${HONEYPI_DATA}/authentik/media:/media
+      - ${HONEYPI_DATA}/authentik/certs:/certs
+      - ${HONEYPI_DATA}/authentik/templates:/templates
     env_file:
       - ./service.env
+    depends_on:
+      - authentik

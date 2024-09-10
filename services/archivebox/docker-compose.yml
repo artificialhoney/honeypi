@@ -1,0 +1,21 @@
+services:
+  archivebox:
+    image: archivebox/archivebox:${HONEYPI_ARCHIVEBOX_VERSION:-latest}
+    volumes:
+      - ${HONEYPI_DATA}/archivebox/data:/data
+    env_file:
+      - ./service.env
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.authentik.rule=Host(`${HONEYPI_ARCHIVEBOX_HOST}`)
+      - traefik.http.routers.authentik.entrypoints=websecure
+      - traefik.http.routers.authentik.tls.certresolver=resolver
+      - traefik.http.routers.authentik.service=authentik
+      - traefik.http.services.authentik.loadbalancer.server.port=8000
+  archivebox_scheduler:
+    image: archivebox/archivebox:${HONEYPI_ARCHIVEBOX_VERSION:-latest}
+    command: schedule --foreground --update --every=day
+    environment:
+      - TIMEOUT=120
+    volumes:
+      - ${HONEYPI_DATA}/archivebox/data:/data

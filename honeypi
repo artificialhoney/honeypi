@@ -21,7 +21,6 @@ while [[ $# -gt 0 ]]; do
 honeypi
 
 Usage:
-  honeypi stack <name>
   honeypi service <name>
   honeypi module <name>
   honeypi env <env>

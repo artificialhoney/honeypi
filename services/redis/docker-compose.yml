@@ -1,12 +1,9 @@
 services:
   redis:
-    image: 'redis:${HONEYPI_APP_VERSION:-latest}'
+    image: redis:${HONEYPI_REDIS_VERSION:-latest}
     container_name: redis
     restart: unless-stopped
     volumes:
-      - ${HONEYPI_HOME}/redis/data:/data
-    extends:
-      file: ../../commons/compose.yml
-      service: base
+      - ${HONEYPI_DATA}/redis/data:/data
     env_file:
       - ./service.env

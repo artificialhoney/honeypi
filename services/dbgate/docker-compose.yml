@@ -1,12 +1,9 @@
 services:
   dbgate:
-    image: dbgate/dbgate:${HONEYPI_APP_VERSION:-latest}
-    restart: always
+    image: dbgate/dbgate:${HONEYPI_DBGATE_VERSION:-latest}
+    restart: unless-stopped
     container_name: dbgate
     volumes:
-      - ${HONEYPI_HOME}/dbgate/data:/root/.dbgate
-    extends:
-      file: ../../commons/compose.yml
-      service: base
+      - ${HONEYPI_DATA}/dbgate/data:/root/.dbgate
     env_file:
       - ./service.env

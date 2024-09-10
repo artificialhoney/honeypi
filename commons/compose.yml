@@ -1,5 +1,0 @@
-services:
-  base:
-    env_file:
-      - ./commons.env
-      - $PWD/${HONEYPI_ENVIRONMENT}.env

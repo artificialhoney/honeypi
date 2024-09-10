@@ -1,0 +1,10 @@
+services:
+  sonic:
+    image: valeriansaliou/sonic:${HONEYPI_SONIC_VERSION:-latest}
+    expose:
+      - 1491
+    volumes:
+      - ${HONEYPI_CONFIG}/sonic/sonic.cfg:/etc/sonic.cfg
+      - ${HONEYPI_DATA}/sonic/data:/var/lib/sonic/store
+    env_file:
+      - ./service.env

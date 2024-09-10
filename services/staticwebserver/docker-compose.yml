@@ -1,10 +1,8 @@
 services:
   staticwebserver:
-    image: joseluisq/static-web-server:${HONEYPI_APP_VERSION:-latest}
+    image: joseluisq/static-web-server:${HONEYPI_STATICWEBSERVER_VERSION:-latest}
     container_name: staticwebserver
     restart: unless-stopped
-    extends:
-      file: ../../commons/compose.yml
-      service: base
     volumes:
-      - ${HONEYPI_HOME}/staticwebserver/public:/public
+      - ${HONEYPI_DATA}/staticwebserver/hosts:/srv/hosts
+      - ${HONEYPI_DATA}/staticwebserver/config.toml:/etc/config.toml

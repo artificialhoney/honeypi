@@ -1,17 +1,15 @@
 services:
   homebridge:
-    image: homebridge/homebridge:${HONEYPI_APP_VERSION:-latest}
+    image: homebridge/homebridge:${HONEYPI_HOMEBRIDGE_VERSION:-latest}
     container_name: homebridge
     restart: unless-stopped
     volumes:
-      - ${HONEYPI_HOME}/homebridge:/homebridge
+      - ${HONEYPI_DATA}/homebridge:/homebridge
       - /run/dbus:/run/dbus:ro
     logging:
       driver: json-file
       options:
         max-size: 10mb
         max-file: 1
-    extends:
-      file: ../../commons/compose.yml
-      service: base
+
     

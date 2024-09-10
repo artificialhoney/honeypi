@@ -5,20 +5,16 @@ My Raspberry Pi Server.
 ## Installation
 
 ```bash
-git clone https://github.com/artificialhoney/honeypi honeypi
-cd honeypi
-cp local.env hive.env # make changes etc.
+./setup.sh
 ```
 
 ## Usage
 
-__Run__:
+### Docker Swarm
 
-> `honeypi run -e hive portainer` installs __Portainer__
+```
 
-__Sync__:
-
-> `honeypi sync -e hive` syncs local folder to $HONEYPI_HOST
+```
 
 ## License
 

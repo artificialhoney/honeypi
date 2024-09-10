@@ -1,13 +1,10 @@
 services:
   jellyfin:
-    image: jellyfin/jellyfin:${HONEYPI_APP_VERSION:-latest}
+    image: jellyfin/jellyfin:${HONEYPI_JELLYFIN_VERSION:-latest}
     container_name: jellyfin
     restart: unless-stopped
-    extends:
-      file: ../../commons/compose.yml
-      service: base
     volumes:
-      - ${HONEYPI_HOME}/jellyfin/config:/config
-      - ${HONEYPI_HOME}/jellyfin/cache:/cache
+      - ${HONEYPI_DATA}/jellyfin/config:/config
+      - ${HONEYPI_DATA}/jellyfin/cache:/cache
     env_file:
       - ./service.env

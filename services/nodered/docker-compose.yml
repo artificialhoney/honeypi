@@ -1,11 +1,9 @@
 services:
   nodered:
-    image: nodered/node-red
+    image: nodered/node-red:{HONEYPI_NODERED_VERSION:-latest}
     container_name: nodered
     restart: unless-stopped
     volumes:
-      - ${HONEYPI_HOME}/nodered/data:/data
-    extends:
-      file: ../../commons/compose.yml
-      service: base
+      - ${HONEYPI_DATA}/nodered/data:/data
+
     
