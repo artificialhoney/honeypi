@@ -1,6 +1,7 @@
 services:
   archivebox:
     image: archivebox/archivebox:${HONEYPI_ARCHIVEBOX_VERSION:-latest}
+    container_name: archivebox
     volumes:
       - ${HONEYPI_DATA}/archivebox/data:/data
     env_file:
@@ -12,8 +13,9 @@ services:
       - traefik.http.routers.authentik.tls.certresolver=resolver
       - traefik.http.routers.authentik.service=authentik
       - traefik.http.services.authentik.loadbalancer.server.port=8000
-  archivebox_scheduler:
+  archivebox-scheduler:
     image: archivebox/archivebox:${HONEYPI_ARCHIVEBOX_VERSION:-latest}
+    container_name: archivebox-scheduler
     command: schedule --foreground --update --every=day
     environment:
       - TIMEOUT=120

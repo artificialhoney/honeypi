@@ -1,6 +1,7 @@
 services:
   sonic:
     image: valeriansaliou/sonic:${HONEYPI_SONIC_VERSION:-latest}
+    container_name: sonic
     expose:
       - 1491
     volumes:

@@ -8,5 +8,7 @@ services:
     volumes:
       - ${HONEYPI_DATA}/postgres/data:/var/lib/postgresql/data
       - ${HONEYPI_CONFIG}/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
-    env_file:
-      - ./service.env
+    environment:
+      - POSTGRES_USER=${HONEYPI_POSTGRES_USER:-honeypi}
+      - POSTGRES_PASSWORD=${HONEYPI_POSTGRES_PASSWORD}
+      - PGDATA=${HONEYPI_POSTGRES_PGDATA:-/var/lib/postgresql/data/pgdata}
