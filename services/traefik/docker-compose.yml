@@ -6,6 +6,8 @@ services:
       - "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
+      - "--providers.file.directory=/etc/traefik/config"
+      - "--providers.file.watch=true"
       - "--entrypoints.web.address=:80"
       - "--entryPoints.websecure.address=:443"
       - "--entrypoints.ssh.address=:2222"
@@ -15,4 +17,5 @@ services:
     restart: unless-stopped
     volumes:
       - ${HONEYPI_DATA}/letsencrypt:/letsencrypt
+      - ${HONEYPI_CONFIG}/traefik:/etc/traefik/config
       - /var/run/docker.sock:/var/run/docker.sock

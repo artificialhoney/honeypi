@@ -6,3 +6,5 @@ services:
     volumes:
       - ${HONEYPI_DATA}/staticwebserver/hosts:/srv/hosts
       - ${HONEYPI_DATA}/staticwebserver/config.toml:/etc/config.toml
+    env_file:
+      - ./service.env
