@@ -8,11 +8,11 @@ services:
       - ${HONEYPI_HOME}/services/archivebox/service.env
     labels:
       - traefik.enable=true
-      - traefik.http.routers.authentik.rule=Host(`${HONEYPI_ARCHIVEBOX_HOST}`)
-      - traefik.http.routers.authentik.entrypoints=websecure
-      - traefik.http.routers.authentik.tls.certresolver=resolver
-      - traefik.http.routers.authentik.service=authentik
-      - traefik.http.services.authentik.loadbalancer.server.port=8000
+      - traefik.http.routers.archivebox.rule=Host(`${HONEYPI_ARCHIVEBOX_HOST}`)
+      - traefik.http.routers.archivebox.entrypoints=websecure
+      - traefik.http.routers.archivebox.tls.certresolver=resolver
+      - traefik.http.routers.archivebox.service=archivebox
+      - traefik.http.services.archivebox.loadbalancer.server.port=8000
   archivebox-scheduler:
     image: archivebox/archivebox:${HONEYPI_ARCHIVEBOX_VERSION:-latest}
     container_name: archivebox-scheduler

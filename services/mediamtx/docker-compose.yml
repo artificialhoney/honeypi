@@ -5,6 +5,3 @@ services:
     restart: unless-stopped
     volumes:
       - ${HONEYPI_CONFIG}/mediamtx/mediamtx.yml:/mediamtx.yml
-
-
-    
