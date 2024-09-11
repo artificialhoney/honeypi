@@ -12,4 +12,4 @@ services:
       - ${HONEYPI_DATA}/mariadb/data:/var/lib/mysql
       - ${HONEYPI_CONFIG}/mariadb/init.sql:/data/application/init.sql
     env_file:
-      - ./service.env
+      - ${HONEYPI_HOME}/services/mariadb/service.env

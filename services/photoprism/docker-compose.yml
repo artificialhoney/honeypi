@@ -12,7 +12,7 @@ services:
       - ${HONEYPI_DATA}/photoprism/originals:/photoprism/originals
       - ${HONEYPI_DATA}/photoprism/storage:/photoprism/storage
     env_file:
-      - ./service.env
+      - ${HONEYPI_HOME}/services/photoprism/service.env
     labels:
       - traefik.enable=true
       - traefik.http.routers.photoprism.rule=Host(`${HONEYPI_PHOTOPRISM_HOST}`)

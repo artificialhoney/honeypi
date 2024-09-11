@@ -5,7 +5,7 @@ services:
     volumes:
       - ${HONEYPI_DATA}/archivebox/data:/data
     env_file:
-      - ./service.env
+      - ${HONEYPI_HOME}/services/archivebox/service.env
     labels:
       - traefik.enable=true
       - traefik.http.routers.authentik.rule=Host(`${HONEYPI_ARCHIVEBOX_HOST}`)

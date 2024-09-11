@@ -9,4 +9,4 @@ services:
       - ${HONEYPI_CONFIG}/gitlab/gitlab.rb:/etc/gitlab/gitlab.rb
       - ${HONEYPI_DATA}/gitlab/logs:/var/log/gitlab
     env_file:
-      - ./service.env
+      - ${HONEYPI_HOME}/services/gitlab/service.env

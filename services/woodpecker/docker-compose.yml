@@ -4,7 +4,7 @@ services:
     container_name: woodpecker-server
     restart: unless-stopped
     env_file:
-      - ./service.env
+      - ${HONEYPI_HOME}/services/woodpecker/service.env
     volumes:
       - ${HONEYPI_DATA}/woodpecker:/var/lib/woodpecker
     labels:
@@ -22,4 +22,4 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     env_file:
-      - ./service.env
+      - ${HONEYPI_HOME}/services/woodpecker/service.env
