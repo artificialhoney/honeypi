@@ -1,6 +1,6 @@
 services:
   linkding:
-    image: sissbruecker/linkding:{HONEYPI_LINKDING_VERSION:-latest}
+    image: sissbruecker/linkding:${HONEYPI_LINKDING_VERSION:-latest}
     container_name: linkding
     restart: unless-stopped
     volumes:
