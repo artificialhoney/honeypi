@@ -5,5 +5,3 @@ services:
     restart: unless-stopped
     volumes:
       - ${HONEYPI_DATA}/nodered/data:/data
-
-    

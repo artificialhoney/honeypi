@@ -11,5 +11,3 @@ services:
       options:
         max-size: 10mb
         max-file: 1
-
-    
