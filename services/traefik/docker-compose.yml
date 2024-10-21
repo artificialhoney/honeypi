@@ -9,6 +9,8 @@ services:
       - "--providers.file.directory=/etc/traefik/config"
       - "--providers.file.watch=true"
       - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
       - "--entryPoints.websecure.address=:443"
       - "--entrypoints.ssh.address=:2222"
       - "--certificatesresolvers.resolver.acme.tlschallenge=true"
