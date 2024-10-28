@@ -1,6 +1,6 @@
 services:
   restreamer:
-    image: datarhei/restreamer-armv7l:${HONEYPI_RESTREAMER_VERSION:-latest}
+    image: datarhei/restreamer:${HONEYPI_RESTREAMER_VERSION:-latest}
     restart: unless-stopped
     container_name: restreamer
     env_file:
