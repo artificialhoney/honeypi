@@ -1,0 +1,10 @@
+services:
+  restreamer:
+    image: datarhei/restreamer-armv7l:${HONEYPI_RESTREAMER_VERSION:-latest}
+    restart: unless-stopped
+    container_name: restreamer
+    env_file:
+      - ${HONEYPI_HOME}/services/restreamer/service.env
+    volumes:
+      - ${HONEYPI_HOME}/restreamer/db:/restreamer/db
+    tmpfs: /tmp/hls
