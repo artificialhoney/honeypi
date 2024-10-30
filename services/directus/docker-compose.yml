@@ -1,0 +1,7 @@
+services:
+  directus:
+    image: directus/directus:${HONEYPI_DIRECTUS_VERSION:-latest}
+    container_name: directus
+    restart: unless-stopped
+    env_file:
+      - ${HONEYPI_HOME}/services/directus/service.env
