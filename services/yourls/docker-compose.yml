@@ -1,0 +1,14 @@
+services:
+  yourls:
+    image: yourls
+    restart: unless-stopped
+    container_name: yourls
+    env_file:
+      - ${HONEYPI_HOME}/services/yourls/service.env
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.yourls.rule=Host(`${HONEYPI_YOURLS_HOST}`)
+      - traefik.http.routers.yourls.entrypoints=websecure
+      - traefik.http.routers.yourls.tls.certresolver=resolver
+      - traefik.http.routers.yourls.service=yourls
+      - traefik.http.services.yourls.loadbalancer.server.port=80
