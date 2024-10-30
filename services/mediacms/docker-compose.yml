@@ -1,0 +1,33 @@
+services:
+  mediacms-migrations:
+    image: mediacms/mediacms:${HONEYPI_MEDIACMS_VERSION:-latest}
+    container_name: mediacms-migrations
+    volumes:
+      - ${HONEYPI_DATA}/mediacms:/home/mediacms.io/mediacms/
+    env_file:
+      - ${HONEYPI_HOME}/services/mediacms/service.env
+    command: "./deploy/docker/prestart.sh"
+    restart: on-failure
+  mediacms-web:
+    image: mediacms/mediacms:${HONEYPI_MEDIACMS_VERSION:-latest}
+    container_name: mediacms-web
+    volumes:
+      - ${HONEYPI_DATA}/mediacms:/home/mediacms.io/mediacms/
+    env_file:
+      - ${HONEYPI_HOME}/services/mediacms/service.env
+    depends_on:
+      - mediacms-migrations
+  mediacms-celery-beat:
+    image: mediacms/mediacms:${HONEYPI_MEDIACMS_VERSION:-latest}
+    container_name: mediacms-celery-beat
+    volumes:
+      - ${HONEYPI_DATA}/mediacms:/home/mediacms.io/mediacms/
+    env_file:
+      - ${HONEYPI_HOME}/services/mediacms/service.env
+  mediacms-celery-worker:
+    image: mediacms/mediacms:${HONEYPI_MEDIACMS_VERSION:-latest}
+    container_name: mediacms-celery-worker
+    volumes:
+      - ${HONEYPI_DATA}/mediacms:/home/mediacms.io/mediacms/
+    env_file:
+      - ${HONEYPI_HOME}/services/mediacms/service.env
