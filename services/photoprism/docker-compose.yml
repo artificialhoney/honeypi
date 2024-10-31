@@ -13,10 +13,3 @@ services:
       - ${HONEYPI_DATA}/photoprism/storage:/photoprism/storage
     env_file:
       - ${HONEYPI_HOME}/services/photoprism/service.env
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.photoprism.rule=Host(`${HONEYPI_PHOTOPRISM_HOST}`)
-      - traefik.http.routers.photoprism.entrypoints=websecure
-      - traefik.http.routers.photoprism.tls.certresolver=resolver
-      - traefik.http.routers.photoprism.service=photoprism
-      - traefik.http.services.photoprism.loadbalancer.server.port=2342

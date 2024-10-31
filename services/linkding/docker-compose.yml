@@ -7,10 +7,3 @@ services:
       - ${HONEYPI_DATA}/linkding/data:/etc/linkding/data
     env_file:
       - ${HONEYPI_HOME}/services/linkding/service.env
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.linkding.rule=Host(`${HONEYPI_LINKDING_HOST}`)
-      - traefik.http.routers.linkding.entrypoints=websecure
-      - traefik.http.routers.linkding.tls.certresolver=resolver
-      - traefik.http.routers.linkding.service=linkding
-      - traefik.http.services.linkding.loadbalancer.server.port=9090

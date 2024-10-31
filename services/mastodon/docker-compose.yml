@@ -10,13 +10,6 @@ services:
       - ${HONEYPI_HOME}/services/mastodon/service.env
     depends_on:
       - mastodon-init
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.mastodon.rule=Host(`${HONEYPI_MASTODON_HOST}`)
-      - traefik.http.routers.mastodon.entrypoints=websecure
-      - traefik.http.routers.mastodon.tls.certresolver=resolver
-      - traefik.http.routers.mastodon.service=mastodon
-      - traefik.http.services.mastodon.loadbalancer.server.port=3000
   mastodon-init:
     image: ghcr.io/${HONEYPI_MASTODON_GHCR_USER:-mastodon}/mastodon:${HONEYPI_MASTODON_VERSION:-latest}
     restart: unless-stopped
@@ -33,13 +26,6 @@ services:
     command: node ./streaming/index.js
     env_file:
       - ${HONEYPI_HOME}/services/mastodon/service.env
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.mastodon-streaming.rule=Host(`${HONEYPI_MASTODON_HOST}`) && PathPrefix(`/api/v1/streaming`)
-      - traefik.http.routers.mastodon-streaming.entrypoints=websecure
-      - traefik.http.routers.mastodon-streaming.tls.certresolver=resolver
-      - traefik.http.routers.mastodon-streaming.service=mastodon-streaming
-      - traefik.http.services.mastodon-streaming.loadbalancer.server.port=4000
   mastodon-sidekiq:
     image: ghcr.io/${HONEYPI_MASTODON_GHCR_USER:-mastodon}/mastodon:${HONEYPI_MASTODON_VERSION:-latest}
     restart: unless-stopped
