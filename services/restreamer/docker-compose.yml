@@ -6,5 +6,5 @@ services:
     env_file:
       - ${HONEYPI_HOME}/services/restreamer/service.env
     volumes:
-      - ${HONEYPI_HOME}/restreamer/db:/restreamer/db
+      - ${HONEYPI_DATA}/restreamer/db:/restreamer/db
     tmpfs: /tmp/hls
