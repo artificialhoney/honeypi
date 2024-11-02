@@ -7,13 +7,6 @@ services:
       - ${HONEYPI_HOME}/services/woodpecker/service.env
     volumes:
       - ${HONEYPI_DATA}/woodpecker:/var/lib/woodpecker
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.woodpecker.rule=Host(`${HONEYPI_WOODPECKER_HOST}`)
-      - traefik.http.routers.woodpecker.entrypoints=websecure
-      - traefik.http.routers.woodpecker.tls.certresolver=resolver
-      - traefik.http.routers.woodpecker.service=woodpecker
-      - traefik.http.services.woodpecker.loadbalancer.server.port=8000
   woodpecker-agent:
     image: woodpeckerci/woodpecker-agent:${HONEYPI_WOODPECKER_VERSION:-latest}
     container_name: woodpecker-agent
