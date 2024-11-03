@@ -5,10 +5,3 @@ services:
     restart: unless-stopped
     volumes:
       - ${HONEYPI_DATA}/filestash/state:/app/data/state/
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.filestash.rule=Host(`${HONEYPI_FILESTASH_HOST}`)
-      - traefik.http.routers.filestash.entrypoints=websecure
-      - traefik.http.routers.filestash.tls.certresolver=resolver
-      - traefik.http.routers.filestash.service=filestash
-      - traefik.http.services.filestash.loadbalancer.server.port=8334
