@@ -8,3 +8,5 @@ services:
       - ${HONEYPI_DATA}/pihole/etc/dnsmasq.d:/etc/dnsmasq.d
     cap_add:
       - NET_ADMIN
+    env_file:
+      - ${HONEYPI_HOME}/services/pihole/service.env
