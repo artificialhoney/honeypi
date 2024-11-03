@@ -5,6 +5,7 @@ services:
     command:
       - "--api.insecure=true"
       - "--providers.docker=true"
+      - "--providers.docker.domain=${HONEYPI_DOCKER_DOMAIN}"
       - "--providers.docker.exposedbydefault=true"
       - "--providers.file.directory=/etc/traefik/config"
       - "--providers.file.watch=true"
