@@ -1,0 +1,5 @@
+services:
+  soketi:
+    image: quay.io/soketi/soketi:${HONEYPI_SOKETI_VERSION:-latest}
+    restart: unless-stopped
+    container_name: soketi
