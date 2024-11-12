@@ -4,5 +4,5 @@ services:
     container_name: portainer
     restart: unless-stopped
     volumes:
-      - ${HONYPI_DATA}/portainer/data:/data
+      - ${HONEYPI_DATA}/portainer/data:/data
       - /var/run/docker.sock:/var/run/docker.sock
