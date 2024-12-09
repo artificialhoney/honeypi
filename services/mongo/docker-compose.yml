@@ -1,6 +1,6 @@
 services:
   mongo:
-    image: arm64v8/mongo:{HONEYPI_MONGO_VERSION:-latest}
+    image: arm64v8/mongo:${HONEYPI_MONGO_VERSION:-latest}
     container_name: mongo
     restart: unless-stopped
     entrypoint: mongod --bind_ip_all --wiredTigerCacheSizeGB 0.25  --oplogSize 128 --replSet rs0
