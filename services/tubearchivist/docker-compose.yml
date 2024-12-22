@@ -7,4 +7,4 @@ services:
       - ${HONEYPI_DATA}/tubearchivist/media:/youtube
       - ${HONEYPI_DATA}/tubearchivist/cache:/cache
     env_file:
-      - ${HONEYPI_HOME:-~/honeypi}/services/tubearchivist/service.env
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/tubearchivist/service.env

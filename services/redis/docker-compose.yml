@@ -6,4 +6,4 @@ services:
     volumes:
       - ${HONEYPI_DATA}/redis/data:/data
     env_file:
-      - ${HONEYPI_HOME:-~/honeypi}/services/redis/service.env
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/redis/service.env

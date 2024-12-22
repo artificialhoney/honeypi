@@ -9,4 +9,4 @@ services:
     cap_add:
       - NET_ADMIN
     env_file:
-      - ${HONEYPI_HOME:-~/honeypi}/services/pihole/service.env
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/pihole/service.env

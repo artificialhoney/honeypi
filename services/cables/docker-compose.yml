@@ -4,4 +4,4 @@ services:
     restart: unless-stopped
     container_name: cables
     env_file:
-      - ${HONEYPI_HOME:-~/honeypi}/services/cables/service.env
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/cables/service.env

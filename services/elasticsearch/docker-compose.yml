@@ -10,4 +10,4 @@ services:
         soft: -1
         hard: -1
     env_file:
-      - ${HONEYPI_HOME:-~/honeypi}/services/elasticsearch/service.env
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/elasticsearch/service.env

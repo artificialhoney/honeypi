@@ -19,4 +19,4 @@ services:
       - ${HONEYPI_KOPIA_REPOSITORY}:/repository
       - /mnt/kopia:/tmp:shared
     env_file:
-      - ${HONEYPI_HOME:-~/honeypi}/services/kopia/service.env
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/kopia/service.env

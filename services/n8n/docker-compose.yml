@@ -6,7 +6,7 @@ services:
     volumes:
       - ${HONEYPI_DATA}/n8n:/home/node/.n8n
     env_file:
-      - ${HONEYPI_HOME:-~/honeypi}/services/n8n/service.env
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/n8n/service.env
     labels:
       - traefik.enable=true
       - traefik.http.routers.n8n.rule=Host(`${HONEYPI_N8N_HOST}`)

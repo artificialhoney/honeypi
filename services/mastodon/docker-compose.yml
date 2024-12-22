@@ -7,7 +7,7 @@ services:
     volumes:
       - ${HONEYPI_DATA}/mastodon/public/system:/mastodon/public/system
     env_file:
-      - ${HONEYPI_HOME:-~/honeypi}/services/mastodon/service.env
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/mastodon/service.env
     depends_on:
       - mastodon-init
   mastodon-init:
@@ -18,14 +18,14 @@ services:
     volumes:
       - ${HONEYPI_DATA}/mastodon/public/system:/mastodon/public/system
     env_file:
-      - ${HONEYPI_HOME:-~/honeypi}/services/mastodon/service.env
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/mastodon/service.env
   mastodon-streaming:
     image: ghcr.io/${HONEYPI_MASTODON_GHCR_USER:-mastodon}/mastodon-streaming:${HONEYPI_MASTODON_VERSION:-latest}
     restart: unless-stopped
     container_name: mastodon-streaming
     command: node ./streaming/index.js
     env_file:
-      - ${HONEYPI_HOME:-~/honeypi}/services/mastodon/service.env
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/mastodon/service.env
   mastodon-sidekiq:
     image: ghcr.io/${HONEYPI_MASTODON_GHCR_USER:-mastodon}/mastodon:${HONEYPI_MASTODON_VERSION:-latest}
     restart: unless-stopped
@@ -34,4 +34,4 @@ services:
     volumes:
       - ${HONEYPI_DATA}/mastodon/public/system:/mastodon/public/system
     env_file:
-      - ${HONEYPI_HOME:-~/honeypi}/services/mastodon/service.env
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/mastodon/service.env

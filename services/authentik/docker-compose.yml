@@ -8,7 +8,7 @@ services:
       - ${HONEYPI_DATA}/authentik/media:/media
       - ${HONEYPI_DATA}/authentik/templates:/templates
     env_file:
-      - ${HONEYPI_HOME:-~/honeypi}/services/authentik/service.env
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/authentik/service.env
     labels:
       - traefik.enable=true
       - traefik.http.routers.authentik.rule=Host(`${HONEYPI_AUTHENTIK_HOST}`)
@@ -26,6 +26,6 @@ services:
       - ${HONEYPI_DATA}/authentik/certs:/certs
       - ${HONEYPI_DATA}/authentik/templates:/templates
     env_file:
-      - ${HONEYPI_HOME:-~/honeypi}/services/authentik/service.env
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/authentik/service.env
     depends_on:
       - authentik

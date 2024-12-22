@@ -12,4 +12,4 @@ services:
       - ${HONEYPI_DATA}/photoprism/originals:/photoprism/originals
       - ${HONEYPI_DATA}/photoprism/storage:/photoprism/storage
     env_file:
-      - ${HONEYPI_HOME:-~/honeypi}/services/photoprism/service.env
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/photoprism/service.env

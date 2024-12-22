@@ -4,7 +4,7 @@ services:
     restart: unless-stopped
     container_name: restreamer
     env_file:
-      - ${HONEYPI_HOME:-~/honeypi}/services/restreamer/service.env
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/restreamer/service.env
     volumes:
       - ${HONEYPI_DATA}/restreamer/db:/restreamer/db
     tmpfs: /tmp/hls

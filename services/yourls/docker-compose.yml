@@ -6,4 +6,4 @@ services:
     volumes:
       - ${HONEYPI_DATA}/yourls/user:/var/www/html/user
     env_file:
-      - ${HONEYPI_HOME:-~/honeypi}/services/yourls/service.env
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/yourls/service.env

@@ -6,4 +6,4 @@ services:
     volumes:
       - ${HONEYPI_DATA}/linkding/data:/etc/linkding/data
     env_file:
-      - ${HONEYPI_HOME:-~/honeypi}/services/linkding/service.env
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/linkding/service.env

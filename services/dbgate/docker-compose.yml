@@ -6,4 +6,4 @@ services:
     volumes:
       - ${HONEYPI_DATA}/dbgate/data:/root/.dbgate
     env_file:
-      - ${HONEYPI_HOME:-~/honeypi}/services/dbgate/service.env
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/dbgate/service.env
