@@ -10,7 +10,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
     env_file:
-      - ${HONEYPI_HOME}/services/homeassistant/service.env
+      - ${HONEYPI_HOME:-~/honeypi}/services/homeassistant/service.env
     labels:
       - traefik.enable=true
       - traefik.http.routers.homeassistant.rule=Host(`${HONEYPI_HOMEASSISTANT_HOST}`)

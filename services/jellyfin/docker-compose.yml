@@ -7,4 +7,4 @@ services:
       - ${HONEYPI_DATA}/jellyfin/config:/config
       - ${HONEYPI_DATA}/jellyfin/cache:/cache
     env_file:
-      - ${HONEYPI_HOME}/services/jellyfin/service.env
+      - ${HONEYPI_HOME:-~/honeypi}/services/jellyfin/service.env

@@ -4,7 +4,7 @@ services:
     image: gitea/gitea:${HONEYPI_GITEA_VERSION:-latest}
     restart: unless-stopped
     env_file:
-      - ${HONEYPI_HOME}/services/gitea/service.env
+      - ${HONEYPI_HOME:-~/honeypi}/services/gitea/service.env
     volumes:
       - ${HONEYPI_DATA}/gitea/data:/data
       - /etc/timezone:/etc/timezone:ro

@@ -7,4 +7,4 @@ services:
       - ${HONEYPI_DATA}/staticwebserver/hosts:/var/hosts
       - ${HONEYPI_DATA}/staticwebserver/config.toml:/etc/config.toml
     env_file:
-      - ${HONEYPI_HOME}/services/staticwebserver/service.env
+      - ${HONEYPI_HOME:-~/honeypi}/services/staticwebserver/service.env

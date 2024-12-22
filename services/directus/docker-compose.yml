@@ -7,4 +7,4 @@ services:
       - ${HONEYPI_DATA}/directus/uploads:/directus/uploads
       - ${HONEYPI_DATA}/directus/extensions:/directus/extensions
     env_file:
-      - ${HONEYPI_HOME}/services/directus/service.env
+      - ${HONEYPI_HOME:-~/honeypi}/services/directus/service.env

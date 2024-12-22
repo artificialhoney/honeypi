@@ -9,7 +9,7 @@ services:
       - freeboard-api
       - freeboard-proxy
     env_file:
-      - ${HONEYPI_HOME}/services/freeboard/service.env
+      - ${HONEYPI_HOME:-~/honeypi}/services/freeboard/service.env
   freeboard-api:
     restart: unless-stopped
     container_name: freeboard-api
@@ -17,13 +17,13 @@ services:
     networks:
       - freeboard
     env_file:
-      - ${HONEYPI_HOME}/services/freeboard/service.env
+      - ${HONEYPI_HOME:-~/honeypi}/services/freeboard/service.env
   freeboard-proxy:
     restart: unless-stopped
     container_name: freeboard-proxy
     image: ghcr.io/artificialhoney/freeboard-proxy:${HONEYPI_FREEBOARD_VERSION:-dev}
     env_file:
-      - ${HONEYPI_HOME}/services/freeboard/service.env
+      - ${HONEYPI_HOME:-~/honeypi}/services/freeboard/service.env
     networks:
       - freeboard
 

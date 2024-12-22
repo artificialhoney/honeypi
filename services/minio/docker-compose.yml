@@ -4,7 +4,7 @@ services:
     container_name: minio
     restart: unless-stopped
     env_file:
-      - ${HONEYPI_HOME}/services/minio/service.env
+      - ${HONEYPI_HOME:-~/honeypi}/services/minio/service.env
     volumes:
       - ${HONEYPI_DATA}/minio/data:/data
     command: server /data --console-address ":9001"
