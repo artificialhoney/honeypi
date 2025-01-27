@@ -1,0 +1,10 @@
+services:
+  minio:
+    image: quay.io/minio/minio:${HONEYPI_MINIO_VERSION:-latest}
+    container_name: minio
+    restart: unless-stopped
+    env_file:
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/minio/service.env
+    volumes:
+      - ${HONEYPI_DATA}/minio/data:/data
+    command: server /data --console-address ":9001"

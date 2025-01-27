@@ -1,0 +1,11 @@
+services:
+  mongo:
+    image: arm64v8/mongo:${HONEYPI_MONGO_VERSION:-latest}
+    container_name: mongo
+    restart: unless-stopped
+    entrypoint: mongod --bind_ip_all --wiredTigerCacheSizeGB 0.25  --oplogSize 128 --replSet rs0
+    volumes:
+      - ${HONEYPI_DATA}/mongo/data:/data
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${HONEYPI_MONGO_USERNAME:-honeypi}
+      MONGO_INITDB_ROOT_PASSWORD: ${HONEYPI_MONGO_PASSWORD}

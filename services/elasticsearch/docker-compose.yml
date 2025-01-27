@@ -1,0 +1,13 @@
+services:
+  elasticsearch:
+    image: arm64v8/elasticsearch:${HONEYPI_ELASTICSEARCH_VERSION:-latest}
+    restart: unless-stopped
+    container_name: elasticsearch
+    volumes:
+      - ${HONEYPI_DATA}/elasticsearch/data:/usr/share/elasticsearch/data
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    env_file:
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/elasticsearch/service.env

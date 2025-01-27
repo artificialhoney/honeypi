@@ -1,0 +1,8 @@
+services:
+  hickory:
+    image: docker.io/hickorydns/hickory-dns:${HONEYPI_HICKORY_VERSION:-latest}
+    container_name: hickory
+    restart: unless-stopped
+    volumes:
+      - ${HONEYPI_CONFIG}/hickory/named.toml:/etc/named.toml:ro
+      - ${HONEYPI_CONFIG}/hickory/ipv6_block.zone:/var/named/ipv6_block.zone:ro

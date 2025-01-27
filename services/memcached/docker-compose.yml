@@ -1,0 +1,6 @@
+services:
+  memcached:
+    image: memcached:${HONEYPI_MEMCACHED_VERSION:-latest}
+    container_name: memcached
+    command: memcached -m 15
+    restart: unless-stopped

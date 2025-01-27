@@ -1,0 +1,7 @@
+services:
+  owncast:
+    image: elestio/owncast:${HONEYPI_OWNCAST_VERSION:-latest}
+    container_name: owncast
+    restart: unless-stopped
+    volumes:
+      - ${HONEYPI_DATA}/owncast/data:/app/data

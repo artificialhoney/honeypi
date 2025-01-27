@@ -1,0 +1,13 @@
+.DS_Store
+tmp
+dist
+
+.local/
+
+*.env
+!local.env
+!commons/commons.env
+!services/*/service.env
+
+assets/
+tmp/

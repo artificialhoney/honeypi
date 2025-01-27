@@ -1,0 +1,7 @@
+services:
+  mediamtx:
+    image: bluenviron/mediamtx:${HONEYPI_MEDIAMTX_VERSION:-latest}-ffmpeg
+    container_name: mediamtx
+    restart: unless-stopped
+    volumes:
+      - ${HONEYPI_CONFIG}/mediamtx/mediamtx.yml:/mediamtx.yml

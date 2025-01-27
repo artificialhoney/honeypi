@@ -1,0 +1,9 @@
+services:
+  redis:
+    image: redis:${HONEYPI_REDIS_VERSION:-latest}
+    container_name: redis
+    restart: unless-stopped
+    volumes:
+      - ${HONEYPI_DATA}/redis/data:/data
+    env_file:
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/redis/service.env

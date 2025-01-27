@@ -1,0 +1,7 @@
+services:
+  syncthing:
+    image: syncthing/syncthing:${HONEYPI_SYNCTHING_VERSION:-latest}
+    container_name: syncthing
+    restart: unless-stopped
+    volumes:
+      - ${HONEYPI_DATA}/syncthing:/var/syncthing

@@ -1,0 +1,10 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:${HONEYPI_JELLYFIN_VERSION:-latest}
+    container_name: jellyfin
+    restart: unless-stopped
+    volumes:
+      - ${HONEYPI_DATA}/jellyfin/config:/config
+      - ${HONEYPI_DATA}/jellyfin/cache:/cache
+    env_file:
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/jellyfin/service.env

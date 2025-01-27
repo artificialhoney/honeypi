@@ -1,0 +1,22 @@
+services:
+  kopia:
+    image: kopia/kopia:${HONEYPI_KOPIA_VERSION:-latest}
+    container_name: kopia
+    restart: unless-stopped
+    command:
+      - server
+      - start
+      - --disable-csrf-token-checks
+      - --insecure
+      - --address=0.0.0.0:51515
+      - --server-username=${HONEYPI_KOPIA_USER:-honeypi}
+      - --server-password=${HONEYPI_KOPIA_PASSWORD}
+    volumes:
+      - ${HONEYPI_DATA}/kopia/config:/app/config
+      - ${HONEYPI_DATA}/kopia/cache:/app/cache
+      - ${HONEYPI_DATA}/kopia/logs:/app/logs
+      - /:/data:ro
+      - ${HONEYPI_KOPIA_REPOSITORY}:/repository
+      - /mnt/kopia:/tmp:shared
+    env_file:
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/kopia/service.env

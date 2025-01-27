@@ -1,0 +1,12 @@
+services:
+  postgres:
+    image: postgres:${HONEYPI_POSTGRES_VERSION:-latest}
+    container_name: postgres
+    restart: unless-stopped
+    command: postgres -c 'max_connections=200'
+    shm_size: 128mb
+    volumes:
+      - ${HONEYPI_DATA}/postgres/data:/var/lib/postgresql/data
+      - ${HONEYPI_CONFIG}/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    env_file:
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/postgres/service.env

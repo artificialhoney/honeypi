@@ -1,0 +1,9 @@
+services:
+  dbgate:
+    image: dbgate/dbgate:${HONEYPI_DBGATE_VERSION:-latest}
+    restart: unless-stopped
+    container_name: dbgate
+    volumes:
+      - ${HONEYPI_DATA}/dbgate/data:/root/.dbgate
+    env_file:
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/dbgate/service.env

@@ -1,0 +1,9 @@
+services:
+  yourls:
+    image: yourls
+    restart: unless-stopped
+    container_name: yourls
+    volumes:
+      - ${HONEYPI_DATA}/yourls/user:/var/www/html/user
+    env_file:
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/yourls/service.env

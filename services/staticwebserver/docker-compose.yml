@@ -1,0 +1,10 @@
+services:
+  staticwebserver:
+    image: joseluisq/static-web-server:${HONEYPI_STATICWEBSERVER_VERSION:-latest}
+    container_name: staticwebserver
+    restart: unless-stopped
+    volumes:
+      - ${HONEYPI_DATA}/staticwebserver/hosts:/var/hosts
+      - ${HONEYPI_CONFIG}/staticwebserver/config.toml:/etc/config.toml
+    env_file:
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/staticwebserver/service.env

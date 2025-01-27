@@ -1,0 +1,5 @@
+services:
+  registry:
+    image: registry:${HONEYPI_REGISTRY_VERSION:-2}
+    container_name: registry
+    restart: unless-stopped

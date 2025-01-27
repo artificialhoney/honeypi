@@ -1,0 +1,7 @@
+services:
+  cables:
+    image: ghcr.io/artificialhoney/cables:${HONEYPI_CABLES_VERSION:-dev}
+    restart: unless-stopped
+    container_name: cables
+    env_file:
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/cables/service.env

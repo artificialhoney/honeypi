@@ -1,0 +1,12 @@
+services:
+  pihole:
+    image: pihole/pihole:${HONEYPI_PIHOLE_VERSION:-latest}
+    container_name: pihole
+    restart: unless-stopped
+    volumes:
+      - ${HONEYPI_DATA}/pihole/etc/pihole:/etc/pihole
+      - ${HONEYPI_DATA}/pihole/etc/dnsmasq.d:/etc/dnsmasq.d
+    cap_add:
+      - NET_ADMIN
+    env_file:
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/pihole/service.env

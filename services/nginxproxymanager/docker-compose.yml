@@ -1,0 +1,8 @@
+services:
+  nginxproxymanager:
+    image: jc21/nginx-proxy-manager:${HONEYPI_NGINXPROXYMANAGER_VERSION:-latest}
+    container_name: nginxproxymanager
+    restart: unless-stopped
+    volumes:
+      - ${HONEYPI_DATA}/nginxproxymanager/data:/data
+      - ${HONEYPI_DATA}/nginxproxymanager/letsencrypt:/etc/letsencrypt

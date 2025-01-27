@@ -1,0 +1,10 @@
+services:
+  tubearchivist:
+    container_name: tubearchivist
+    restart: unless-stopped
+    image: bbilly1/tubearchivist
+    volumes:
+      - ${HONEYPI_DATA}/tubearchivist/media:/youtube
+      - ${HONEYPI_DATA}/tubearchivist/cache:/cache
+    env_file:
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/tubearchivist/service.env

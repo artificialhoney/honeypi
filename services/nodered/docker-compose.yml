@@ -1,0 +1,7 @@
+services:
+  nodered:
+    image: nodered/node-red:{HONEYPI_NODERED_VERSION:-latest}
+    container_name: nodered
+    restart: unless-stopped
+    volumes:
+      - ${HONEYPI_DATA}/nodered/data:/data

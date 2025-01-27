@@ -1,0 +1,9 @@
+services:
+  linkding:
+    image: sissbruecker/linkding:${HONEYPI_LINKDING_VERSION:-latest}
+    container_name: linkding
+    restart: unless-stopped
+    volumes:
+      - ${HONEYPI_DATA}/linkding/data:/etc/linkding/data
+    env_file:
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/linkding/service.env

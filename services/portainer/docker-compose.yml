@@ -1,0 +1,8 @@
+services:
+  portainer:
+    image: portainer/portainer-ce:${HONEYPI_PORTAINER_VERSION:-latest}
+    container_name: portainer
+    restart: unless-stopped
+    volumes:
+      - ${HONEYPI_DATA}/portainer/data:/data
+      - /var/run/docker.sock:/var/run/docker.sock

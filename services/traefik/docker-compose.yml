@@ -1,0 +1,23 @@
+services:
+  traefik:
+    image: traefik:${HONEYPI_APP_VERSION:-latest}
+    container_name: traefik
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=true"
+      - "--providers.file.directory=/etc/traefik/config"
+      - "--providers.file.watch=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--entryPoints.websecure.address=:443"
+      - "--entrypoints.ssh.address=:2222"
+      - "--certificatesresolvers.resolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.resolver.acme.email=${HONEYPI_LETSENCRYPT_EMAIL}"
+      - "--certificatesresolvers.resolver.acme.storage=/letsencrypt/acme.json"
+    restart: unless-stopped
+    volumes:
+      - ${HONEYPI_DATA}/letsencrypt:/letsencrypt
+      - ${HONEYPI_CONFIG}/traefik:/etc/traefik/config
+      - /var/run/docker.sock:/var/run/docker.sock

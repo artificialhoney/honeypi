@@ -1,0 +1,8 @@
+services:
+  zigbee2mqtt:
+    image: koenkk/zigbee2mqtt:${HONEYPI_ZIGBEE2MQTT_VERSION:-latest}
+    container_name: zigbee2mqtt
+    restart: unless-stopped
+    volumes:
+      - ${HONEYPI_DATA}/zigbee2mqtt/data:/app/data
+      - /run/udev:/run/udev:ro

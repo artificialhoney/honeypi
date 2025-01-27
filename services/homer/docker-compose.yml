@@ -1,0 +1,7 @@
+services:
+  homer:
+    container_name: homer
+    image: b4bz/homer:${HONEYPI_HOMER_VERSION:-latest}
+    restart: unless-stopped
+    volumes:
+      - ${HONEYPI_CONFIG}/homer/www/assets:/www/assets

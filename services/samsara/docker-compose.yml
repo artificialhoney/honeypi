@@ -1,0 +1,9 @@
+services:
+  samsara:
+    image: mariusgundersen/samsara:${HONEYPI_SAMSARA_VERSION:-latest}
+    container_name: samsara
+    restart: unless-stopped
+    platform: linux/amd64
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${HONEYPI_DATA}/samsara/config:/usr/src/app/config

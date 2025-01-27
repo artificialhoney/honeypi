@@ -1,0 +1,13 @@
+services:
+  homebridge:
+    image: homebridge/homebridge:${HONEYPI_HOMEBRIDGE_VERSION:-latest}
+    container_name: homebridge
+    restart: unless-stopped
+    volumes:
+      - ${HONEYPI_DATA}/homebridge:/homebridge
+      - /run/dbus:/run/dbus:ro
+    logging:
+      driver: json-file
+      options:
+        max-size: 10mb
+        max-file: 1
