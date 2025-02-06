@@ -3,8 +3,6 @@ services:
     image: ghcr.io/artificialhoney/freeboard-ui:${HONEYPI_FREEBOARD_VERSION:-dev}
     restart: unless-stopped
     container_name: freeboard-ui
-    networks:
-      - freeboard
     depends_on:
       - freeboard-api
       - freeboard-proxy
@@ -14,8 +12,6 @@ services:
     restart: unless-stopped
     container_name: freeboard-api
     image: ghcr.io/artificialhoney/freeboard-api:${HONEYPI_FREEBOARD_VERSION:-dev}
-    networks:
-      - freeboard
     env_file:
       - ${HONEYPI_HOME:-/home/pi/honeypi}/services/freeboard/service.env
   freeboard-proxy:
@@ -24,10 +20,3 @@ services:
     image: ghcr.io/artificialhoney/freeboard-proxy:${HONEYPI_FREEBOARD_VERSION:-dev}
     env_file:
       - ${HONEYPI_HOME:-/home/pi/honeypi}/services/freeboard/service.env
-    networks:
-      - freeboard
-
-networks:
-  freeboard:
-    name: freeboard
-    driver: bridge

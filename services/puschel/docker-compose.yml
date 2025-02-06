@@ -1,0 +1,15 @@
+services:
+  puschel-ui:
+    image: ghcr.io/artificialhoney/puschel-ui:${HONEYPI_PUSCHEL_VERSION:-dev}
+    restart: unless-stopped
+    container_name: puschel-ui
+    depends_on:
+      - puschel-hub
+    env_file:
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/puschel/service.env
+  puschel-hub:
+    restart: unless-stopped
+    container_name: puschel-hub
+    image: ghcr.io/artificialhoney/puschel-hub:${HONEYPI_PUSCHEL_VERSION:-dev}
+    env_file:
+      - ${HONEYPI_HOME:-/home/pi/honeypi}/services/puschel/service.env
